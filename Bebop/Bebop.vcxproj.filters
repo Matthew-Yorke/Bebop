@@ -8,13 +8,27 @@
     <Filter Include="Source">
       <UniqueIdentifier>{c244b109-ea74-448c-8452-c4c5ca67ab1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\BebopCore">
+      <UniqueIdentifier>{aff384cf-631e-44ce-bd20-2a7b6737ecd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BebopCore\Graphics">
+      <UniqueIdentifier>{2955e01f-f76b-4c13-abfc-d0d043d789f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Window.cpp">
+      <Filter>Source\BebopCore\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\BebopCore\Graphics\Window.h">
+      <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

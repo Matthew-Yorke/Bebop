@@ -2,7 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Bebop",
-    "\\Bebop\\Source"
+    "\\Bebop\\Source",
+    "\\Bebop\\Source\\BebopCore",
+    "\\Bebop\\Source\\BebopCore\\Graphics"
   ],
+  "SelectedNode": "\\Bebop\\Source\\Main.cpp",
   "PreviewInSolutionExplorer": false
 }
