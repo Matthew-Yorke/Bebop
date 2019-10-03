@@ -3,7 +3,7 @@
 // File: Window.cpp
 //
 // Description:
-//    This class is sued to create  a display window using the Allegroe 5 library.
+//    This class is used to create a display window using the Allegroe 5 library.
 //
 //*********************************************************************************************************************
 
@@ -31,7 +31,8 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   Window::Window(int aWidth, int aHeight) : mpWindow(nullptr), mWidth(aWidth), mHeight(aHeight)
+   Window::Window(int aWidth, int aHeight) :
+      mpWindow(nullptr), mWidth(aWidth), mHeight(aHeight)
    {
       if (false == Initialize())
       {
@@ -93,13 +94,6 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    bool Window::Initialize()
    {
-      // Initialize allegro and catch if a failure occurs.
-      // TODO: This should be moved to a different class for the game enginee initialization.
-      if (!al_init())
-      {
-         return false;
-      }
-   
       if (!(mpWindow = al_create_display(mWidth, mHeight)))
       {
          return false;

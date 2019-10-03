@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\BebopCore\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
@@ -26,6 +27,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BebopCore\Graphics\Sprite.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

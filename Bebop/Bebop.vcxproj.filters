@@ -22,12 +22,18 @@
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Sprite.cpp">
+      <Filter>Source\BebopCore\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BebopCore\Graphics\Window.h">
+      <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Graphics\Sprite.h">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

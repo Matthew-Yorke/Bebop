@@ -3,7 +3,7 @@
 // File: Window.h
 //
 // Description:
-//    This class is sued to create  a display window using the Allegroe 5 library.
+//    This class is used to create a display window using the Allegroe 5 library.
 //
 //*********************************************************************************************************************
 
@@ -107,11 +107,11 @@ namespace Bebop { namespace Graphics
 
       public:
 
-         // There are currently no public methods for this class.
+         // There are currently no public member variables for this class.
 
       protected:
 
-         // There are currently no prtoected methods for this class.
+         // There are currently no protected member variables for this class.
 
       private:
    

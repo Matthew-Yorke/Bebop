@@ -1,0 +1,134 @@
+//*********************************************************************************************************************
+//
+// File: Sprite.cpp
+//
+// Description:
+//    This class handles creationg and drawing of a sprite image.
+//
+//*********************************************************************************************************************
+
+#include "Sprite.h"
+
+namespace Bebop { namespace Graphics
+{
+//*********************************************************************************************************************
+// Public Methods - Start
+//*********************************************************************************************************************
+
+   //******************************************************************************************************************
+   //
+   // Method: Sprite
+   //
+   // Description:
+   //    Constructor for the sprite class that takes in arguments to specify the location of the image containing the
+   //    sprite, the location on the image to start drawing from, and the dimensions of the sprite.
+   //
+   // Arguments:
+   //    aFilePath - This string depicts the file location of the sprite image.
+   //    aSourceX  - The X-Coordinate on the image to start drawing from.
+   //    aSourceY  - The Y-Coordinate on the image to start drawing from.
+   //    aWidth    - The width of the sprite image.
+   //    aHeight   - The height of the sprite image.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   Sprite::Sprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
+                  const int aHeight) :
+      mSourceX(aSourceX), mSourceY(aSourceY), mWidth(aWidth), mHeight(aHeight)
+   {
+      if (nullptr == (mpSpriteSheet = al_load_bitmap(aFilePath.c_str())))
+      {
+         Terminate();
+      }
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method: ~Sprite
+   //
+   // Description:
+   //    Destructor of the sprite class that takes steps to free any allocated memory from this class.
+   //    
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   Sprite::~Sprite()
+   {
+      Terminate();
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: Draw
+   //
+   // Description:
+   //    The drawing call to handle drawing the current sprite configuration at the desired location on the window.
+   //
+   // Arguments:
+   //    aDestinationX - The X-Coordinate on the window where the image will be drawn on.
+   //    aDestinationY - The Y-Coordinate on the window where the image will be drawn on.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Sprite::Draw(const int theDestinationX, const int theDestinationY)
+   {
+      al_draw_bitmap_region(mpSpriteSheet,
+                            mSourceX,
+                            mSourceY,
+                            mWidth,
+                            mHeight,
+                            theDestinationX,
+                            theDestinationY,
+                            0);
+   }
+
+//*********************************************************************************************************************
+// Public Methods - End
+//*********************************************************************************************************************
+
+//*********************************************************************************************************************
+// Protected Methods - Start
+//*********************************************************************************************************************
+
+   // There are currently no protected methods for this class.
+
+//*********************************************************************************************************************
+// Protected Methods - End
+//*********************************************************************************************************************
+
+//*********************************************************************************************************************
+// Private Methods - Start
+//*********************************************************************************************************************
+
+   //******************************************************************************************************************
+   //
+   // Method: Terminate
+   //
+   // Description:
+   //    Termination the sprite. This can be used to destroy the sprite with or without destroying the entire class
+   //    object.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Sprite::Terminate()
+   {
+      al_destroy_bitmap(mpSpriteSheet);
+   }
+
+//*********************************************************************************************************************
+// Private Methods - End
+//*********************************************************************************************************************
+}}
