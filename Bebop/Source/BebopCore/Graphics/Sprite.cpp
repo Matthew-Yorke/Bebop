@@ -3,7 +3,7 @@
 // File: Sprite.cpp
 //
 // Description:
-//    This class handles creationg and drawing of a sprite image.
+//    This class handles creating and drawing of a sprite image.
 //
 //*********************************************************************************************************************
 

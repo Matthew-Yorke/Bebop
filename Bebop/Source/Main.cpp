@@ -1,8 +1,10 @@
 #include <iostream>
 #include "BebopCore/Graphics/Window.h"
 #include "BebopCore/Graphics/Sprite.h"
+#include "BebopCore/Graphics/AnimatedSprite.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <time.h>
 
 using namespace Bebop::Graphics;
 
@@ -28,12 +30,34 @@ int main()
 
    Window test(400, 400);
    Sprite testSprite("../TestImages/TestSprite.png", 0, 0, 32, 32);
-   testSprite.Draw(0, 0);
+   
+   AnimatedSprite animatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 2, 2);
 
-   // TODO: This should be moved toa renderer class within the engine that is called to update drawings.
-   al_flip_display();
+   clock_t begin;
+   clock_t end;
+   begin = end = clock();
+   double elapsedTime = 0;
+   double time = 10.0;
+   while (time > 0)
+   {
+      // Update elapsed time.
+      end = clock();
+      elapsedTime = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+      begin = end;
 
-   int a;
-   std::cin >> a;
+      // Update time for this loop.
+      time -= elapsedTime;
+
+      // call to update the animated sprite.
+      animatedSprite.Update(elapsedTime);
+
+      // Draw the sprites.
+      animatedSprite.Draw(100, 100);
+      testSprite.Draw(0, 0);
+
+      // TODO: This should be moved toa renderer class within the engine that is called to update drawings.
+      al_flip_display();
+   }
+
    return 0;
 }
