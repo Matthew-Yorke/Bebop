@@ -17,9 +17,9 @@ namespace Bebop { namespace Graphics
 {
    class Sprite
    {
-   //***************************************************************************************************************
-   // Methods - Start
-   //***************************************************************************************************************
+      //***************************************************************************************************************
+      // Methods - Start
+      //***************************************************************************************************************
 
       public:
 
@@ -33,18 +33,20 @@ namespace Bebop { namespace Graphics
          //    sprite.
          //
          // Arguments:
-         //    aFilePath - This string depicts the file location of the sprite image.
-         //    aSourceX  - The X-Coordinate on the image to start drawing from.
-         //    aSourceY  - The Y-Coordinate on the image to start drawing from.
-         //    aWidth    - The width of the sprite image.
-         //    aHeight   - The height of the sprite image.
+         //    aFilePath  - This string depicts the file location of the sprite image.
+         //    aSourceX   - The X-Coordinate on the image to start drawing from.
+         //    aSourceY   - The Y-Coordinate on the image to start drawing from.
+         //    aWidth     - The width of the sprite image.
+         //    aHeight    - The height of the sprite image.
+         //    aPositionX - The X-Coordinate to draw the sprite.
+         //    aPositionY - The Y-Coordinate to draw the sprite.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Sprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
-                const int aHeight);
+                const int aHeight, const int aPositionX, const int aPositionY);
 
          //************************************************************************************************************
          //
@@ -64,21 +66,68 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
-         // Method: Draw
+         // Method: UpdatePosition
          //
          // Description:
-         //    The drawing call to handle drawing the current sprite configuration at the desired location on the
-         //    window.
-         //
+         //    Update the sprites windows position with the passed in values.
+         //    
          // Arguments:
-         //    aDestinationX - The X-Coordinate on the window where the image will be drawn on.
-         //    aDestinationY - The Y-Coordinate on the window where the image will be drawn on.
+         //    aPositionX - The X-Coordinate to draw the sprite.
+         //    aPositionY - The Y-Coordinate to draw the sprite.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void Draw(const int aDestinationX, const int aDestinationY);
+         void UpdatePosition(const int aPositionX, const int aPositionY);
+
+         //************************************************************************************************************
+         //
+         // Method: GetPositionX
+         //
+         // Description:
+         //    Retrieve the current X-Coordinate position of the sprite.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the current Y-Coordinate position of the sprite.
+         //
+         //************************************************************************************************************
+         int GetPositionX();
+
+         //************************************************************************************************************
+         //
+         // Method: GetPositionY
+         //
+         // Description:
+         //    Retrieve the current Y-Coordinate position of the sprite.
+         //    
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the current Y-Coordinate position of the sprite.
+         //
+         //************************************************************************************************************
+         int GetPositionY();
+
+         //************************************************************************************************************
+         //
+         // Method: Draw
+         //
+         // Description:
+         //    The drawing call to handle drawing the current sprite configuration on the window.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void Draw();
 
       protected:
 
@@ -101,6 +150,14 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          void Terminate();
 
+      //***************************************************************************************************************
+      // Methods - End
+      //***************************************************************************************************************
+      
+      //***************************************************************************************************************
+      // Member Variables - Start
+      //***************************************************************************************************************
+
       public:
 
          // There are currently no public member variables for this class.
@@ -119,10 +176,20 @@ namespace Bebop { namespace Graphics
          // Holds the height of the sprite image.
          int mHeight;
 
+         // The X-Coordinate position to draw the sprite on the window.
+         int mPositionX;
+
+         // The Y-Coordinate position to draw the sprite on the window.
+         int mPositionY;
+
       private:
 
          // Holds the bitmap of the sprite(sheet) containing the image(s) of sprite.
          ALLEGRO_BITMAP* mpSpriteSheet;
+
+      //***************************************************************************************************************
+      // Member Variables - End
+      //***************************************************************************************************************
    };
 }}
 

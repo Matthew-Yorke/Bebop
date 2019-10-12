@@ -11,6 +11,7 @@
 #define Window_H
 
 #include <allegro5/allegro_native_dialog.h>
+#include "Scene.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -55,6 +56,22 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          ~Window();
+
+         //************************************************************************************************************
+         //
+         // Method: GetScene
+         //
+         // Description:
+         //    Returns the current scene to the caller.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the current scene.
+         //
+         //************************************************************************************************************
+         Scene* GetScene();
    
       protected:
 
@@ -123,6 +140,9 @@ namespace Bebop { namespace Graphics
    
          // The height of the window.
          int mHeight;
+
+         // Pointer to the scene on the screen.
+         Scene* mpScene;
 
       //***************************************************************************************************************
       // Member Variables - Start

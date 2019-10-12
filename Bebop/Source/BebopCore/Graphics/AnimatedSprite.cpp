@@ -28,6 +28,8 @@ namespace Bebop { namespace Graphics
    //    aSourceY      - The Y-Coordinate where the sprite image on the bitmap is located.
    //    aWidth        - The width of the sprite image.
    //    aHeight       - The height of the sprite image.
+   //    aPositionX    - The X-Coordinate to draw the sprite.
+   //    aPositionY    - The Y-Coordinate to draw the sprite.
    //    aFps          - The number of frames that occur in a second.
    //    aNumberFrames - The number of frames in the animation.
    //
@@ -36,8 +38,9 @@ namespace Bebop { namespace Graphics
    //
    //******************************************************************************************************************
    AnimatedSprite::AnimatedSprite(const std::string aFilePath, const int aSourceX, const int aSourceY,
-                                  const int aWidth, const int aHeight, const float aFps, const int aNumberFrames) :
-      Sprite(aFilePath, aSourceX, aSourceY, aWidth, aHeight),
+                                  const int aWidth, const int aHeight, const int aPositionX, const int aPositionY,
+                                  const float aFps, const int aNumberFrames) :
+      Sprite(aFilePath, aSourceX, aSourceY, aWidth, aHeight, aPositionX, aPositionY),
       mFrameTime(1.0F /aFps), mNumberFrames(aNumberFrames), mCurrentFrame(0), mElapsedTime(0.0F)
    {
    }

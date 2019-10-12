@@ -28,16 +28,20 @@ int main()
       return false;
    }
 
-   Window test(400, 400);
-   Sprite testSprite("../TestImages/TestSprite.png", 0, 0, 32, 32);
-   
-   AnimatedSprite animatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 2, 2);
+   Window testWindow(400, 400);
+
+   Sprite* testSprite = new Sprite("../TestImages/TestSprite.png", 0, 0, 32, 32, 0, 0);
+   AnimatedSprite* animatedSprite = new AnimatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 100, 100, 2, 2);
+
+   testWindow.GetScene()->PushSprite(testSprite);
+   testWindow.GetScene()->PushAnimatedSprite(animatedSprite);
 
    clock_t begin;
    clock_t end;
    begin = end = clock();
    double elapsedTime = 0;
    double time = 10.0;
+   double moveTime = 1.0;
    while (time > 0)
    {
       // Update elapsed time.
@@ -48,15 +52,23 @@ int main()
       // Update time for this loop.
       time -= elapsedTime;
 
-      // call to update the animated sprite.
-      animatedSprite.Update(elapsedTime);
+      // Move the test sprite horizontally across the screen every second.
+      moveTime -= elapsedTime;
+      if (moveTime < 0.0)
+      {
+         moveTime = 1.0;
+         testSprite->UpdatePosition(testSprite->GetPositionX() + 10, testSprite->GetPositionY());
+      }
 
-      // Draw the sprites.
-      animatedSprite.Draw(100, 100);
-      testSprite.Draw(0, 0);
+      // call to update the scene.
+      testWindow.GetScene()->Update(elapsedTime);
+
+      // Draw the scene.
+      testWindow.GetScene()->Draw();
 
       // TODO: This should be moved toa renderer class within the engine that is called to update drawings.
       al_flip_display();
+      al_clear_to_color(al_map_rgb(0, 0, 0));
    }
 
    return 0;

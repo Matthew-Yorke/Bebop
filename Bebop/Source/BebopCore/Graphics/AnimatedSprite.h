@@ -30,20 +30,23 @@ namespace Bebop { namespace Graphics
          //  Constructor that sets default values for member variables.
          //
          // Arguments:
-         //  aFilePath     - The file path where the sprite(sheet) is located.
-         //  aSourceX      - The X-Coordinate where the sprite image on the bitmap is located.
-         //  aSourceY      - The Y-Coordinate where the sprite image on the bitmap is located.
-         //  aWidth        - The width of the sprite image.
-         //  aHeight       - The height of the sprite image.
-         //  aFps          - The number of frames that occur in a second.
-         //  aNumberFrames - The number of frames in the animation.
+         //    aFilePath     - The file path where the sprite(sheet) is located.
+         //    aSourceX      - The X-Coordinate where the sprite image on the bitmap is located.
+         //    aSourceY      - The Y-Coordinate where the sprite image on the bitmap is located.
+         //    aWidth        - The width of the sprite image.
+         //    aHeight       - The height of the sprite image.
+         //    aPositionX    - The X-Coordinate to draw the sprite.
+         //    aPositionY    - The Y-Coordinate to draw the sprite.
+         //    aFps          - The number of frames that occur in a second.
+         //    aNumberFrames - The number of frames in the animation.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          AnimatedSprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
-                        const int aHeight, const float aFps, const int aNumberFrames);
+                        const int aHeight, const int aPositionX, const int aPositionY, const float aFps,
+                        const int aNumberFrames);
 
          //************************************************************************************************************
          //
@@ -53,7 +56,7 @@ namespace Bebop { namespace Graphics
          //  Update to the next frame when enough time has passed.
          //
          // Arguments:
-         //  aElapsedTime - The amount of time elapsed since the last update.
+         //    aElapsedTime - The amount of time elapsed since the last update.
          //
          // Return:
          //    N/A
@@ -105,4 +108,4 @@ namespace Bebop { namespace Graphics
    };
 }}
 
-#endif // AnimatedSprite_H#pragma once
+#endif // AnimatedSprite_H
