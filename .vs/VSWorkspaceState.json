@@ -4,8 +4,9 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics"
+    "\\Bebop\\Source\\BebopCore\\Graphics",
+    "\\Bebop\\Source\\BebopCore\\Graphics\\Particles"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\Scene.h",
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\Particles\\RoundParticle.cpp",
   "PreviewInSolutionExplorer": false
 }

@@ -3,7 +3,8 @@
 // File: Scene.h
 //
 // Description:
-//    
+//    This class handles an individual scene with ability to call to update and draw what objects are part of the
+//    scene.
 //
 //*********************************************************************************************************************
 
@@ -12,6 +13,7 @@
 
 #include "Sprite.h"
 #include "AnimatedSprite.h"
+#include "Particles/Particle.h"
 #include <vector>
 
 namespace Bebop { namespace Graphics
@@ -71,6 +73,22 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void PushAnimatedSprite(AnimatedSprite* const aAnimatedSprite);
+
+         //************************************************************************************************************
+         //
+         // Method: PushParticle
+         //
+         // Description:
+         //    Pushes a particle object onto the vector list of particles.
+         //
+         // Arguments:
+         //    aParticle - Pointer to the particle object being pushed into the particle vector.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void PushParticle(Particle* const aParticle);
 
          //************************************************************************************************************
          //
@@ -135,6 +153,9 @@ namespace Bebop { namespace Graphics
 
          // Vector list of the animated sprites within the scene.
          std::vector<AnimatedSprite*> mAnimatedSprites;
+
+         // Vector list of the particles within the scene.
+         std::vector<Particle*> mParticles;
    
       //***************************************************************************************************************
       // Member Variables - End

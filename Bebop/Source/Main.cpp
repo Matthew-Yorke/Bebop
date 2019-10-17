@@ -2,6 +2,8 @@
 #include "BebopCore/Graphics/Window.h"
 #include "BebopCore/Graphics/Sprite.h"
 #include "BebopCore/Graphics/AnimatedSprite.h"
+#include "BebopCore/Graphics/Particles/RoundParticle.h"
+#include "BebopCore/Graphics/Particles/RectangleParticle.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
@@ -32,9 +34,13 @@ int main()
 
    Sprite* testSprite = new Sprite("../TestImages/TestSprite.png", 0, 0, 32, 32, 0, 0);
    AnimatedSprite* animatedSprite = new AnimatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 100, 100, 2, 2);
+   RectangleParticle* rectangleParticleTest = new RectangleParticle(200, 200, 5.0F, 30, 50);
+   RoundParticle* roundParticleTest = new RoundParticle(200, 300, 30, 5.0F);
 
    testWindow.GetScene()->PushSprite(testSprite);
    testWindow.GetScene()->PushAnimatedSprite(animatedSprite);
+   testWindow.GetScene()->PushParticle(rectangleParticleTest);
+   testWindow.GetScene()->PushParticle(roundParticleTest);
 
    clock_t begin;
    clock_t end;

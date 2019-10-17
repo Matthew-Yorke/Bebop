@@ -14,6 +14,9 @@
     <Filter Include="Source\BebopCore\Graphics">
       <UniqueIdentifier>{2955e01f-f76b-4c13-abfc-d0d043d789f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\BebopCore\Graphics\Particles">
+      <UniqueIdentifier>{29149f91-8a80-44d4-94d8-9b303bb49bcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -31,6 +34,15 @@
     <ClCompile Include="Source\BebopCore\Graphics\Scene.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Particles\Particle.cpp">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Particles\RoundParticle.cpp">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Particles\RectangleParticle.cpp">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +59,15 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Graphics\Scene.h">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Graphics\Particles\Particle.h">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Graphics\Particles\RoundParticle.h">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Graphics\Particles\RectangleParticle.h">
+      <Filter>Source\BebopCore\Graphics\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,8 @@
 // File: Sprite.cpp
 //
 // Description:
-//    This class handles creating and drawing of a sprite image.
+//    This class handles an individual scene with ability to call to update and draw what objects are part of the
+//    scene.
 //
 //*********************************************************************************************************************
 
@@ -73,6 +74,25 @@ namespace Bebop { namespace Graphics
 
    //******************************************************************************************************************
    //
+   // Method: PushParticle
+   //
+   // Description:
+   //    Pushes a particle object onto the vector list of particles.
+   //
+   // Arguments:
+   //    aParticle - Pointer to the particle object being pushed into the particle vector.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Scene::PushParticle(Particle* const aParticle)
+   {
+      mParticles.push_back(aParticle);
+   }
+
+   //******************************************************************************************************************
+   //
    // Method: Update
    //
    // Description:
@@ -88,6 +108,11 @@ namespace Bebop { namespace Graphics
    void Scene::Update(const float aElapsedTime)
    {
       for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
+      {
+         (*iterator)->Update(aElapsedTime);
+      }
+
+      for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
       {
          (*iterator)->Update(aElapsedTime);
       }
@@ -115,6 +140,11 @@ namespace Bebop { namespace Graphics
       }
 
       for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
+      {
+         (*iterator)->Draw();
+      }
+
+      for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
       {
          (*iterator)->Draw();
       }
