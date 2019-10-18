@@ -13,7 +13,7 @@
 
 #include "Sprite.h"
 #include "AnimatedSprite.h"
-#include "Particles/Particle.h"
+#include "Particle.h"
 #include <vector>
 
 namespace Bebop { namespace Graphics

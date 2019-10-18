@@ -14,8 +14,8 @@
     <Filter Include="Source\BebopCore\Graphics">
       <UniqueIdentifier>{2955e01f-f76b-4c13-abfc-d0d043d789f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\BebopCore\Graphics\Particles">
-      <UniqueIdentifier>{29149f91-8a80-44d4-94d8-9b303bb49bcf}</UniqueIdentifier>
+    <Filter Include="Source\BebopCore\Objects">
+      <UniqueIdentifier>{ac458a92-f05e-4226-806a-1fa7a8e8ac6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,14 +34,17 @@
     <ClCompile Include="Source\BebopCore\Graphics\Scene.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\Particle.cpp">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClCompile Include="Source\BebopCore\Objects\Object.cpp">
+      <Filter>Source\BebopCore\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\RoundParticle.cpp">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClCompile Include="Source\BebopCore\Objects\RectangleObject.cpp">
+      <Filter>Source\BebopCore\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\RectangleParticle.cpp">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClCompile Include="Source\BebopCore\Objects\CircleObject.cpp">
+      <Filter>Source\BebopCore\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BebopCore\Graphics\Particle.cpp">
+      <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,14 +63,17 @@
     <ClInclude Include="Source\BebopCore\Graphics\Scene.h">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\Particle.h">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClInclude Include="Source\BebopCore\Objects\Object.h">
+      <Filter>Source\BebopCore\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\RoundParticle.h">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClInclude Include="Source\BebopCore\Objects\RectangleObject.h">
+      <Filter>Source\BebopCore\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\RectangleParticle.h">
-      <Filter>Source\BebopCore\Graphics\Particles</Filter>
+    <ClInclude Include="Source\BebopCore\Objects\CircleObject.h">
+      <Filter>Source\BebopCore\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Graphics\Particle.h">
+      <Filter>Source\BebopCore\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,12 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BebopCore\Graphics\AnimatedSprite.cpp" />
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\Particle.cpp" />
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\RoundParticle.cpp" />
-    <ClCompile Include="Source\BebopCore\Graphics\Particles\RectangleParticle.cpp" />
+    <ClCompile Include="Source\BebopCore\Graphics\Particle.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Scene.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp" />
+    <ClCompile Include="Source\BebopCore\Objects\CircleObject.cpp" />
+    <ClCompile Include="Source\BebopCore\Objects\Object.cpp" />
+    <ClCompile Include="Source\BebopCore\Objects\RectangleObject.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,12 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BebopCore\Graphics\AnimatedSprite.h" />
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\Particle.h" />
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\RoundParticle.h" />
-    <ClInclude Include="Source\BebopCore\Graphics\Particles\RectangleParticle.h" />
+    <ClInclude Include="Source\BebopCore\Graphics\Particle.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Scene.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Sprite.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Window.h" />
+    <ClInclude Include="Source\BebopCore\Objects\CircleObject.h" />
+    <ClInclude Include="Source\BebopCore\Objects\Object.h" />
+    <ClInclude Include="Source\BebopCore\Objects\RectangleObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
