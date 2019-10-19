@@ -11,6 +11,7 @@
 #define Particle_H
 
 #include "../Objects/Object.h"
+#include "../Math/SinWave.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -37,7 +38,23 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         Particle(Objects::Object* const apObject, const float aTimeToLive);
+         Particle(Objects::Object* const apObject, Math::SinWave* const aSinWave, const float aTimeToLive);
+
+         //************************************************************************************************************
+         //
+         // Method: ~Particle
+         //
+         // Description:
+         //    Destructor to free up any memory.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         ~Particle();
 
          //************************************************************************************************************
          //
@@ -101,10 +118,14 @@ namespace Bebop { namespace Graphics
 
          Objects::Object* mpObject;
 
+         Math::SinWave* mpSinWave;
+
       private:
 
          // The time left until the particle dies.
          float mTimeToLive;
+
+         float mLivingTime;
 
       //***************************************************************************************************************
       // Member Variables - End

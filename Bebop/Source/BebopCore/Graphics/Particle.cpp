@@ -30,9 +30,29 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   Particle::Particle(Objects::Object* const apObject, const float aTimeToLive) :
-      mpObject(apObject), mTimeToLive(aTimeToLive)
+   Particle::Particle(Objects::Object* const apObject, Math::SinWave* const aSinWave, const float aTimeToLive) :
+      mpObject(apObject), mpSinWave(aSinWave), mTimeToLive(aTimeToLive), mLivingTime(0.0F)
    {
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: ~Particle
+   //
+   // Description:
+   //    Destructor to free up any memory.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   Particle::~Particle()
+   {
+      delete mpObject;
+      delete mpSinWave;
    }
 
    //******************************************************************************************************************
@@ -52,6 +72,9 @@ namespace Bebop { namespace Graphics
    void Particle::Update(const float aElapsedTime)
    {
       mTimeToLive -= aElapsedTime;
+      mLivingTime += aElapsedTime;
+      mpObject->SetCoordinateX(mpObject->GetStartingCoordinateX() + mpSinWave->GetPositionX(mLivingTime));
+      mpObject->SetCoordinateY(mpObject->GetStartingCoordinateY() + mpSinWave->GetPositionY(mLivingTime));
    }
 
    //******************************************************************************************************************

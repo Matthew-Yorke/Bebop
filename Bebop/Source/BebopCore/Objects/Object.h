@@ -36,7 +36,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         Object(const int aCoordinateX, const int aCoordinateY, const int aWidthCenterPoint,
+         Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
                 const int aHeightCenterPoint);
       
          //************************************************************************************************************
@@ -53,7 +53,7 @@ namespace Bebop { namespace Objects
          //    Returns the current X-Coordinate of the object.
          //
          //************************************************************************************************************
-         int GetCoordinateX();
+         float GetCoordinateX();
       
          //************************************************************************************************************
          //
@@ -69,7 +69,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         void SetCoordinateX(const int aoordianteX);
+         void SetCoordinateX(const float aoordianteX);
       
          //************************************************************************************************************
          //
@@ -85,7 +85,7 @@ namespace Bebop { namespace Objects
          //    Returns the current Y-Coordinate of the object.
          //
          //************************************************************************************************************
-         int GetCoordinateY();
+         float GetCoordinateY();
       
          //************************************************************************************************************
          //
@@ -101,7 +101,39 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         void SetCoordinateY(const int aCoordianteY);
+         void SetCoordinateY(const float aCoordianteY);
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetStartingCoordinateX
+         //
+         // Description:
+         //    This method returns the starting X-Coordinate of the object.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the starting X-Coordinate of the object.
+         //
+         //************************************************************************************************************
+         float GetStartingCoordinateX();
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetStartingCoordinateY
+         //
+         // Description:
+         //    This method returns the starting Y-Coordinate of the object.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the starting Y-Coordinate of the object.
+         //
+         //************************************************************************************************************
+         float GetStartingCoordinateY();
       
          //************************************************************************************************************
          //
@@ -203,11 +235,17 @@ namespace Bebop { namespace Objects
       
       protected:
       
+         // The X-Coordinate that the object is starting at.
+         float mStartingCoordinateX;
+
+         // The Y-Coordinate that the object is starting at.
+         float mStartingCoordinateY;
+
          // The X-Coordinate that the object is placed at based on world coordinates.
-         int mCoordinateX;
+         float mCoordinateX;
       
          // The Y-Coordinate that the object is placed at based on world coordinates.
-         int mCoordinateY;
+         float mCoordinateY;
       
          // The center point along the width of an object.
          int mWidthCenterPoint;

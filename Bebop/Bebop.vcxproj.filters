@@ -17,6 +17,9 @@
     <Filter Include="Source\BebopCore\Objects">
       <UniqueIdentifier>{ac458a92-f05e-4226-806a-1fa7a8e8ac6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\BebopCore\Math">
+      <UniqueIdentifier>{7c89a7e9-d36e-47b6-9651-58fce9b9319b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -46,6 +49,9 @@
     <ClCompile Include="Source\BebopCore\Graphics\Particle.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BebopCore\Math\SinWave.cpp">
+      <Filter>Source\BebopCore\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -74,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Graphics\Particle.h">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Math\SinWave.h">
+      <Filter>Source\BebopCore\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

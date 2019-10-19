@@ -39,7 +39,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         RectangleObject(const int aCoordinateX, const int aCoordinateY, const int aWidth, const int aHeight);
+         RectangleObject(const float aCoordinateX, const float aCoordinateY, const int aWidth, const int aHeight);
       
          //************************************************************************************************************
          //

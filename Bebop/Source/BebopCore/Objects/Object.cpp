@@ -31,10 +31,10 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   Object::Object(const int aCoordinateX, const int aCoordinateY, const int aWidthCenterPoint, 
+   Object::Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
                   const int aHeightCenterPoint) :
       mCoordinateX(aCoordinateX), mCoordinateY(aCoordinateY), mWidthCenterPoint(aWidthCenterPoint),
-      mHeightCenterPoint(aHeightCenterPoint)
+      mHeightCenterPoint(aHeightCenterPoint), mStartingCoordinateX(aCoordinateX), mStartingCoordinateY(aCoordinateY)
    {
    }
    
@@ -52,7 +52,7 @@ namespace Bebop { namespace Objects
    //    Returns the current X-Coordinate of the object.
    //
    //******************************************************************************************************************
-   int Object::GetCoordinateX()
+   float Object::GetCoordinateX()
    {
       return mCoordinateX;
    }
@@ -71,7 +71,7 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void Object::SetCoordinateX(const int aCoordianteX)
+   void Object::SetCoordinateX(const float aCoordianteX)
    {
       mCoordinateX = aCoordianteX;
    }
@@ -90,7 +90,7 @@ namespace Bebop { namespace Objects
    //    Returns the current Y-Coordinate of the object.
    //
    //******************************************************************************************************************
-   int Object::GetCoordinateY()
+   float Object::GetCoordinateY()
    {
       return mCoordinateY;
    }
@@ -109,11 +109,49 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void Object::SetCoordinateY(const int aCoordianteY)
+   void Object::SetCoordinateY(const float aCoordianteY)
    {
       mCoordinateY = aCoordianteY;
    }
    
+   //******************************************************************************************************************
+   //
+   // Method Name: GetStartingCoordinateY
+   //
+   // Description:
+   //    This method returns the starting X-Coordinate of the object.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns the starting X-Coordinate of the object.
+   //
+   //******************************************************************************************************************
+   float Object::GetStartingCoordinateX()
+   {
+      return mStartingCoordinateX;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: GetStartingCoordinateY
+   //
+   // Description:
+   //    This method returns the starting X-Coordinate of the object.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns the starting X-Coordinate of the object.
+   //
+   //******************************************************************************************************************
+   float Object::GetStartingCoordinateY()
+   {
+      return mStartingCoordinateY;
+   }
+
    //******************************************************************************************************************
    //
    // Method Name: GetWidthCenterPoint

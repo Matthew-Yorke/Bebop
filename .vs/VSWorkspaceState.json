@@ -4,7 +4,8 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics"
+    "\\Bebop\\Source\\BebopCore\\Graphics",
+    "\\Bebop\\Source\\BebopCore\\Math"
   ],
   "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\AnimatedSprite.cpp",
   "PreviewInSolutionExplorer": false

@@ -38,7 +38,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         CircleObject(const int aCoordinateX, const int aCoordinateY, const int aRadius);
+         CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius);
       
          //************************************************************************************************************
          //
