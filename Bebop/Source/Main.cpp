@@ -5,7 +5,8 @@
 #include "BebopCore/Graphics/Particle.h"
 #include "BebopCore//Objects/CircleObject.h"
 #include "BebopCore//Objects//RectangleObject.h"
-#include "BebopCore/Math/SinWave.h"
+#include "BebopCore/Math/Motion/SinWaveMotion.h"
+#include "BebopCore/Math/Motion/CircularMotion.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
@@ -38,8 +39,8 @@ int main()
 
    Sprite* testSprite = new Sprite("../TestImages/TestSprite.png", 0, 0, 32, 32, 0, 0);
    AnimatedSprite* animatedSprite = new AnimatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 100, 100, 2, 2);
-   Particle* rectangleParticleTest = new Particle(new RectangleObject(200, 200, 30, 50), new SinWave(1.0F, 3.0F, 0.0F), 20.0F, 5.0F);
-   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30), new SinWave(5.0F, 0.25F, 160.0F), 50.0F, 5.0F);
+   Particle* rectangleParticleTest = new Particle(new RectangleObject(200, 200, 30, 50), new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
+   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30), new CircularMotion(100.0F, 1.0F), 5.0F);
    
    testWindow.GetScene()->PushSprite(testSprite);
    testWindow.GetScene()->PushAnimatedSprite(animatedSprite);

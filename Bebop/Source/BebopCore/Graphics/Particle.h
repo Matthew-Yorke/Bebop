@@ -11,7 +11,7 @@
 #define Particle_H
 
 #include "../Objects/Object.h"
-#include "../Math/SinWave.h"
+#include "../Math/Motion/MotionBase.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -32,16 +32,14 @@ namespace Bebop { namespace Graphics
          //
          // Arguments:
          //    apObject    - Pointer to the object type the particle is to be.
-         //    apSinWave   - Pinter to the sin wave movement pattern.
-         //    aSpeed      - The speed (in pixels) the particle is moving at.
+         //    apMotion    - Pointer to the motion movement pattern.
          //    aTimeToLive - The time left for the particle to exist.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         Particle(Objects::Object* const apObject, Math::SinWave* const apSinWave, const float aSpeed,
-                  const float aTimeToLive);
+         Particle(Objects::Object* const apObject, Math::MotionBase* const apMotion, const float aTimeToLive);
 
          //************************************************************************************************************
          //
@@ -128,10 +126,7 @@ namespace Bebop { namespace Graphics
 
          // Pointer to the sin wave pattern being used for movement.
          // TODO: This is to be replaced witha  more generic pattern that will allow different types of patterns.
-         Math::SinWave* mpSinWave;
-
-         // The speed the particle is moving at.
-         float mSpeed;
+         Math::MotionBase* mpMotion;
 
          // The time left until the particle dies.
          float mTimeToLive;

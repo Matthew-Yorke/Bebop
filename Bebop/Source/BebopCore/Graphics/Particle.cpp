@@ -24,17 +24,15 @@ namespace Bebop { namespace Graphics
    //
    // Arguments:
    //    apObject    - Pointer to the object type the particle is to be.
-   //    apSinWave   - Pinter to the sin wave movement pattern.
-   //    aSpeed      - The speed (in pixels) the particle is moving at.
+   //    apMotion    - Pointer to the motion movement pattern.
    //    aTimeToLive - The time left for the particle to exist.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   Particle::Particle(Objects::Object* const apObject, Math::SinWave* const aSinWave, const float aSpeed,
-                      const float aTimeToLive) :
-      mpObject(apObject), mpSinWave(aSinWave), mTimeToLive(aTimeToLive), mSpeed(aSpeed), mLivingTime(0.0F)
+   Particle::Particle(Objects::Object* const apObject, Math::MotionBase* const apMotion, const float aTimeToLive) :
+      mpObject(apObject), mpMotion(apMotion), mTimeToLive(aTimeToLive), mLivingTime(0.0F)
    {
    }
 
@@ -55,7 +53,7 @@ namespace Bebop { namespace Graphics
    Particle::~Particle()
    {
       delete mpObject;
-      delete mpSinWave;
+      delete mpMotion;
    }
 
    //******************************************************************************************************************
@@ -76,9 +74,8 @@ namespace Bebop { namespace Graphics
    {
       mLivingTime += aElapsedTime;
 
-      float moveDistance = mLivingTime * mSpeed;
-      mpObject->SetCoordinateX(mpObject->GetStartingCoordinateX() + mpSinWave->GetPositionX(moveDistance));
-      mpObject->SetCoordinateY(mpObject->GetStartingCoordinateY() + mpSinWave->GetPositionY(moveDistance));
+      mpObject->SetCoordinateX(mpObject->GetStartingCoordinateX() + mpMotion->GetPositionX(mLivingTime));
+      mpObject->SetCoordinateY(mpObject->GetStartingCoordinateY() + mpMotion->GetPositionY(mLivingTime));
    }
 
    //******************************************************************************************************************

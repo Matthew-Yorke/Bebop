@@ -4,9 +4,9 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics",
-    "\\Bebop\\Source\\BebopCore\\Math"
+    "\\Bebop\\Source\\BebopCore\\Math",
+    "\\Bebop\\Source\\BebopCore\\Math\\Motion"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Math\\SinWave.cpp",
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Math\\RotationMatrix2D.h",
   "PreviewInSolutionExplorer": false
 }

@@ -1,15 +1,14 @@
 //*********************************************************************************************************************
 //
-// File: SinWave.cpp
+// File: RotationMatrix2D.cpp
 //
 // Description:
-//    This class handles the sin wave positioning including the sin wave at an angle.
+//    This class handles creating a rotation matrix for 2D objects.
 //
 //*********************************************************************************************************************
 
 #include "RotationMatrix2D.h"
-#define _USE_MATH_DEFINES
-#include <cmath>
+#include "MathConstants.h"
 
 namespace Bebop { namespace Math
 {
@@ -33,10 +32,10 @@ namespace Bebop { namespace Math
    //******************************************************************************************************************
    RotationMatrix2D::RotationMatrix2D(const float aRotation)
    {
-      mRotationMatrix = new float*[2];
-      for (auto i = 0; i < 2; ++i)
+      mRotationMatrix = new float*[MATRIX_SIZE_2D];
+      for (auto i = 0; i < MATRIX_SIZE_2D; ++i)
       {
-         mRotationMatrix[i] = new float[2];
+         mRotationMatrix[i] = new float[MATRIX_SIZE_2D];
       }
 
       SetAngle(aRotation);
@@ -60,7 +59,7 @@ namespace Bebop { namespace Math
    {
       if (mRotationMatrix)
       {
-         for (auto i = 0; i < 2; i++)
+         for (auto i = 0; i < MATRIX_SIZE_2D; i++)
          {
             if (mRotationMatrix[i])
             {
@@ -91,10 +90,10 @@ namespace Bebop { namespace Math
       //       0             1
       // 0 | cos(theta)   -sin(theta) |
       // 1 | sin(theta)   cos(theta)  |
-      mRotationMatrix[0][0] = cos(aRotation * M_PI / 180.0F);
-      mRotationMatrix[0][1] = -sin(aRotation * M_PI / 180.0F);
-      mRotationMatrix[1][0] = sin(aRotation * M_PI / 180.0F);
-      mRotationMatrix[1][1] = cos(aRotation * M_PI / 180.0F);
+      mRotationMatrix[0][0] = cos(aRotation * RADIANS_CONVERSION);
+      mRotationMatrix[0][1] = -sin(aRotation * RADIANS_CONVERSION);
+      mRotationMatrix[1][0] = sin(aRotation * RADIANS_CONVERSION);
+      mRotationMatrix[1][1] = cos(aRotation * RADIANS_CONVERSION);
    }
 
    //******************************************************************************************************************

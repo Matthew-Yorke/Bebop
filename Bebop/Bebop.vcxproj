@@ -24,8 +24,9 @@
     <ClCompile Include="Source\BebopCore\Graphics\Scene.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp" />
+    <ClCompile Include="Source\BebopCore\Math\Motion\CircularMotion.cpp" />
+    <ClCompile Include="Source\BebopCore\Math\Motion\SinWaveMotion.cpp" />
     <ClCompile Include="Source\BebopCore\Math\RotationMatrix2D.cpp" />
-    <ClCompile Include="Source\BebopCore\Math\SinWave.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\CircleObject.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\Object.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\RectangleObject.cpp" />
@@ -40,8 +41,11 @@
     <ClInclude Include="Source\BebopCore\Graphics\Scene.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Sprite.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Window.h" />
+    <ClInclude Include="Source\BebopCore\Math\MathConstants.h" />
+    <ClInclude Include="Source\BebopCore\Math\Motion\CircularMotion.h" />
+    <ClInclude Include="Source\BebopCore\Math\Motion\MotionBase.h" />
+    <ClInclude Include="Source\BebopCore\Math\Motion\SinWaveMotion.h" />
     <ClInclude Include="Source\BebopCore\Math\RotationMatrix2D.h" />
-    <ClInclude Include="Source\BebopCore\Math\SinWave.h" />
     <ClInclude Include="Source\BebopCore\Objects\CircleObject.h" />
     <ClInclude Include="Source\BebopCore\Objects\Object.h" />
     <ClInclude Include="Source\BebopCore\Objects\RectangleObject.h" />
