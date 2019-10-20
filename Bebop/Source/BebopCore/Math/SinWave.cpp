@@ -23,7 +23,7 @@ namespace Bebop { namespace Math
    // Method Name: SinWave
    //
    // Description:
-   //    This method returns the current X-Coordinate of the object.
+   //    Constructor that sets default values for member variables.
    //
    // Arguments:
    //    aAmplitude - The amplitude of a wave for the sin wave.
@@ -35,16 +35,8 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    SinWave::SinWave(const float aAmplitude, const float aFrequency, const float aRotation) :
-      mAmplitude(aAmplitude), mFrequency(aFrequency)
+      mAmplitude(aAmplitude), mFrequency(aFrequency), mRotationMatrix(aRotation)
    {
-      // Rotation Matrix
-      //       0             1
-      // 0 | cos(theta)   -sin(theta) |
-      // 1 | sin(theta)   cos(theta)  |
-      mRotationMatrix[0][0] = cos(aRotation * M_PI / 180.0F);
-      mRotationMatrix[0][1] = -sin(aRotation * M_PI / 180.0F);
-      mRotationMatrix[1][0] = sin(aRotation * M_PI / 180.0F);
-      mRotationMatrix[1][1] = cos(aRotation * M_PI / 180.0F);
    }
 
    //************************************************************************************************************
@@ -63,7 +55,8 @@ namespace Bebop { namespace Math
    //************************************************************************************************************
    float SinWave::GetPositionX(const float aTime)
    {
-      return (mRotationMatrix[0][0] * aTime) + (mRotationMatrix[0][1] * (mAmplitude * sin(mFrequency * aTime)));
+      return (mRotationMatrix.GetRotationMatrix()[0][0] * aTime) +
+             (mRotationMatrix.GetRotationMatrix()[0][1] * (mAmplitude * sin(mFrequency * aTime)));
    }
 
    //************************************************************************************************************
@@ -82,7 +75,8 @@ namespace Bebop { namespace Math
    //************************************************************************************************************
    float SinWave::GetPositionY(const float aTime)
    {
-      return (mRotationMatrix[1][0] * aTime) + (mRotationMatrix[1][1] * (mAmplitude * sin(mFrequency * aTime)));
+      return (mRotationMatrix.GetRotationMatrix()[1][0] * aTime) +
+             (mRotationMatrix.GetRotationMatrix()[1][1] * (mAmplitude * sin(mFrequency * aTime)));
    }
 
 //*********************************************************************************************************************

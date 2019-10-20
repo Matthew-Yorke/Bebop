@@ -10,6 +10,8 @@
 #ifndef SinWave_H
 #define SinWave_H
 
+#include "RotationMatrix2D.h"
+
 namespace Bebop { namespace Math
 {
    class SinWave
@@ -24,7 +26,7 @@ namespace Bebop { namespace Math
          // Method Name: SinWave
          //
          // Description:
-         //    This method returns the current X-Coordinate of the object.
+         //    Constructor that sets default values for member variables.
          //
          // Arguments:
          //    aAmplitude - The amplitude of a wave for the sin wave.
@@ -91,9 +93,8 @@ namespace Bebop { namespace Math
          // The frequency of waves for the sin wave.
          float mFrequency;
 
-         // Holds the rotation matrix:
-         // TODO: This should be moved somewhere else as it may be used for other calculations.
-         float mRotationMatrix[2][2];
+         // Holds a rotation matrix for the sin wave rotation.
+         RotationMatrix2D mRotationMatrix;
 
    //******************************************************************************************************************
    // Member Variables - Start

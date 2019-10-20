@@ -32,13 +32,16 @@ namespace Bebop { namespace Graphics
          //
          // Arguments:
          //    apObject    - Pointer to the object type the particle is to be.
+         //    apSinWave   - Pinter to the sin wave movement pattern.
+         //    aSpeed      - The speed (in pixels) the particle is moving at.
          //    aTimeToLive - The time left for the particle to exist.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         Particle(Objects::Object* const apObject, Math::SinWave* const aSinWave, const float aTimeToLive);
+         Particle(Objects::Object* const apObject, Math::SinWave* const apSinWave, const float aSpeed,
+                  const float aTimeToLive);
 
          //************************************************************************************************************
          //
@@ -110,21 +113,30 @@ namespace Bebop { namespace Graphics
 
       protected:
 
+         
+
+      private:
+
          // The X-Coordinate position to draw the sprite on the window.
          int mPositionX;
 
          // The Y-Coordinate position to draw the sprite on the window.
          int mPositionY;
 
+         // Pointer to the object type for the Particle
          Objects::Object* mpObject;
 
+         // Pointer to the sin wave pattern being used for movement.
+         // TODO: This is to be replaced witha  more generic pattern that will allow different types of patterns.
          Math::SinWave* mpSinWave;
 
-      private:
+         // The speed the particle is moving at.
+         float mSpeed;
 
          // The time left until the particle dies.
          float mTimeToLive;
 
+         // The time this object has lived so far.
          float mLivingTime;
 
       //***************************************************************************************************************
