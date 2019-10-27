@@ -4,9 +4,9 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Math",
-    "\\Bebop\\Source\\BebopCore\\Math\\Motion"
+    "\\Bebop\\Source\\BebopCore\\Graphics",
+    "\\Bebop\\Source\\BebopCore\\Math"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Math\\RotationMatrix2D.h",
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\GraphicsConstants.h",
   "PreviewInSolutionExplorer": false
 }

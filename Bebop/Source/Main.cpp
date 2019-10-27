@@ -3,6 +3,7 @@
 #include "BebopCore/Graphics/Sprite.h"
 #include "BebopCore/Graphics/AnimatedSprite.h"
 #include "BebopCore/Graphics/Particle.h"
+#include "BebopCore/Graphics/Color.h"
 #include "BebopCore//Objects/CircleObject.h"
 #include "BebopCore//Objects//RectangleObject.h"
 #include "BebopCore/Math/Motion/SinWaveMotion.h"
@@ -38,9 +39,12 @@ int main()
    Window testWindow(400, 400);
 
    Sprite* testSprite = new Sprite("../TestImages/TestSprite.png", 0, 0, 32, 32, 0, 0);
-   AnimatedSprite* animatedSprite = new AnimatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 100, 100, 2, 2);
-   Particle* rectangleParticleTest = new Particle(new RectangleObject(200, 200, 30, 50), new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
-   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30), new CircularMotion(100.0F, 1.0F), 5.0F);
+   AnimatedSprite* animatedSprite = new AnimatedSprite("../TestImages/TestAnimatedSprite.png", 0, 0, 32, 32, 100, 100,
+                                                       2, 2);
+   Particle* rectangleParticleTest = new Particle(new RectangleObject(200, 200, 30, 50, Color(255, 0, 0, 255)),
+                                                  new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
+   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 50)),
+                                              new CircularMotion(100.0F, 0.5F), 5.0F);
    
    testWindow.GetScene()->PushSprite(testSprite);
    testWindow.GetScene()->PushAnimatedSprite(animatedSprite);

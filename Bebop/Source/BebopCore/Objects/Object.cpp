@@ -26,15 +26,17 @@ namespace Bebop { namespace Objects
    //    aCoorindateY       - The Y-Coordinate to place the object upon creation.
    //    aWidthCenterPoint  - The center point of the width of the object.
    //    aHeightCenterPoint - The center point of the height of the object.
+   //    aColor             - The color of the rectangle object.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    Object::Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
-                  const int aHeightCenterPoint) :
+                  const int aHeightCenterPoint, const Graphics::Color aColor) :
       mCoordinateX(aCoordinateX), mCoordinateY(aCoordinateY), mWidthCenterPoint(aWidthCenterPoint),
-      mHeightCenterPoint(aHeightCenterPoint), mStartingCoordinateX(aCoordinateX), mStartingCoordinateY(aCoordinateY)
+      mHeightCenterPoint(aHeightCenterPoint), mStartingCoordinateX(aCoordinateX), mStartingCoordinateY(aCoordinateY),
+      mColor(aColor)
    {
    }
    

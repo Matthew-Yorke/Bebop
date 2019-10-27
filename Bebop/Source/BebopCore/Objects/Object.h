@@ -10,6 +10,8 @@
 #ifndef Object_h
 #define Object_h
 
+#include "../Graphics/Color.h"
+
 namespace Bebop { namespace Objects
 {
    class Object
@@ -31,13 +33,14 @@ namespace Bebop { namespace Objects
          //    aCoorindateY       - The Y-Coordinate to place the object upon creation.
          //    aWidthCenterPoint  - The center point of the width of the object.
          //    aHeightCenterPoint - The center point of the height of the object.
+         //    aColor             - The color of the rectangle object.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
-                const int aHeightCenterPoint);
+                const int aHeightCenterPoint, const Graphics::Color aColor);
       
          //************************************************************************************************************
          //
@@ -252,6 +255,9 @@ namespace Bebop { namespace Objects
       
          // The center point along the height of an object.
          int mHeightCenterPoint;
+
+         // The color of the object
+         Graphics::Color mColor;
       
       private:
       

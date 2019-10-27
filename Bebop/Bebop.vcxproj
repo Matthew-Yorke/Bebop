@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BebopCore\Graphics\AnimatedSprite.cpp" />
+    <ClCompile Include="Source\BebopCore\Graphics\Color.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Particle.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Scene.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Sprite.cpp" />
@@ -37,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BebopCore\Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Source\BebopCore\Graphics\Color.h" />
+    <ClInclude Include="Source\BebopCore\Graphics\GraphicsConstants.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Particle.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Scene.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Sprite.h" />

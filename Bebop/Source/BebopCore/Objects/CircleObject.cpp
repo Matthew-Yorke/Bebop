@@ -27,13 +27,15 @@ namespace Bebop { namespace Objects
    //    aCoordinateX - The X-Coordinate the circular object is to be displayed on the window.
    //    aCoordinateY - The Y-Coordinate the circular object is to be displayed on the window. 
    //    aRadius      - The radisu of the circular object.
+   //    aColor       - The color of the rectangle object.
    //
    // Return:
    //    N/A
    //
    //************************************************************************************************************
-   CircleObject::CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius) :
-      Object(aCoordinateX, aCoordinateY, aRadius, aRadius), mRadius(aRadius)
+   CircleObject::CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius,
+                              const Graphics::Color aColor) :
+      Object(aCoordinateX, aCoordinateY, aRadius, aRadius, aColor), mRadius(aRadius)
    {
    }
    
@@ -72,7 +74,10 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void CircleObject::Draw()
    {
-      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius, al_map_rgba(255, 0, 255, 100));
+      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius, al_map_rgba(mColor.GetRedColor(),
+                                                                             mColor.GetGreenColor(),
+                                                                             mColor.GetBlueColor(),
+                                                                             mColor.GetAlpha()));
    }
 
 //*********************************************************************************************************************

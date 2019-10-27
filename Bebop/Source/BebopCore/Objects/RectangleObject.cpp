@@ -24,16 +24,19 @@ namespace Bebop { namespace Objects
    //    Constructor that sets default values for member variables.
    //
    // Arguments:
-   //    aCoordinateX -
-   //    aCoordinateY -
+   //    aCoordinateX - The X-Coordinate the rectangular object is to be displayed on the window.
+   //    aCoordinateY - The Y-Coordinate the rectangular object is to be displayed on the window. 
+   //    aWidth       - The width of the rectangular object.
+   //    aHeight      - The height of the rectangular object.
+   //    aColor       - The color of the rectangle object.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    RectangleObject::RectangleObject(const float aCoordinateX, const float aCoordinateY, const int aWidth,
-                                    const int aHeight) :
-      Object(aCoordinateX, aCoordinateY, (aWidth / 2), (aHeight / 2)), mWidth(aWidth), mHeight(aHeight)
+                                    const int aHeight, const Graphics::Color aColor) :
+      Object(aCoordinateX, aCoordinateY, (aWidth / 2), (aHeight / 2), aColor), mWidth(aWidth), mHeight(aHeight)
    {
    }
    
@@ -132,7 +135,8 @@ namespace Bebop { namespace Objects
    void RectangleObject::Draw()
    {
       al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
-                               al_map_rgba(255, 0, 255, 100));
+                               al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
+                                           mColor.GetAlpha()));
    }
 
 //*********************************************************************************************************************
