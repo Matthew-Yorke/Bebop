@@ -108,7 +108,7 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
-         // Method: operator+
+         // Method: operator+=
          //
          // Description:
          //    Overrides the += operator and returns the addition of this vector to this vector.  
@@ -124,7 +124,7 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
-         // Method: operator-
+         // Method: operator-=
          //
          // Description:
          //    Overrides the -= operator and returns the subtraction of this vector to this vector.  
@@ -140,7 +140,7 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
-         // Method: operator*
+         // Method: operator*=
          //
          // Description:
          //    Overrides the *= operator and returns the multiplication of this vector to this vector.
@@ -156,7 +156,7 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
-         // Method: operator/
+         // Method: operator/=
          //
          // Description:
          //    Overrides the /= operator and returns the division of this vector to this vector. 
@@ -165,7 +165,7 @@ namespace Bebop { namespace Math
          //    aRightVector - The right side of operator that is dividing to this vector.
          //
          // Return:
-         //    Returns the devision of this vector and the passed in vector.
+         //    Returns the division of this vector and the passed in vector.
          //
          //************************************************************************************************************
          Vector2D& operator/=(const Vector2D& aRightVector);

@@ -120,17 +120,16 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
-   // Method: operator+
+   // Method: operator+=
    //
    // Description:
-   //    Overrides the + operator and returns the addition of this vector to another.  
+   //    Overrides the += operator and returns the addition of this vector to this vector.  
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being added from.
-   //    aRightVector - The right side of operator that is adding to the left.
+   //    aRightVector - The right side of operator that is adding to the this vector.
    //
    // Return:
-   //    Returns the addition of two vectors.
+   //    Returns the addition of this vector and the passed in vector.
    //
    //******************************************************************************************************************
    Vector2D& Vector2D::operator+=(const Vector2D& aRightVector)
@@ -140,17 +139,16 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
-   // Method: operator-
+   // Method: operator-=
    //
    // Description:
-   //    Overrides the - operator and returns the subtraction of this vector to another.  
+   //    Overrides the -= operator and returns the subtraction of this vector to this vector.  
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being subtracted from.
-   //    aRightVector - The right side of operator that is subtracting to the left.
+   //    aRightVector - The right side of operator that is subtracting to this vector.
    //
    // Return:
-   //    Returns the subtraction of two vectors.
+   //    Returns the subtraction of this vector and the passed in vector.
    //
    //******************************************************************************************************************
    Vector2D& Vector2D::operator-=(const Vector2D& aRightVector)
@@ -160,19 +158,19 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
-   // Method: operator*
+   // Method: operator*=
    //
    // Description:
-   //    Overrides the * operator and returns the multiplication of this vector to another.
+   //    Overrides the *= operator and returns the multiplication of this vector to this vector.
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being multiplied from.
-   //    aRightVector - The right side of operator that is multiplying to the left.
+   //    aRightVector - The right side of operator that is multiplying to this vector.
    //
    // Return:
-   //    Returns the multiplication of two vectors.
+   //    Returns the multiplication of this vector and the passed in vector.
    //
    //******************************************************************************************************************
+   
    Vector2D& Vector2D::operator*=(const Vector2D& aRightVector)
    {
       return Multiply(aRightVector);
@@ -180,19 +178,19 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
-   // Method: operator/
+   // Method: operator/=
    //
    // Description:
-   //    Overrides the / operator and returns the division of this vector to another. 
+   //    Overrides the /= operator and returns the division of this vector to this vector. 
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being divided from.
-   //    aRightVector - The right side of operator that is dividing to the left.
+   //    aRightVector - The right side of operator that is dividing to this vector.
    //
    // Return:
-   //    Returns the devision of two vectors.
+   //    Returns the division of this vector and the passed in vector.
    //
    //******************************************************************************************************************
+   
    Vector2D& Vector2D::operator/=(const Vector2D& aRightVector)
    {
       return Divide(aRightVector);
