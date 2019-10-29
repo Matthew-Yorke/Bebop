@@ -4,9 +4,8 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics",
     "\\Bebop\\Source\\BebopCore\\Math"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\GraphicsConstants.h",
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Math\\Vector2D.cpp",
   "PreviewInSolutionExplorer": false
 }

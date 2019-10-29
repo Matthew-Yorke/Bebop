@@ -14,82 +14,83 @@ namespace Bebop { namespace Math
 {
 	class RotationMatrix2D
 	{
-	   //******************************************************************************************************************
-	   // Methods - Start
-	   //******************************************************************************************************************
-	public:
+   //******************************************************************************************************************
+   // Methods - Start
+   //******************************************************************************************************************
+      
+	   public:
 	
-		//************************************************************************************************************
-		//
-		// Method Name: RotationMatrix2D
-		//
-		// Description:
-		//    Constructor that sets default values for member variables.
-		//
-		// Arguments:
-		//    aRotation  - The rotation in degrees.
-		//
-		// Return:
-		//    N/A
-		//
-		//************************************************************************************************************
-		RotationMatrix2D(const float aRotation);
+		   //************************************************************************************************************
+		   //
+		   // Method Name: RotationMatrix2D
+		   //
+		   // Description:
+		   //    Constructor that sets default values for member variables.
+		   //
+		   // Arguments:
+		   //    aRotation  - The rotation in degrees.
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+		   RotationMatrix2D(const float aRotation);
 
-		//************************************************************************************************************
-		//
-		// Method Name: ~RotationMatrix2D
-		//
-		// Description:
-		//    Destructor to free memory being used in this class.
-		//
-		// Arguments:
-		//    N/A
-		//
-		// Return:
-		//    N/A
-		//
-		//************************************************************************************************************
-		~RotationMatrix2D();
+		   //************************************************************************************************************
+		   //
+		   // Method Name: ~RotationMatrix2D
+		   //
+		   // Description:
+		   //    Destructor to free memory being used in this class.
+		   //
+		   // Arguments:
+		   //    N/A
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+		   ~RotationMatrix2D();
 
-		//************************************************************************************************************
-		//
-		// Method Name: SetAngle
-		//
-		// Description:
-		//    Updates the rotation matrix with a new angle.
-		//
-		// Arguments:
-		//    aRotation  - The rotation in degrees.
-		//
-		// Return:
-		//    N/A
-		//
-		//************************************************************************************************************
-		void SetAngle(const float aRotation);
+		   //************************************************************************************************************
+		   //
+		   // Method Name: SetAngle
+		   //
+		   // Description:
+		   //    Updates the rotation matrix with a new angle.
+		   //
+		   // Arguments:
+		   //    aRotation  - The rotation in degrees.
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+		   void SetAngle(const float aRotation);
 
-		//************************************************************************************************************
-		//
-		// Method Name: GetRotationMatrix
-		//
-		// Description:
-		//    This method returns the rotation matrix.
-		//
-		// Arguments:
-		//    N/A
-		//
-		// Return:
-		//    Returns the rotation matrix.
-		//
-		//************************************************************************************************************
-		float** GetRotationMatrix();
+		   //************************************************************************************************************
+		   //
+		   // Method Name: GetRotationMatrix
+		   //
+		   // Description:
+		   //    This method returns the rotation matrix.
+		   //
+		   // Arguments:
+		   //    N/A
+		   //
+		   // Return:
+		   //    Returns the rotation matrix.
+		   //
+		   //************************************************************************************************************
+		   float** GetRotationMatrix();
 	
-	protected:
+	   protected:
 	
-	   // There are currently no protected methods for this class.
+	      // There are currently no protected methods for this class.
 	
-	private:
+	   private:
 	
-	   // There are currently no private methods for this class.
+	      // There are currently no private methods for this class.
 	
    //******************************************************************************************************************
    // Methods - End
@@ -99,8 +100,18 @@ namespace Bebop { namespace Math
    // Member Variables - Start
    //******************************************************************************************************************
 	
-		// Holds the rotation matrix:
-		float** mRotationMatrix;
+      public:
+
+         // There are currently no public member variables for this class.
+
+      protected:
+	
+	      // There are currently no protected member variables for this class.
+	
+	   private:
+	
+		   // Holds the rotation matrix:
+		   float** mRotationMatrix;
 	
 	//******************************************************************************************************************
 	// Member Variables - Start

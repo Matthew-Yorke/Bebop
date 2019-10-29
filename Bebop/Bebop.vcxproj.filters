@@ -64,6 +64,9 @@
     <ClCompile Include="Source\BebopCore\Graphics\Color.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BebopCore\Math\Vector2D.cpp">
+      <Filter>Source\BebopCore\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Graphics\GraphicsConstants.h">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Math\Vector2D.h">
+      <Filter>Source\BebopCore\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

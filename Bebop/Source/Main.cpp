@@ -8,6 +8,7 @@
 #include "BebopCore//Objects//RectangleObject.h"
 #include "BebopCore/Math/Motion/SinWaveMotion.h"
 #include "BebopCore/Math/Motion/CircularMotion.h"
+#include "BebopCore/Math/Vector2D.h"
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
@@ -45,6 +46,20 @@ int main()
                                                   new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
    Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 50)),
                                               new CircularMotion(100.0F, 0.5F), 5.0F);
+
+   Vector2D a(1.0F, 2.0F);
+   Vector2D b(4.0F, 4.0F);
+   Vector2D addTest = a + b;
+   Vector2D subtractTest = a - b;
+   Vector2D multiplyTest = a * b;
+   Vector2D divideTest = a / b;
+
+   std::cout << "A.x: " << a.GetComponentX() << "     A.y: " << a.GetComponentY() << std::endl;
+   std::cout << "B.x: " << b.GetComponentX() << "     B.y: " << b.GetComponentY() << std::endl;
+   std::cout << "addTest.x: " << addTest.GetComponentX() << "     addTest.y: " << addTest.GetComponentY() << std::endl;
+   std::cout << "subtractTest.x: " << subtractTest.GetComponentX() << "     subtractTest.y: " << subtractTest.GetComponentY() << std::endl;
+   std::cout << "multiplyTest.x: " << multiplyTest.GetComponentX() << "     multiplyTest.y: " << multiplyTest.GetComponentY() << std::endl;
+   std::cout << "divideTest.x: " << divideTest.GetComponentX() << "     divideTest.y: " << divideTest.GetComponentY() << std::endl;
    
    testWindow.GetScene()->PushSprite(testSprite);
    testWindow.GetScene()->PushAnimatedSprite(animatedSprite);
