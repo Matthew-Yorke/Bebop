@@ -23,9 +23,6 @@ namespace Bebop { namespace Math
 
    // The number of columns and rows in a 2D matrix.
    const int MATRIX_SIZE_2D = 2;
-
-   // The value to square another value.
-   const float SQUARED = 2.0F;
 }}
 
 #endif // MathConstants_H

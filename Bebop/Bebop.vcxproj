@@ -28,7 +28,6 @@
     <ClCompile Include="Source\BebopCore\Math\Motion\CircularMotion.cpp" />
     <ClCompile Include="Source\BebopCore\Math\Motion\SinWaveMotion.cpp" />
     <ClCompile Include="Source\BebopCore\Math\RotationMatrix2D.cpp" />
-    <ClCompile Include="Source\BebopCore\Math\Vector2D.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\CircleObject.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\Object.cpp" />
     <ClCompile Include="Source\BebopCore\Objects\RectangleObject.cpp" />

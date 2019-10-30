@@ -47,12 +47,12 @@ int main()
    Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 50)),
                                               new CircularMotion(100.0F, 0.5F), 5.0F);
 
-   Vector2D a(1.0F, 2.0F);
-   Vector2D b(4.0F, 4.0F);
-   Vector2D addTest = a + b;
-   Vector2D subtractTest = a - b;
-   Vector2D multiplyTest = a * b;
-   Vector2D divideTest = a / b;
+   Vector2D<float> a(1.0F, 2.0F);
+   Vector2D<float> b(4.0F, 4.0F);
+   Vector2D<float> addTest = a + b;
+   Vector2D<float> subtractTest = a - b;
+   Vector2D<float> multiplyTest = a * b;
+   Vector2D<float> divideTest = a / b;
 
    std::cout << "A.x: " << a.GetComponentX() << "     A.y: " << a.GetComponentY() << std::endl;
    std::cout << "B.x: " << b.GetComponentX() << "     B.y: " << b.GetComponentY() << std::endl;
