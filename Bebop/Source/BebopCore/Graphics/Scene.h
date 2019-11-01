@@ -14,6 +14,7 @@
 #include "Sprite.h"
 #include "AnimatedSprite.h"
 #include "Particle.h"
+#include "Light.h"
 #include <vector>
 
 namespace Bebop { namespace Graphics
@@ -92,6 +93,22 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: PushLight
+         //
+         // Description:
+         //    Pushes a light object onto the vector list of lights.
+         //
+         // Arguments:
+         //    aLight - Pointer to the light object being pushed into the light vector.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void PushLight(Light* const aLight);
+
+         //************************************************************************************************************
+         //
          // Method: Update
          //
          // Description:
@@ -156,6 +173,8 @@ namespace Bebop { namespace Graphics
 
          // Vector list of the particles within the scene.
          std::vector<Particle*> mParticles;
+
+         std::vector<Light*> mLights;
    
       //***************************************************************************************************************
       // Member Variables - End

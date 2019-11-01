@@ -93,6 +93,25 @@ namespace Bebop { namespace Graphics
 
    //******************************************************************************************************************
    //
+   // Method: PushLight
+   //
+   // Description:
+   //    Pushes a light object onto the vector list of lights.
+   //
+   // Arguments:
+   //    aLight - Pointer to the light object being pushed into the light vector.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Scene::PushLight(Light* const aLight)
+   {
+      mLights.push_back(aLight);
+   }
+
+   //******************************************************************************************************************
+   //
    // Method: Update
    //
    // Description:
@@ -145,6 +164,11 @@ namespace Bebop { namespace Graphics
       }
 
       for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
+      {
+         (*iterator)->Draw();
+      }
+
+      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
       {
          (*iterator)->Draw();
       }

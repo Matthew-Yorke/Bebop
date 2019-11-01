@@ -4,8 +4,11 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Math"
+    "\\Bebop\\Source\\BebopCore\\Graphics",
+    "\\Bebop\\Source\\BebopCore\\Math",
+    "\\Bebop\\Source\\BebopCore\\Math\\Motion",
+    "\\Bebop\\Source\\BebopCore\\Objects"
   ],
-  "SelectedNode": "\\Bebop\\Source\\Main.cpp",
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Objects\\CircleObject.cpp",
   "PreviewInSolutionExplorer": false
 }

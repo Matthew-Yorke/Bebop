@@ -46,6 +46,7 @@ int main()
                                                   new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
    Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 50)),
                                               new CircularMotion(100.0F, 0.5F), 5.0F);
+   Light* lightTest = new Light(75.0F, 75.0F, 50.0F, Color(0, 0, 255, 0));
 
    Vector2D<float> a(1.0F, 2.0F);
    Vector2D<float> b(4.0F, 4.0F);
@@ -65,6 +66,7 @@ int main()
    testWindow.GetScene()->PushAnimatedSprite(animatedSprite);
    testWindow.GetScene()->PushParticle(rectangleParticleTest);
    testWindow.GetScene()->PushParticle(roundParticleTest);
+   testWindow.GetScene()->PushLight(lightTest);
 
    clock_t begin;
    clock_t end;
