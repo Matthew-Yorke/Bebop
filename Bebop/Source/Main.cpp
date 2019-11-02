@@ -44,9 +44,10 @@ int main()
                                                        2, 2);
    Particle* rectangleParticleTest = new Particle(new RectangleObject(200, 200, 30, 50, Color(255, 0, 0, 255)),
                                                   new SinWaveMotion(3.0F, 0.25F, 10.0F, 0.0F), 5.0F);
-   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 50)),
+   Particle* roundParticleTest = new Particle(new CircleObject(200, 300, 30, Color(0, 255, 0, 255)),
                                               new CircularMotion(100.0F, 0.5F), 5.0F);
-   Light* lightTest = new Light(75.0F, 75.0F, 50.0F, Color(0, 0, 255, 0));
+   Light* lightTest = new Light(75.0F, 75.0F, 150.0F, Color(0, 0, 255, 255), 100);
+   Light* lightTest2 = new Light(150.0F, 150.0F, 150.0F, Color(255, 0, 0, 255), 150);
 
    Vector2D<float> a(1.0F, 2.0F);
    Vector2D<float> b(4.0F, 4.0F);
@@ -67,6 +68,7 @@ int main()
    testWindow.GetScene()->PushParticle(rectangleParticleTest);
    testWindow.GetScene()->PushParticle(roundParticleTest);
    testWindow.GetScene()->PushLight(lightTest);
+   testWindow.GetScene()->PushLight(lightTest2);
 
    clock_t begin;
    clock_t end;

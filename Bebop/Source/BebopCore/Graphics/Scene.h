@@ -12,10 +12,11 @@
 #define Scene_H
 
 #include "Sprite.h"
+#include <vector>
 #include "AnimatedSprite.h"
 #include "Particle.h"
 #include "Light.h"
-#include <vector>
+
 
 namespace Bebop { namespace Graphics
 {
@@ -145,7 +146,37 @@ namespace Bebop { namespace Graphics
 
       private:
 
-         // There are currently no private methods for this class.
+         //************************************************************************************************************
+         //
+         // Method: DrawLightColors
+         //
+         // Description:
+         //    Draw light's color onto the main display.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void DrawLightColors();
+
+         //************************************************************************************************************
+         //
+         // Method: DrawShadowMap
+         //
+         // Description:
+         //    Draw shadow map for the lights onto the main display, this does not include the light's color.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void DrawShadowMap();
 
       //***************************************************************************************************************
       // Methods - End
@@ -175,6 +206,8 @@ namespace Bebop { namespace Graphics
          std::vector<Particle*> mParticles;
 
          std::vector<Light*> mLights;
+
+         ALLEGRO_BITMAP* mpShadowMap;
    
       //***************************************************************************************************************
       // Member Variables - End

@@ -31,16 +31,18 @@ namespace Bebop { namespace Graphics
          //    Constructor to set member variables to their default values and then calculate the points for the light.
          //
          // Arguments:
-         //    aOriginX    - The X-Coordinate of the light origin point.
-         //    aOriginY    - The Y-Coordinate of the light origin point.
-         //    aRaidus     - The radius of the light source.
-         //    aLightColor - The color of the light source.
+         //    aOriginX        - The X-Coordinate of the light origin point.
+         //    aOriginY        - The Y-Coordinate of the light origin point.
+         //    aRaidus         - The radius of the light source.
+         //    aLightColor     - The color of the light source.
+         //    aLightIntensity - Th intensity of the light itself.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor);
+         Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
+               const int aLightIntensity);
 
          //************************************************************************************************************
          //
@@ -66,13 +68,14 @@ namespace Bebop { namespace Graphics
          //    Draw the light as triangles based on the points calulated.
          //
          // Arguments:
-         //    N/A
+         //    aWith Color - True  = Draw the light's color.
+         //                  False = Only draw the cleared area of the light. 
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void Draw();
+         void Draw(const bool aWithColor);
 
       protected:
 
@@ -93,13 +96,15 @@ namespace Bebop { namespace Graphics
          //    aFirstPointY  - Y-Coordinate of the first point added to the gradient traingle.
          //    aSecondPointX - X-Coordinate of the second point added to the gradient traingle.
          //    aSecondPointY - Y-Coordinate of the second point added to the gradient traingle.
+         //    aWith Color   - True  = Draw the light's color.
+         //                    False = Only draw the cleared area of the light.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          void DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
-                           const float aSecondPointY);
+                           const float aSecondPointY, const bool aWithColor);
 
    //******************************************************************************************************************
    // Methods - End
@@ -119,11 +124,22 @@ namespace Bebop { namespace Graphics
 
       private:
 
+         // The X-Cooridnate of the origin of the light source.
          float mOriginX;
+
+         // The Y-Coordinate of the origin of the light source.
          float mOriginY;
+
+         // The radius of the light.
          float mRaidus;
+
+         // The color of the light.
          Color mLightColor;
 
+         // The intensity of the actual light.
+         int mLightIntensity;
+
+         // Vector of X and Y coordinate for each point in the light radius.
          std::vector<std::pair<float, float>> mPoints;
 
    //******************************************************************************************************************

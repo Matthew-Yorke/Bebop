@@ -27,17 +27,20 @@ namespace Bebop { namespace Graphics
    //    Constructor to set member variables to their default values and then calculate the points for the light.
    //
    // Arguments:
-   //    aOriginX    - The X-Coordinate of the light origin point.
-   //    aOriginY    - The Y-Coordinate of the light origin point.
-   //    aRaidus     - The radius of the light source.
-   //    aLightColor - The color of the light source.
+   //    aOriginX        - The X-Coordinate of the light origin point.
+   //    aOriginY        - The Y-Coordinate of the light origin point.
+   //    aRaidus         - The radius of the light source.
+   //    aLightColor     - The color of the light source.
+   //    aLightIntensity - Th intensity of the light itself.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   Light::Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor) :
-      mOriginX(aOriginX), mOriginY(aOriginY), mRaidus(aRaidus), mLightColor(aLightColor)
+   Light::Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
+                const int aLightIntensity) :
+      mOriginX(aOriginX), mOriginY(aOriginY), mRaidus(aRaidus), mLightColor(aLightColor),
+      mLightIntensity(aLightIntensity)
    {
       CalculateLight();
    }
@@ -75,13 +78,14 @@ namespace Bebop { namespace Graphics
    //    Draw the light as triangles based on the points calulated.
    //
    // Arguments:
-   //    N/A
+   //    aWith Color - True  = Draw the light's color.
+   //                  False = Only draw the cleared area of the light. 
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Light::Draw()
+   void Light::Draw(const bool aWithColor)
    {
       // Iterate through all the points calculated.
       for (auto iterator = mPoints.begin(); iterator != mPoints.end(); ++iterator)
@@ -92,13 +96,13 @@ namespace Bebop { namespace Graphics
          if (isNext == mPoints.end())
          {
             auto firstPoint = mPoints.begin();
-            DrawTriangle(iterator->first, iterator->second, firstPoint->first, firstPoint->second);
+            DrawTriangle(iterator->first, iterator->second, firstPoint->first, firstPoint->second, aWithColor);
          }
          // Otherwise connect the points to the next point in the vector.
          else
          {
             auto nextPoint = iterator + 1;
-            DrawTriangle(iterator->first, iterator->second, nextPoint->first, nextPoint->second);
+            DrawTriangle(iterator->first, iterator->second, nextPoint->first, nextPoint->second, aWithColor);
          }
       }
    }
@@ -134,25 +138,45 @@ namespace Bebop { namespace Graphics
    //    aFirstPointY  - Y-Coordinate of the first point added to the gradient traingle.
    //    aSecondPointX - X-Coordinate of the second point added to the gradient traingle.
    //    aSecondPointY - Y-Coordinate of the second point added to the gradient traingle.
+   //    aWith Color   - True  = Draw the light's color.
+   //                    False = Only draw the cleared area of the light.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    void Light::DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
-                            const float aSecondPointY)
+                            const float aSecondPointY, const bool aWithColor)
    {
-      // Add the points of the triangle along with their colors at the point.
-      ALLEGRO_VERTEX v[] =
+      if (true == aWithColor)
       {
-         {mOriginX, mOriginY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
-                                                   mLightColor.GetBlueColor(), mLightColor.GetAlpha())},
-         {aFirstPointX, aFirstPointY, 0, 0, 0, LIGHTS_EDGE_COLOR},
-         {aSecondPointX, aSecondPointY, 0, 0, 0, LIGHTS_EDGE_COLOR},
-      };
-      
-      // Draw the gradient triangle
-      al_draw_prim(v, NULL, NULL, 0, 3, ALLEGRO_PRIM_TRIANGLE_STRIP);
+         // Add the points of the triangle along with their colors at the point.
+         ALLEGRO_VERTEX vertex[] =
+         {
+            {mOriginX, mOriginY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
+                                                      mLightColor.GetBlueColor(), mLightColor.GetAlpha())},
+            {aFirstPointX, aFirstPointY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
+                                                              mLightColor.GetBlueColor(), NO_ALPHA)},
+            {aSecondPointX, aSecondPointY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
+                                                                mLightColor.GetBlueColor(), NO_ALPHA)},
+         };
+         
+         // Draw the gradient triangle
+         al_draw_prim(vertex, NULL, NULL, 0, 3, ALLEGRO_PRIM_TRIANGLE_STRIP);
+      }
+      else
+      {
+         // Add the points of the triangle along with their colors at the point.
+         ALLEGRO_VERTEX vertex[] =
+         {
+            {mOriginX, mOriginY, 0, 0, 0, al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, mLightIntensity)},
+            {aFirstPointX, aFirstPointY, 0, 0, 0, LIGHTS_EDGE_COLOR},
+            {aSecondPointX, aSecondPointY, 0, 0, 0, LIGHTS_EDGE_COLOR},
+         };
+         
+         // Draw the gradient triangle
+         al_draw_prim(vertex, NULL, NULL, 0, 3, ALLEGRO_PRIM_TRIANGLE_STRIP);
+      }
    }
 
 //*********************************************************************************************************************

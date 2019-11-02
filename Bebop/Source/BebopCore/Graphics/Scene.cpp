@@ -9,6 +9,7 @@
 //*********************************************************************************************************************
 
 #include "Scene.h"
+#include "GraphicsConstants.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -32,6 +33,9 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    Scene::Scene()
    {
+      // TODO: This constructor needs to pass in a scene width and height, the 400, 400 is temporary for the shadow map
+      //       for testing purposes.
+      mpShadowMap = al_create_bitmap(400, 400);
    }
 
    //******************************************************************************************************************
@@ -153,6 +157,8 @@ namespace Bebop { namespace Graphics
    //************************************************************************************************************
    void Scene::Draw()
    {
+      DrawLightColors();
+
       for (auto iterator = mSprites.begin(); iterator != mSprites.end(); ++iterator)
       {
          (*iterator)->Draw();
@@ -168,10 +174,7 @@ namespace Bebop { namespace Graphics
          (*iterator)->Draw();
       }
 
-      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
-      {
-         (*iterator)->Draw();
-      }
+      DrawShadowMap();
    }
 
 //*********************************************************************************************************************
@@ -192,7 +195,70 @@ namespace Bebop { namespace Graphics
 // Private Methods - Start
 //*********************************************************************************************************************
 
-   // There are currently no protected methods for this class.
+   //******************************************************************************************************************
+   //
+   // Method: DrawLightColors
+   //
+   // Description:
+   //    Draw light's color onto the main display.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Scene::DrawLightColors()
+   {
+      // Set to blend the colors together by adding the values together.
+      al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+
+      // Draw the the ligths to the shadow map.
+      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
+      {
+         (*iterator)->Draw(true);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: DrawShadowMap
+   //
+   // Description:
+   //    Draw shadow map for the lights onto the main display, this does not include the light's color.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Scene::DrawShadowMap()
+   {
+      // Retain the display bitmap information.
+      ALLEGRO_BITMAP* displayBitmap = al_get_target_bitmap();
+
+      // Set bitmap to the shdow layer and clear it.
+      al_set_target_bitmap(mpShadowMap);
+      al_clear_to_color(al_map_rgb(NO_COLOR, NO_COLOR, NO_COLOR));
+
+      // Set to blend the colors together byt subtracting the light from the shadow map.
+      al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+
+      // Draw the the ligths to the shadow map.
+      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
+      {
+         (*iterator)->Draw(false);
+      }
+
+      // Set the target bitmap back to the main display and reset the blending options.
+      al_set_target_bitmap(displayBitmap);
+
+      // Draw the shadow map onto the main display.
+      al_draw_bitmap(mpShadowMap, SCENE_ORIGIN, SCENE_ORIGIN, NO_DRAW_FLAGS);
+   }
 
 //*********************************************************************************************************************
 // Private Methods - End
