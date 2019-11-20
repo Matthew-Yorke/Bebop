@@ -3,14 +3,16 @@
 // File: CollisionChecker.h
 //
 // Description:
-//    This class handles creating a rotation matrix for 2D objects.
+//    This class handles checking objects for collision. This class does not handle the collision handling, but only
+//    simply detection of collisions.
 //
 //*********************************************************************************************************************
 
 #ifndef CollisionChecker_H
 #define CollisionChecker_H
 
-#include "..\..\Objects\RectangleObject.h"
+#include "../../Objects/RectangleObject.h"
+#include <vector>
 
 namespace Bebop { namespace Math
 {
@@ -21,38 +23,38 @@ namespace Bebop { namespace Math
    //******************************************************************************************************************
       
 	   public:
-	
-		   //************************************************************************************************************
-		   //
-		   // Method Name: CollisionChecker
-		   //
-		   // Description:
-		   //    Constructor that sets default values for member variables.
-		   //
-		   // Arguments:
-		   //    N/A
-		   //
-		   // Return:
-		   //    N/A
-		   //
-		   //************************************************************************************************************
-		   CollisionChecker();
 
          //************************************************************************************************************
 		   //
-		   // Method Name: HasCollided
+		   // Method Name: InsertRectangleObject
 		   //
 		   // Description:
-		   //    Constructor that sets default values for member variables.
+		   //    Insert a rectangle object to check for collisions.
 		   //
 		   // Arguments:
-		   //    aRotation  - The rotation in degrees.
+		   //    mpRectangleObject - The rectangle object to be inserted for collision checks.
 		   //
 		   // Return:
 		   //    N/A
 		   //
 		   //************************************************************************************************************
-         bool HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo);
+         void InsertRectangleObject(Objects::RectangleObject* mpRectangleObject);
+
+         //************************************************************************************************************
+		   //
+		   // Method Name: CheckCollision
+		   //
+		   // Description:
+		   //    Checks all the objects for collisions.
+		   //
+		   // Arguments:
+		   //    N/A
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+         void CheckCollision();
 
 	   protected:
 	
@@ -60,7 +62,22 @@ namespace Bebop { namespace Math
 	
 	   private:
 	
-	      // There are currently no private methods for this class.
+	      //************************************************************************************************************
+		   //
+		   // Method Name: HasCollided
+		   //
+		   // Description:
+		   //    Checks two rectangular objects for collision
+		   //
+		   // Arguments:
+		   //    mpRectangleOne - The first rectangular object to be checked for collision.
+         //    mpRectangleTwo - The second rectangular object to be checked for collision.
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+         bool HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo);
 	
    //******************************************************************************************************************
    // Methods - End
@@ -80,7 +97,8 @@ namespace Bebop { namespace Math
 	
 	   private:
 	
-		   // There are currently no private member variables for this class.
+         // Vector the holds all the rectangle objects to be used for collision checking.
+		   std::vector<Objects::RectangleObject*> mpRectangularObjects;
 	
 	//******************************************************************************************************************
 	// Member Variables - Start

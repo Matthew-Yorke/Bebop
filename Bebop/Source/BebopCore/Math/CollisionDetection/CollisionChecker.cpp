@@ -3,11 +3,15 @@
 // File: CollisionChecker.cpp
 //
 // Description:
-//    This class handles creating a rotation matrix for 2D objects.
+//    This class handles checking objects for collision. This class does not handle the collision handling, but only
+//    simply detection of collisions.
 //
 //*********************************************************************************************************************
 
 #include "CollisionChecker.h"
+#include "../MathConstants.h"
+// TODO: Delete this iostream when no longer needed
+#include <iostream>
 
 namespace Bebop { namespace Math
 {
@@ -17,10 +21,29 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
-   // Method Name: CollisionChecker
+   // Method Name: InsertRectangleObject
    //
    // Description:
-   //    Constructor that sets default values for member variables.
+   //    Insert a rectangle object to check for collisions.
+   //
+   // Arguments:
+   //    mpRectangleObject - The rectangle object to be inserted for collision checks.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void CollisionChecker::InsertRectangleObject(Objects::RectangleObject* mpRectangleObject)
+   {
+      mpRectangularObjects.push_back(mpRectangleObject);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: CheckCollision
+   //
+   // Description:
+   //    Checks all the objects for collisions.
    //
    // Arguments:
    //    N/A
@@ -29,9 +52,46 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   CollisionChecker::CollisionChecker()
+   void CollisionChecker::CheckCollision()
    {
+      // If  there aren't enough objects in the vector, return as there is no collisions to checks.
+      if (mpRectangularObjects.size() >= MINIMUM_COLLISION_VECTOR_SIZE)
+      {
+         // Check rectangle objects against each other.
+         for (auto startRectIterator = mpRectangularObjects.begin();
+              startRectIterator != mpRectangularObjects.end();
+              ++startRectIterator)
+         {
+            // Start collision check against every object after the start rectangle object.
+            for (auto potentialCollisionIterator = startRectIterator + NEXT_ITERATOR_VALUE;
+                 potentialCollisionIterator != mpRectangularObjects.end();
+                 ++potentialCollisionIterator)
+            {
+               // TODO: This string is temporary to just check for collision until collision handling is implemented.
+               std::cout << "Start(" << std::distance(mpRectangularObjects.begin(), startRectIterator) << ") End(" <<
+               std::distance(mpRectangularObjects.begin(), potentialCollisionIterator) << ") Collision: " <<
+               std::boolalpha << HasCollided(*startRectIterator, *potentialCollisionIterator) << std::endl;
+            }
+         }
+
+         // TODO: Remove this string when collision handling is implemented.
+         std::cout << "----------------------------------------------------------------------\n";
+      }
    }
+
+//*********************************************************************************************************************
+// Protected Methods - End
+//*********************************************************************************************************************
+
+   // There are currently no protected methods for this class.
+
+//*********************************************************************************************************************
+// Protected Methods - End
+//*********************************************************************************************************************
+
+//*********************************************************************************************************************
+// Private Methods - Start
+//*********************************************************************************************************************
 
    //******************************************************************************************************************
    //
@@ -61,22 +121,6 @@ namespace Bebop { namespace Math
          return false;
       }
    }
-
-//*********************************************************************************************************************
-// Protected Methods - End
-//*********************************************************************************************************************
-
-   // There are currently no protected methods for this class.
-
-//*********************************************************************************************************************
-// Protected Methods - End
-//*********************************************************************************************************************
-
-//*********************************************************************************************************************
-// Private Methods - Start
-//*********************************************************************************************************************
-
-   // There are currently no private methods for this class.
 
 //*********************************************************************************************************************
 // Private Methods - End

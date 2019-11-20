@@ -52,7 +52,8 @@ int main()
 
    // Test objects to test collision
    RectangleObject* rectTestOne = new RectangleObject(30, 30, 20, 20, Color(255, 0, 0, 255));
-   RectangleObject* rectTestTwo = new RectangleObject(30, 40, 20, 20, Color(0, 255, 0, 255));
+   RectangleObject* rectTestTwo = new RectangleObject(30, 30, 20, 20, Color(0, 255, 0, 255));
+   RectangleObject* rectTestThree = new RectangleObject(30, 45, 20, 20, Color(0, 255, 0, 255));
 
    Vector2D<float> a(1.0F, 2.0F);
    Vector2D<float> b(4.0F, 4.0F);
@@ -82,6 +83,9 @@ int main()
    double time = 30.0;
    double moveTime = 1.0;
    CollisionChecker collisionChecker;
+   collisionChecker.InsertRectangleObject(rectTestOne);
+   collisionChecker.InsertRectangleObject(rectTestTwo);
+   collisionChecker.InsertRectangleObject(rectTestThree);
    while (time > 0)
    {
       // Update elapsed time.
@@ -100,9 +104,10 @@ int main()
          testSprite->UpdatePosition(testSprite->GetPositionX() + 10, testSprite->GetPositionY());
 
          // Test collision check.
-         std::cout << "Collision Check: " << collisionChecker.HasCollided(rectTestOne, rectTestTwo);
+         collisionChecker.CheckCollision();
          // Move one collision test rectangles
          rectTestOne->SetCoordinateX(rectTestOne->GetCoordinateX() + 2);
+         rectTestThree->SetCoordinateY(rectTestThree->GetCoordinateY() + 2);
       }
 
       // call to update the scene.
@@ -114,6 +119,7 @@ int main()
       // Draw the collision test rectangles.
       rectTestOne->Draw();
       rectTestTwo->Draw();
+      rectTestThree->Draw();
 
       // TODO: This should be moved toa renderer class within the engine that is called to update drawings.
       al_flip_display();

@@ -34,6 +34,12 @@ namespace Bebop { namespace Math
 
    // The value of incrementing to the enxt degree.
    const float DEGREES_INCREMENT = 1.0F;
+
+   // The value used when finding the next item in an iterator.
+   const int NEXT_ITERATOR_VALUE = 1;
+
+   // The minimum size of a collision vector needed to check for collisions.
+   const int MINIMUM_COLLISION_VECTOR_SIZE = 2;
 }}
 
 #endif // MathConstants_H
