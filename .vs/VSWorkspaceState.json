@@ -4,11 +4,9 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics",
     "\\Bebop\\Source\\BebopCore\\Math",
-    "\\Bebop\\Source\\BebopCore\\Math\\Motion",
-    "\\Bebop\\Source\\BebopCore\\Objects"
+    "\\Bebop\\Source\\BebopCore\\Math\\CollisionDetection",
+    "\\Bebop\\Source\\BebopCore\\Physics"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Objects\\CircleObject.cpp",
   "PreviewInSolutionExplorer": false
 }

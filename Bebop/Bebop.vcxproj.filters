@@ -23,6 +23,12 @@
     <Filter Include="Source\BebopCore\Math\Motion">
       <UniqueIdentifier>{4f9a6ee4-b4bf-4fbd-b5ff-0488db6173b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\BebopCore\Physics">
+      <UniqueIdentifier>{6994e323-039f-4ea6-a6db-a38f00d07112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BebopCore\Math\CollisionDetection">
+      <UniqueIdentifier>{cb144d87-afbc-4f7e-a3af-214316189e3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -66,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="Source\BebopCore\Graphics\Light.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BebopCore\Math\CollisionDetection\CollisionChecker.cpp">
+      <Filter>Source\BebopCore\Math\CollisionDetection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Graphics\Light.h">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Math\CollisionDetection\CollisionChecker.h">
+      <Filter>Source\BebopCore\Math\CollisionDetection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
