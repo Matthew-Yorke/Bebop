@@ -2,12 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Bebop",
-    "\\Bebop\\Source",
-    "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Math",
-    "\\Bebop\\Source\\BebopCore\\Math\\CollisionDetection",
-    "\\Bebop\\Source\\BebopCore\\Physics"
+    "\\Bebop\\Source"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Math\\CollisionDetection\\CollisionChecker.h",
   "PreviewInSolutionExplorer": false
 }

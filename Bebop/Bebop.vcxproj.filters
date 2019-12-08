@@ -31,9 +31,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
     </ClCompile>
@@ -75,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="Source\BebopCore\Math\CollisionDetection\CollisionChecker.cpp">
       <Filter>Source\BebopCore\Math\CollisionDetection</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bebop.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Math\CollisionDetection\CollisionChecker.h">
       <Filter>Source\BebopCore\Math\CollisionDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bebop.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
