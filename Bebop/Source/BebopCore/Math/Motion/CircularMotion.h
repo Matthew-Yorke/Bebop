@@ -96,7 +96,7 @@ namespace Bebop { namespace Math
 
       private:
 
-         // The raidus of the circular motion.
+         // The radius of the circular motion.
          float mRadius;
 
          // The number of rotation per second for the circular motion.

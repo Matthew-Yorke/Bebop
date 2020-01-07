@@ -124,8 +124,7 @@ namespace Bebop { namespace Graphics
          // Pointer to the object type for the Particle
          Objects::Object* mpObject;
 
-         // Pointer to the sin wave pattern being used for movement.
-         // TODO: This is to be replaced witha  more generic pattern that will allow different types of patterns.
+         // Pointer to the motion pattern being used for movement.
          Math::MotionBase* mpMotion;
 
          // The time left until the particle dies.

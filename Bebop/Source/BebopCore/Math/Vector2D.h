@@ -3,7 +3,7 @@
 // File: Vector2D.h
 //
 // Description:
-//    This class handles functionality for a 2D vector. Direction is based ont he positive and negative values of the
+//    This class handles functionality for a 2D vector. Direction is based on the positive and negative values of the
 //    x and y components. A positive X component is movement to the right and negative is movement to the left. A
 //    positive Y component is movement downwards and negative is movement upwards.
 //
@@ -53,7 +53,7 @@ namespace Bebop { namespace Math
          //    Overrides the + operator and returns the addition of this vector to another.  
          //
          // Arguments:
-         //    aLeftVector  - The left side of the opertor that is being added from.
+         //    aLeftVector  - The left side of the operator that is being added from.
          //    aRightVector - The right side of operator that is adding to the left.
          //
          // Return:
@@ -70,7 +70,7 @@ namespace Bebop { namespace Math
          //    Overrides the - operator and returns the subtraction of this vector to another.  
          //
          // Arguments:
-         //    aLeftVector  - The left side of the opertor that is being subtracted from.
+         //    aLeftVector  - The left side of the operator that is being subtracted from.
          //    aRightVector - The right side of operator that is subtracting to the left.
          //
          // Return:
@@ -87,7 +87,7 @@ namespace Bebop { namespace Math
          //    Overrides the * operator and returns the multiplication of this vector to another.
          //
          // Arguments:
-         //    aLeftVector  - The left side of the opertor that is being multiplied from.
+         //    aLeftVector  - The left side of the operator that is being multiplied from.
          //    aRightVector - The right side of operator that is multiplying to the left.
          //
          // Return:
@@ -104,7 +104,7 @@ namespace Bebop { namespace Math
          //    Overrides the / operator and returns the division of this vector to another. 
          //
          // Arguments:
-         //    aLeftVector  - The left side of the opertor that is being divided from.
+         //    aLeftVector  - The left side of the operator that is being divided from.
          //    aRightVector - The right side of operator that is dividing to the left.
          //
          // Return:
@@ -230,8 +230,8 @@ namespace Bebop { namespace Math
          // Method: GetNormalized
          //
          // Description:
-         //    Returns the normalized x and y values of the vector. The nromalized values of these is the assumption
-         //    that magnitude is of lenght 1.0 pixel.
+         //    Returns the normalized x and y values of the vector. The normalized values of these is the assumption
+         //    that magnitude is of length 1.0 pixel.
          //
          // Arguments:
          //    N/A
@@ -372,7 +372,7 @@ namespace Bebop { namespace Math
    //    Overrides the + operator and returns the addition of this vector to another.  
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being added from.
+   //    aLeftVector  - The left side of the operator that is being added from.
    //    aRightVector - The right side of operator that is adding to the left.
    //
    // Return:
@@ -393,7 +393,7 @@ namespace Bebop { namespace Math
    //    Overrides the - operator and returns the subtraction of this vector to another.  
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being subtracted from.
+   //    aLeftVector  - The left side of the operator that is being subtracted from.
    //    aRightVector - The right side of operator that is subtracting to the left.
    //
    // Return:
@@ -414,7 +414,7 @@ namespace Bebop { namespace Math
    //    Overrides the * operator and returns the multiplication of this vector to another.
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being multiplied from.
+   //    aLeftVector  - The left side of the operator that is being multiplied from.
    //    aRightVector - The right side of operator that is multiplying to the left.
    //
    // Return:
@@ -435,7 +435,7 @@ namespace Bebop { namespace Math
    //    Overrides the / operator and returns the division of this vector to another. 
    //
    // Arguments:
-   //    aLeftVector  - The left side of the opertor that is being divided from.
+   //    aLeftVector  - The left side of the operator that is being divided from.
    //    aRightVector - The right side of operator that is dividing to the left.
    //
    // Return:
@@ -593,8 +593,8 @@ namespace Bebop { namespace Math
    // Method: GetNormalized
    //
    // Description:
-   //    Returns the normalized x and y values of the vector. The nromalized values of these is the assumption that
-   //    magnitude is of lenght 1.0 pixel.
+   //    Returns the normalized x and y values of the vector. The normalized values of these is the assumption that
+   //    magnitude is of length 1.0 pixel.
    //
    // Arguments:
    //    N/A

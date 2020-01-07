@@ -3,7 +3,7 @@
 // File: AnimatedSprite.cpp
 //
 // Description:
-//    This class handles creatiog and drawing of animated sprite images.
+//    This class handles creating and drawing of animated sprite images.
 //
 //*********************************************************************************************************************
 

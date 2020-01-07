@@ -3,7 +3,7 @@
 // File: CircleObject.cpp
 //
 // Description:
-//    This class handles the functionality for a ciruclar object.   
+//    This class handles the functionality for a circular object.   
 //
 //*********************************************************************************************************************
 
@@ -26,7 +26,7 @@ namespace Bebop { namespace Objects
    // Arguments:
    //    aCoordinateX - The X-Coordinate the circular object is to be displayed on the window.
    //    aCoordinateY - The Y-Coordinate the circular object is to be displayed on the window. 
-   //    aRadius      - The radisu of the circular object.
+   //    aRadius      - The radius of the circular object.
    //    aColor       - The color of the rectangle object.
    //
    // Return:

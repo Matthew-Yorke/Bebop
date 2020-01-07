@@ -3,7 +3,7 @@
 // File: Light.h
 //
 // Description:
-//    This is the light class the create a lightsource using triangle from a point and a radius.
+//    This is the light class the create a light source using triangle from a point and a radius.
 //
 //*********************************************************************************************************************
 
@@ -65,7 +65,7 @@ namespace Bebop { namespace Graphics
          // Method: Draw
          //
          // Description:
-         //    Draw the light as triangles based on the points calulated.
+         //    Draw the light as triangles based on the points calculated.
          //
          // Arguments:
          //    aWith Color - True  = Draw the light's color.
@@ -88,14 +88,14 @@ namespace Bebop { namespace Graphics
          // Method: DrawTriangle
          //
          // Description:
-         //    Draw the light as triangles based on the points calulated with the very first point being the origin and
-         //    passed in points the points at the edge of the triangle.
+         //    Draw the light as triangles based on the points calculated with the very first point being the origin
+         //    and passed in points the points at the edge of the triangle.
          //
          // Arguments:
-         //    aFirstPointX  - X-Coordinate of the first point added to the gradient traingle.
-         //    aFirstPointY  - Y-Coordinate of the first point added to the gradient traingle.
-         //    aSecondPointX - X-Coordinate of the second point added to the gradient traingle.
-         //    aSecondPointY - Y-Coordinate of the second point added to the gradient traingle.
+         //    aFirstPointX  - X-Coordinate of the first point added to the gradient triangle.
+         //    aFirstPointY  - Y-Coordinate of the first point added to the gradient triangle.
+         //    aSecondPointX - X-Coordinate of the second point added to the gradient triangle.
+         //    aSecondPointY - Y-Coordinate of the second point added to the gradient triangle.
          //    aWith Color   - True  = Draw the light's color.
          //                    False = Only draw the cleared area of the light.
          //
@@ -124,7 +124,7 @@ namespace Bebop { namespace Graphics
 
       private:
 
-         // The X-Cooridnate of the origin of the light source.
+         // The X-Coordinate of the origin of the light source.
          float mOriginX;
 
          // The Y-Coordinate of the origin of the light source.

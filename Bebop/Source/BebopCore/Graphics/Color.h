@@ -3,7 +3,7 @@
 // File: Color.h
 //
 // Description:
-//    This class handles holding information on a sepcific color in an RGB fashion. There is also an alpha (opacity)
+//    This class handles holding information on a specific color in an RGB fashion. There is also an alpha (opacity)
 //    value correlated with the color.
 //
 //*********************************************************************************************************************
@@ -119,7 +119,7 @@ namespace Bebop { namespace Graphics
          //    Returns the red color value.
          //
          //************************************************************************************************************
-         unsigned int GetRedColor();
+         unsigned int GetRedColor() const;
 
          //************************************************************************************************************
          //
@@ -135,7 +135,7 @@ namespace Bebop { namespace Graphics
          //    Returns the green color value.
          //
          //************************************************************************************************************
-         unsigned int GetGreenColor();
+         unsigned int GetGreenColor() const;
 
          //************************************************************************************************************
          //
@@ -151,7 +151,7 @@ namespace Bebop { namespace Graphics
          //    Returns the blue color value.
          //
          //************************************************************************************************************
-         unsigned int GetBlueColor();
+         unsigned int GetBlueColor() const;
 
          //************************************************************************************************************
          //
@@ -167,7 +167,7 @@ namespace Bebop { namespace Graphics
          //    Returns the alpha (opacity) value.
          //
          //************************************************************************************************************
-         unsigned int GetAlpha();
+         unsigned int GetAlpha() const;
 
       protected:
       
@@ -180,16 +180,16 @@ namespace Bebop { namespace Graphics
          // Method: VerifyRange
          //
          // Description:
-         //    Checks if the value is within the color range. If it is not then the maximum value is set in its place.
+         //    Checks if the value is within the color range. If it is not, then the maximum value is set in its place.
          //
          // Arguments:
          //    aValue - The value being checked to be within the color range.
          //
          // Return:
-         //    Returns the finalized color.
+         //    Returns the finalized color value.
          //
          //************************************************************************************************************
-         int VerifyRange(const unsigned int aValue);
+         int VerifyRange(const unsigned int aValue) const;
       
    //******************************************************************************************************************
    // Methods - End

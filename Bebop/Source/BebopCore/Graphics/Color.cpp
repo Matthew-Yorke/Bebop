@@ -3,7 +3,7 @@
 // File: Color.cpp
 //
 // Description:
-//    This class handles holding information on a sepcific color in an RGB fashion. There is also an alpha (opacity)
+//    This class handles holding information on a specific color in an RGB fashion. There is also an alpha (opacity)
 //    value correlated with the color.  
 //
 //*********************************************************************************************************************
@@ -130,7 +130,7 @@ namespace Bebop { namespace Graphics
    //    Returns the red color value.
    //
    //******************************************************************************************************************
-   unsigned int Color::GetRedColor()
+   unsigned int Color::GetRedColor() const
    {
       return mRed;
    }
@@ -149,7 +149,7 @@ namespace Bebop { namespace Graphics
    //    Returns the green color value.
    //
    //******************************************************************************************************************
-   unsigned int Color::GetGreenColor()
+   unsigned int Color::GetGreenColor() const
    {
       return mGreen;
    }
@@ -168,7 +168,7 @@ namespace Bebop { namespace Graphics
    //    Returns the blue color value.
    //
    //******************************************************************************************************************
-   unsigned int Color::GetBlueColor()
+   unsigned int Color::GetBlueColor() const
    {
       return mBlue;
    }
@@ -187,7 +187,7 @@ namespace Bebop { namespace Graphics
    //    Returns the alpha (opacity) value.
    //
    //******************************************************************************************************************
-   unsigned int Color::GetAlpha()
+   unsigned int Color::GetAlpha() const
    {
       return mAlpha;
    }
@@ -215,16 +215,16 @@ namespace Bebop { namespace Graphics
    // Method: VerifyRange
    //
    // Description:
-   //    Checks if the value is within the color range. If it is not then the maximum value is set in its place.
+   //    Checks if the value is within the color range. If it is not, then the maximum value is set in its place.
    //
    // Arguments:
    //    aValue - The value being checked to be within the color range.
    //
    // Return:
-   //    Returns the finalized color.
+   //    Returns the finalized color value.
    //
    //******************************************************************************************************************
-   int Color::VerifyRange(const unsigned int aValue)
+   int Color::VerifyRange(const unsigned int aValue) const
    {
       if (aValue > MAX_COLOR_VALUE)
       {

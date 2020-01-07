@@ -3,7 +3,7 @@
 // File: Window.h
 //
 // Description:
-//    This class is used to create a display window using the Allegroe 5 library.
+//    This class is used to create a display window using the Allegro 5 library.
 //
 //*********************************************************************************************************************
 
@@ -29,7 +29,7 @@ namespace Bebop { namespace Graphics
          //
          // Description:
          //    Constructor for the window class that takes in arguments to specify the window dimensions and then calls
-         //    to intialize the creation of the window.
+         //    to initialize the creation of the window.
          //
          // Arguments:
          //    aWidth  - The width of the display window.
@@ -92,7 +92,7 @@ namespace Bebop { namespace Graphics
          //
          // Return:
          //    True  - The initialization of the window was successful.
-         //    False - The initializaiton of the window was unsuccessful.
+         //    False - The initialization of the window was unsuccessful.
          //
          //************************************************************************************************************
          bool Initialize();

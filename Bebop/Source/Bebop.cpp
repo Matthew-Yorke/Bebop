@@ -40,7 +40,7 @@ namespace Bebop
    // Method: InitializeBebop
    //
    // Description:
-   //    The primary initialization of the bebop engine. Intializes required features for the engine.
+   //    The primary initialization of the bebop engine. Initializes required features for the engine.
    //
    // Arguments:
    //    N/A
@@ -58,7 +58,7 @@ namespace Bebop
          return false;
       }
    
-      // Primary initialization is succesful.
+      // Primary initialization is successful.
       BebopInitalized = true;
       return true;
    }
@@ -68,8 +68,8 @@ namespace Bebop
    // Method: InitializeGraphics
    //
    // Description:
-   //    Intialization for the graphics portion of the engine. Intializes pieces needed for the graphics properties.
-   //    Requires the primary intitalization to have already happened.
+   //    Initialization for the graphics portion of the engine. Initializes pieces needed for the graphics properties.
+   //    Requires the primary initialization to have already happened.
    //
    // Arguments:
    //    N/A
@@ -81,7 +81,7 @@ namespace Bebop
    //******************************************************************************************************************
    bool Bebop::InitializeGraphics()
    {
-      // Primary intialization must come first.
+      // Primary initialization must come first.
       if (BebopInitalized == false)
       {
          return false;
@@ -119,7 +119,7 @@ namespace Bebop
 // Private Methods - Start
 //*********************************************************************************************************************
 
-   // There are currently no priate methods for this class.
+   // There are currently no private methods for this class.
 
 //*********************************************************************************************************************
 // Private Methods - End

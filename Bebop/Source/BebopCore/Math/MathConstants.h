@@ -32,7 +32,7 @@ namespace Bebop { namespace Math
    // The value for degrees at point 360.
    const float DEGREES_THREE_SIXTY = 360.0F;
 
-   // The value of incrementing to the enxt degree.
+   // The value of incrementing to the next degree.
    const float DEGREES_INCREMENT = 1.0F;
 
    // The value used when finding the next item in an iterator.

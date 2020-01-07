@@ -214,7 +214,7 @@ namespace Bebop { namespace Graphics
       // Set to blend the colors together by adding the values together.
       al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
-      // Draw the the ligths to the shadow map.
+      // Draw the lights to the shadow map.
       for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
       {
          (*iterator)->Draw(true);
@@ -240,14 +240,14 @@ namespace Bebop { namespace Graphics
       // Retain the display bitmap information.
       ALLEGRO_BITMAP* displayBitmap = al_get_target_bitmap();
 
-      // Set bitmap to the shdow layer and clear it.
+      // Set bitmap to the shadow layer and clear it.
       al_set_target_bitmap(mpShadowMap);
       al_clear_to_color(al_map_rgb(NO_COLOR, NO_COLOR, NO_COLOR));
 
-      // Set to blend the colors together byt subtracting the light from the shadow map.
+      // Set to blend the colors together by subtracting the light from the shadow map.
       al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
-      // Draw the the ligths to the shadow map.
+      // Draw the lights to the shadow map.
       for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
       {
          (*iterator)->Draw(false);
