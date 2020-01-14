@@ -55,7 +55,7 @@ namespace Bebop { namespace Math
          //    Returns the X-Coordinate.
          //
          //************************************************************************************************************
-         float GetPositionX(const float aTime) override;
+         float GetPositionX(const float aTime) const override;
 
          //************************************************************************************************************
          //
@@ -71,7 +71,7 @@ namespace Bebop { namespace Math
          //    Returns the Y-Coordinate.
          //
          //************************************************************************************************************
-         float GetPositionY(const float aTime) override;
+         float GetPositionY(const float aTime) const override;
 
       protected:
 

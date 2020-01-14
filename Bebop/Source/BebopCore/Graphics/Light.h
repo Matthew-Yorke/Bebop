@@ -75,7 +75,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void Draw(const bool aWithColor);
+         void Draw(const bool aWithColor) const;
 
       protected:
 
@@ -104,7 +104,7 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
-                           const float aSecondPointY, const bool aWithColor);
+                           const float aSecondPointY, const bool aWithColor) const;
 
    //******************************************************************************************************************
    // Methods - End

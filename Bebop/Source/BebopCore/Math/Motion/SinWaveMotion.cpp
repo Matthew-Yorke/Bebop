@@ -54,7 +54,7 @@ namespace Bebop { namespace Math
    //    Returns the X-Coordinate.
    //
    //************************************************************************************************************
-   float SinWaveMotion::GetPositionX(const float aTime)
+   float SinWaveMotion::GetPositionX(const float aTime) const
    {
       return (mRotationMatrix.GetRotationMatrix()[0][0] * aTime * mSpeed) +
              (mRotationMatrix.GetRotationMatrix()[0][1] * (mAmplitude * sin(mFrequency * aTime * mSpeed)));
@@ -74,7 +74,7 @@ namespace Bebop { namespace Math
    //    Returns the Y-Coordinate.
    //
    //************************************************************************************************************
-   float SinWaveMotion::GetPositionY(const float aTime)
+   float SinWaveMotion::GetPositionY(const float aTime) const
    {
       return (mRotationMatrix.GetRotationMatrix()[1][0] * aTime * mSpeed) +
              (mRotationMatrix.GetRotationMatrix()[1][1] * (mAmplitude * sin(mFrequency * aTime * mSpeed)));

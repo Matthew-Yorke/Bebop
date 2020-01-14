@@ -71,7 +71,7 @@ namespace Bebop { namespace Graphics
          //    Returns the current scene.
          //
          //************************************************************************************************************
-         Scene* GetScene();
+         Scene* GetScene() const;
    
       protected:
 

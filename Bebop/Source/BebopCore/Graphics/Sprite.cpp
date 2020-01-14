@@ -101,7 +101,7 @@ namespace Bebop { namespace Graphics
    //    Returns the current Y-Coordinate position of the sprite.
    //
    //******************************************************************************************************************
-   int Sprite::GetPositionX()
+   int Sprite::GetPositionX() const
    {
       return mPositionX;
    }
@@ -120,7 +120,7 @@ namespace Bebop { namespace Graphics
    //    Returns the current Y-Coordinate position of the sprite.
    //
    //******************************************************************************************************************
-   int Sprite::GetPositionY()
+   int Sprite::GetPositionY() const
    {
       return mPositionY;
    }
@@ -139,7 +139,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Sprite::Draw()
+   void Sprite::Draw() const
    {
       al_draw_bitmap_region(mpSpriteSheet,
                             mSourceX,

@@ -33,7 +33,7 @@ namespace Bebop { namespace Math
          //    Returns the X-Coordinate.
          //
          //************************************************************************************************************
-         virtual float GetPositionX(const float aTime) = 0;
+         virtual float GetPositionX(const float aTime) const = 0;
 
          //************************************************************************************************************
          //
@@ -49,7 +49,7 @@ namespace Bebop { namespace Math
          //    Returns the Y-Coordinate.
          //
          //************************************************************************************************************
-         virtual float GetPositionY(const float aTime) = 0;
+         virtual float GetPositionY(const float aTime) const = 0;
 
       protected:
 

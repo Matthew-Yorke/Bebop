@@ -85,7 +85,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Light::Draw(const bool aWithColor)
+   void Light::Draw(const bool aWithColor) const
    {
       // Iterate through all the points calculated.
       for (auto iterator = mPoints.begin(); iterator != mPoints.end(); ++iterator)
@@ -146,7 +146,7 @@ namespace Bebop { namespace Graphics
    //
    //******************************************************************************************************************
    void Light::DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
-                            const float aSecondPointY, const bool aWithColor)
+                            const float aSecondPointY, const bool aWithColor) const
    {
       if (true == aWithColor)
       {

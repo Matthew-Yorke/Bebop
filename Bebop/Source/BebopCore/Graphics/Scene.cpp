@@ -128,7 +128,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::Update(const float aElapsedTime)
+   void Scene::Update(const float aElapsedTime) const
    {
       for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
       {
@@ -155,7 +155,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //************************************************************************************************************
-   void Scene::Draw()
+   void Scene::Draw() const
    {
       DrawLightColors();
 
@@ -209,7 +209,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::DrawLightColors()
+   void Scene::DrawLightColors() const
    {
       // Set to blend the colors together by adding the values together.
       al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
@@ -235,7 +235,7 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::DrawShadowMap()
+   void Scene::DrawShadowMap() const
    {
       // Retain the display bitmap information.
       ALLEGRO_BITMAP* displayBitmap = al_get_target_bitmap();

@@ -54,7 +54,7 @@ namespace Bebop { namespace Objects
    //    Returns the current X-Coordinate of the object.
    //
    //******************************************************************************************************************
-   float Object::GetCoordinateX()
+   float Object::GetCoordinateX() const
    {
       return mCoordinateX;
    }
@@ -92,7 +92,7 @@ namespace Bebop { namespace Objects
    //    Returns the current Y-Coordinate of the object.
    //
    //******************************************************************************************************************
-   float Object::GetCoordinateY()
+   float Object::GetCoordinateY() const
    {
       return mCoordinateY;
    }
@@ -130,7 +130,7 @@ namespace Bebop { namespace Objects
    //    Returns the starting X-Coordinate of the object.
    //
    //******************************************************************************************************************
-   float Object::GetStartingCoordinateX()
+   float Object::GetStartingCoordinateX() const
    {
       return mStartingCoordinateX;
    }
@@ -149,7 +149,7 @@ namespace Bebop { namespace Objects
    //    Returns the starting X-Coordinate of the object.
    //
    //******************************************************************************************************************
-   float Object::GetStartingCoordinateY()
+   float Object::GetStartingCoordinateY() const
    {
       return mStartingCoordinateY;
    }
@@ -168,7 +168,7 @@ namespace Bebop { namespace Objects
    //    Returns the current width center point of the object.
    //
    //******************************************************************************************************************
-   int Object::GetWidthCenterPoint()
+   int Object::GetWidthCenterPoint() const
    {
       return mWidthCenterPoint;
    }
@@ -187,7 +187,7 @@ namespace Bebop { namespace Objects
    //    Returns the current height center of the object.
    //
    //******************************************************************************************************************
-   int Object::GetHeightCenterPoint()
+   int Object::GetHeightCenterPoint() const
    {
       return mHeightCenterPoint;
    }

@@ -54,7 +54,7 @@ namespace Bebop { namespace Math
 		   //    N/A
 		   //
 		   //************************************************************************************************************
-         void CheckCollision();
+         void CheckCollision() const;
 
 	   protected:
 	
@@ -77,7 +77,7 @@ namespace Bebop { namespace Math
 		   //    N/A
 		   //
 		   //************************************************************************************************************
-         bool HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo);
+         bool HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo) const;
 	
    //******************************************************************************************************************
    // Methods - End

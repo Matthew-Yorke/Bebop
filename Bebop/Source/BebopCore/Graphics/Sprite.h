@@ -95,7 +95,7 @@ namespace Bebop { namespace Graphics
          //    Returns the current Y-Coordinate position of the sprite.
          //
          //************************************************************************************************************
-         int GetPositionX();
+         int GetPositionX() const;
 
          //************************************************************************************************************
          //
@@ -111,7 +111,7 @@ namespace Bebop { namespace Graphics
          //    Returns the current Y-Coordinate position of the sprite.
          //
          //************************************************************************************************************
-         int GetPositionY();
+         int GetPositionY() const;
 
          //************************************************************************************************************
          //
@@ -127,7 +127,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void Draw();
+         void Draw() const;
 
       protected:
 

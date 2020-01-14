@@ -82,7 +82,7 @@ namespace Bebop { namespace Math
 		   //    Returns the rotation matrix.
 		   //
 		   //************************************************************************************************************
-		   float** GetRotationMatrix();
+		   float** GetRotationMatrix() const;
 	
 	   protected:
 	

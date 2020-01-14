@@ -50,7 +50,7 @@ namespace Bebop { namespace Math
    //    Returns the X-Coordinate.
    //
    //************************************************************************************************************
-   float CircularMotion::GetPositionX(const float aTime)
+   float CircularMotion::GetPositionX(const float aTime) const
    {
       float angleRadians = (mRotationsPerSecond * CIRCLE_RADIANS) * aTime;
       return cos(angleRadians) * mRadius;
@@ -70,7 +70,7 @@ namespace Bebop { namespace Math
    //    Returns the Y-Coordinate.
    //
    //************************************************************************************************************
-   float CircularMotion::GetPositionY(const float aTime)
+   float CircularMotion::GetPositionY(const float aTime) const
    {
       float angleRadians = (mRotationsPerSecond * CIRCLE_RADIANS) * aTime;
       return sin(angleRadians) * mRadius;

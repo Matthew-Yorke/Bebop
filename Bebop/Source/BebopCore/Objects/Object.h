@@ -56,7 +56,7 @@ namespace Bebop { namespace Objects
          //    Returns the current X-Coordinate of the object.
          //
          //************************************************************************************************************
-         float GetCoordinateX();
+         float GetCoordinateX() const;
       
          //************************************************************************************************************
          //
@@ -88,7 +88,7 @@ namespace Bebop { namespace Objects
          //    Returns the current Y-Coordinate of the object.
          //
          //************************************************************************************************************
-         float GetCoordinateY();
+         float GetCoordinateY() const;
       
          //************************************************************************************************************
          //
@@ -120,7 +120,7 @@ namespace Bebop { namespace Objects
          //    Returns the starting X-Coordinate of the object.
          //
          //************************************************************************************************************
-         float GetStartingCoordinateX();
+         float GetStartingCoordinateX() const;
 
          //************************************************************************************************************
          //
@@ -136,7 +136,7 @@ namespace Bebop { namespace Objects
          //    Returns the starting Y-Coordinate of the object.
          //
          //************************************************************************************************************
-         float GetStartingCoordinateY();
+         float GetStartingCoordinateY() const;
       
          //************************************************************************************************************
          //
@@ -152,7 +152,7 @@ namespace Bebop { namespace Objects
          //    Returns the current width center point of the object.
          //
          //************************************************************************************************************
-         int GetWidthCenterPoint();
+         int GetWidthCenterPoint() const;
       
          //************************************************************************************************************
          //
@@ -168,7 +168,7 @@ namespace Bebop { namespace Objects
          //    Returns the current height center of the object.
          //
          //************************************************************************************************************
-         int GetHeightCenterPoint();
+         int GetHeightCenterPoint() const;
       
          //************************************************************************************************************
          //
@@ -184,7 +184,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         virtual void Draw() = 0;
+         virtual void Draw() const = 0;
 
       protected:
       

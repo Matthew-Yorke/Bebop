@@ -52,7 +52,7 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   void CollisionChecker::CheckCollision()
+   void CollisionChecker::CheckCollision() const
    {
       // If  there aren't enough objects in the vector, return as there is no collisions to checks.
       if (mpRectangularObjects.size() >= MINIMUM_COLLISION_VECTOR_SIZE)
@@ -107,7 +107,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool CollisionChecker::HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo)
+   bool CollisionChecker::HasCollided(Objects::RectangleObject* mpRectangleOne,
+                                      Objects::RectangleObject* mpRectangleTwo) const
    {
       if (mpRectangleOne->GetCoordinateX() < mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth() &&
           mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth() > mpRectangleTwo->GetCoordinateX() &&

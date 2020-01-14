@@ -53,7 +53,7 @@ namespace Bebop { namespace Objects
    //    Returns the circular object radius.
    //
    //************************************************************************************************************
-   int CircleObject::GetRadius()
+   int CircleObject::GetRadius() const
    {
       return mRadius;
    }
@@ -72,7 +72,7 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void CircleObject::Draw()
+   void CircleObject::Draw() const
    {
       al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius, al_map_rgba(mColor.GetRedColor(),
                                                                              mColor.GetGreenColor(),

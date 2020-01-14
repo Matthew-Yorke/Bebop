@@ -74,7 +74,7 @@ namespace Bebop { namespace Objects
    //    Returns the rectangular object width.
    //
    //******************************************************************************************************************
-   int RectangleObject::GetWidth()
+   int RectangleObject::GetWidth() const
    {
       return mWidth;
    }
@@ -113,7 +113,7 @@ namespace Bebop { namespace Objects
    //    Returns the rectangular object height.
    //
    //******************************************************************************************************************
-   int RectangleObject::GetHeight()
+   int RectangleObject::GetHeight() const
    {
       return mHeight;
    }
@@ -132,7 +132,7 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void RectangleObject::Draw()
+   void RectangleObject::Draw() const
    {
       al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
                                al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),

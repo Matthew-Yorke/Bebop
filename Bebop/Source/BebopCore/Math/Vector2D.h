@@ -191,7 +191,7 @@ namespace Bebop { namespace Math
          //    Returns the X component of the vector.
          //
          //************************************************************************************************************
-         T GetComponentX();
+         T GetComponentX() const;
 
          //************************************************************************************************************
          //
@@ -207,7 +207,7 @@ namespace Bebop { namespace Math
          //    Returns the Y component of the vector.
          //
          //************************************************************************************************************
-         T GetComponentY();
+         T GetComponentY() const;
 
          //************************************************************************************************************
          //
@@ -223,7 +223,7 @@ namespace Bebop { namespace Math
          //    Returns the magnitude of the vector.
          //
          //************************************************************************************************************
-         T GetMagnitude();
+         T GetMagnitude() const;
 
          //************************************************************************************************************
          //
@@ -240,7 +240,7 @@ namespace Bebop { namespace Math
          //    N/A
          //
          //************************************************************************************************************
-         Vector2D<T> GetNormalized();
+         Vector2D<T> GetNormalized() const;
 
       protected:
 
@@ -543,7 +543,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    template<class T>
-   T Vector2D<T>::GetComponentX()
+   T Vector2D<T>::GetComponentX() const
    {
       return mComponentX;
    }
@@ -563,7 +563,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    template<class T>
-   T Vector2D<T>::GetComponentY()
+   T Vector2D<T>::GetComponentY() const
    {
       return mComponentY;
    }
@@ -583,7 +583,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    template<class T>
-   T Vector2D<T>::GetMagnitude()
+   T Vector2D<T>::GetMagnitude() const
    {
       return sqrt((mComponentX * mComponentX) + (mComponentY * mComponentY));
    }
@@ -604,7 +604,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    template<class T>
-   Vector2D<T> Vector2D<T>::GetNormalized()
+   Vector2D<T> Vector2D<T>::GetNormalized() const
    {
       float length = GetMagnitude();
       return Vector2D(mComponentX / length, mComponentY / length);

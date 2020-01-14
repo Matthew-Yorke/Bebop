@@ -110,7 +110,7 @@ namespace Bebop { namespace Math
    //    Returns the rotation matrix.
    //
    //******************************************************************************************************************
-   float** RotationMatrix2D::GetRotationMatrix()
+   float** RotationMatrix2D::GetRotationMatrix() const
    {
       return mRotationMatrix;
    }
