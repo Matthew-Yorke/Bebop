@@ -31,11 +31,9 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   Scene::Scene()
+   Scene::Scene(int width, int height)
    {
-      // TODO: This constructor needs to pass in a scene width and height, the 400, 400 is temporary for the shadow map
-      //       for testing purposes.
-      mpShadowMap = al_create_bitmap(400, 400);
+      mpShadowMap = al_create_bitmap(width, height);
    }
 
    //******************************************************************************************************************

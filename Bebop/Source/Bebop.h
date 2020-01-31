@@ -12,6 +12,8 @@
 
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include "BebopCore/Graphics/Window.h"
+#include "BebopCore/Graphics/Scene.h"
 
 namespace Bebop
 {
@@ -28,7 +30,7 @@ namespace Bebop
          // Method: Bebop
          //
          // Description:
-         //    Constructor for the window class that sets member variables to default values.
+         //    Constructor for the bebop class that sets member variables to default values.
          //
          // Arguments:
          //    N/A
@@ -38,6 +40,22 @@ namespace Bebop
          //
          //************************************************************************************************************
          Bebop();
+
+         //************************************************************************************************************
+         //
+         // Method: ~Bebop
+         //
+         // Description:
+         //    Destructor for the bebop class that releases any allocated memory this class manages..
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         ~Bebop();
 
          //************************************************************************************************************
          //
@@ -74,6 +92,70 @@ namespace Bebop
          //************************************************************************************************************
          bool InitializeGraphics();
 
+         //************************************************************************************************************
+         //
+         // Method: CreateWindow
+         //
+         // Description:
+         //    Create a window for the game. Requires initialization of the engine and graphics.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void CreateWindow();
+
+         //************************************************************************************************************
+         //
+         // Method: CreateScene
+         //
+         // Description:
+         //    Create a scene for the game.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void CreateScene();
+
+         //************************************************************************************************************
+         //
+         // Method: GetScene
+         //
+         // Description:
+         //    Retrieve the scene for the game, allowing users to add additional objects into the scene.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         Graphics::Scene* GetScene();
+
+         //************************************************************************************************************
+         //
+         // Method: Draw
+         //
+         // Description:
+         //    Draw the scene onto the display.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void Draw();
+
       protected:
 
          // There are currently no protected methods for this class.
@@ -101,10 +183,16 @@ namespace Bebop
       private:
 
          // Tracks if bebop primary initialization has happened.
-         bool BebopInitalized;
+         bool mBebopInitalized;
 
          // Tracks if the graphics initialization has happened.
-         bool GraphicsIntialized;
+         bool mGraphicsIntialized;
+
+         // Tracks a window for the game.
+         Graphics::Window* mpWindow;
+
+         // Tracks the scene for the game.
+         Graphics::Scene* mpScene;
 
       //***************************************************************************************************************
       // Member Variables - Start

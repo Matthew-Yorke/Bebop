@@ -20,7 +20,7 @@ namespace Bebop
    // Method: Bebop
    //
    // Description:
-   //    Constructor for the window class that sets member variables to default values.
+   //    Constructor for the bebop class that sets member variables to default values.
    //
    // Arguments:
    //    N/A
@@ -29,10 +29,30 @@ namespace Bebop
    //    N/A
    //
    //******************************************************************************************************************
-   Bebop::Bebop()
+   Bebop::Bebop() : mBebopInitalized(false), mGraphicsIntialized(false), mpWindow(nullptr), mpScene(nullptr)
    {
-      BebopInitalized = false;
-      GraphicsIntialized = false;
+   }
+
+   //************************************************************************************************************
+   //
+   // Method: ~Bebop
+   //
+   // Description:
+   //    Destructor for the bebop class that releases any allocated memory this class manages..
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //************************************************************************************************************
+   Bebop::~Bebop()
+   {
+      delete mpWindow;
+      mpWindow = nullptr;
+      delete mpScene;
+      mpScene = nullptr;
    }
    
    //******************************************************************************************************************
@@ -59,7 +79,7 @@ namespace Bebop
       }
    
       // Primary initialization is successful.
-      BebopInitalized = true;
+      mBebopInitalized = true;
       return true;
    }
    
@@ -82,7 +102,7 @@ namespace Bebop
    bool Bebop::InitializeGraphics()
    {
       // Primary initialization must come first.
-      if (BebopInitalized == false)
+      if (mBebopInitalized == false)
       {
          return false;
       }
@@ -97,8 +117,91 @@ namespace Bebop
          return false;
       }
    
-      GraphicsIntialized = true;
+      mGraphicsIntialized = true;
       return true;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: CreateWindow
+   //
+   // Description:
+   //    Create a window for the game. Requires initialization of the engine and graphics.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Bebop::CreateWindow()
+   {
+      if (mBebopInitalized == true && mGraphicsIntialized == true && mpWindow == nullptr)
+      {
+         mpWindow = new Graphics::Window(640, 360);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: CreateScene
+   //
+   // Description:
+   //    Create a scene for the game.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Bebop::CreateScene()
+   {
+      mpScene = new Graphics::Scene(640, 360);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: GetScene
+   //
+   // Description:
+   //    Retrieve the scene for the game, allowing users to add additional objects into the scene.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   Graphics::Scene* Bebop::GetScene()
+   {
+      return mpScene;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: Draw
+   //
+   // Description:
+   //    Draw the scene onto the display.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Bebop::Draw()
+   {
+      al_clear_to_color(al_map_rgb(0, 0, 0));
+
+      mpScene->Draw();
+
+      al_flip_display();
    }
 
 //*********************************************************************************************************************

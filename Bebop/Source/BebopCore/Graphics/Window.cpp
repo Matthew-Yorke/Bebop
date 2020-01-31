@@ -34,8 +34,6 @@ namespace Bebop { namespace Graphics
    Window::Window(int aWidth, int aHeight) :
       mpWindow(nullptr), mWidth(aWidth), mHeight(aHeight)
    {
-      mpScene = new Scene();
-
       if (false == Initialize())
       {
          Terminate();
@@ -59,25 +57,6 @@ namespace Bebop { namespace Graphics
    Window::~Window()
    {
       Terminate();
-   }
-   
-   //******************************************************************************************************************
-   //
-   // Method: GetScene
-   //
-   // Description:
-   //    Returns the current scene to the caller.
-   //
-   // Arguments:
-   //    N/A
-   //
-   // Return:
-   //    Returns the current scene.
-   //
-   //******************************************************************************************************************
-   Scene* Window::GetScene() const
-   {
-      return mpScene;
    }
 
 //*********************************************************************************************************************
@@ -115,7 +94,7 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    bool Window::Initialize()
    {
-      if (!(mpWindow = al_create_display(mWidth, mHeight)))
+      if ((mpWindow = al_create_display(mWidth, mHeight)) == false)
       {
          return false;
       }
@@ -141,6 +120,7 @@ namespace Bebop { namespace Graphics
    void Window::Terminate()
    {
       al_destroy_display(mpWindow);
+      mpWindow = nullptr;
    }
 
 //*********************************************************************************************************************

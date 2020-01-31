@@ -141,9 +141,6 @@ namespace Bebop { namespace Graphics
          // The height of the window.
          int mHeight;
 
-         // Pointer to the scene on the screen.
-         Scene* mpScene;
-
       //***************************************************************************************************************
       // Member Variables - Start
       //***************************************************************************************************************

@@ -1,0 +1,17 @@
+﻿  Bebop.cpp
+  AnimatedSprite.cpp
+  Color.cpp
+  Light.cpp
+  Particle.cpp
+  Scene.cpp
+  Sprite.cpp
+  Window.cpp
+  CollisionChecker.cpp
+  CircularMotion.cpp
+  SinWaveMotion.cpp
+  RotationMatrix2D.cpp
+  CircleObject.cpp
+  Object.cpp
+  RectangleObject.cpp
+  Generating Code...
+  Bebop.vcxproj -> C:\Users\Yorke\source\repos\ChatServer\Bebop\x64\Debug\Bebop.lib
