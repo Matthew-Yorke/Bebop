@@ -12,6 +12,7 @@
 #define CollisionChecker_H
 
 #include "../../Objects/RectangleObject.h"
+#include "../../Objects/CircleObject.h"
 #include <vector>
 
 namespace Bebop { namespace Math
@@ -26,48 +27,10 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
 		   //
-		   // Method Name: InsertRectangleObject
+		   // Method Name: RectangleRectangleCollision
 		   //
 		   // Description:
-		   //    Insert a rectangle object to check for collisions.
-		   //
-		   // Arguments:
-		   //    mpRectangleObject - The rectangle object to be inserted for collision checks.
-		   //
-		   // Return:
-		   //    N/A
-		   //
-		   //************************************************************************************************************
-         void InsertRectangleObject(Objects::RectangleObject* mpRectangleObject);
-
-         //************************************************************************************************************
-		   //
-		   // Method Name: CheckCollision
-		   //
-		   // Description:
-		   //    Checks all the objects for collisions.
-		   //
-		   // Arguments:
-		   //    N/A
-		   //
-		   // Return:
-		   //    N/A
-		   //
-		   //************************************************************************************************************
-         void CheckCollision() const;
-
-	   protected:
-	
-	      // There are currently no protected methods for this class.
-	
-	   private:
-	
-	      //************************************************************************************************************
-		   //
-		   // Method Name: HasCollided
-		   //
-		   // Description:
-		   //    Checks two rectangular objects for collision
+		   //    Checks two rectangular objects for collision.
 		   //
 		   // Arguments:
 		   //    mpRectangleOne - The first rectangular object to be checked for collision.
@@ -77,7 +40,50 @@ namespace Bebop { namespace Math
 		   //    N/A
 		   //
 		   //************************************************************************************************************
-         bool HasCollided(Objects::RectangleObject* mpRectangleOne, Objects::RectangleObject* mpRectangleTwo) const;
+         bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
+                                          Objects::RectangleObject* mpRectangleTwo);
+
+         //************************************************************************************************************
+		   //
+		   // Method Name: RectangleCircleCollision
+		   //
+		   // Description:
+		   //    Checks rectangle and circle objects for collision.
+		   //
+		   // Arguments:
+		   //    mpRectangle - The rectangular object to be checked for collision.
+         //    mpCircle - The circular object to be checked for collision.
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+         bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle);
+
+         //************************************************************************************************************
+		   //
+		   // Method Name: CircleCircleCollision
+		   //
+		   // Description:
+		   //    Checks two circle objects for collision.
+		   //
+		   // Arguments:
+		   //    mpCircleOne - The first circle object to be checked for collision.
+         //    mpCircleTwo - The second circle object to be checked for collision.
+		   //
+		   // Return:
+		   //    N/A
+		   //
+		   //************************************************************************************************************
+         bool CircleCircleCollision(Objects::CircleObject* mpCircleOne, Objects::CircleObject* mpCircleTwo);
+
+	   protected:
+	
+	      // There are currently no protected methods for this class.
+	
+	   private:
+	
+	      // There are currently no private methods for this class.
 	
    //******************************************************************************************************************
    // Methods - End
@@ -97,8 +103,7 @@ namespace Bebop { namespace Math
 	
 	   private:
 	
-         // Vector the holds all the rectangle objects to be used for collision checking.
-		   std::vector<Objects::RectangleObject*> mpRectangularObjects;
+         // There are currently no private member variables for this class.
 	
 	//******************************************************************************************************************
 	// Member Variables - Start
