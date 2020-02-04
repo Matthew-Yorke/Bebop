@@ -129,17 +129,18 @@ namespace Bebop
    //    Create a window for the game. Requires initialization of the engine and graphics.
    //
    // Arguments:
-   //    N/A
+   //    aWidth  - The width in pixels for the window.
+   //    aHeight - The height in pixels for the window.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Bebop::CreateWindow()
+   void Bebop::CreateWindow(float aWidth, float aHeight)
    {
       if (mBebopInitalized == true && mGraphicsIntialized == true && mpWindow == nullptr)
       {
-         mpWindow = new Graphics::Window(640, 360);
+         mpWindow = new Graphics::Window(aWidth, aHeight);
       }
    }
 
@@ -159,7 +160,7 @@ namespace Bebop
    //******************************************************************************************************************
    void Bebop::CreateScene()
    {
-      mpScene = new Graphics::Scene(640, 360);
+      mpScene = new Graphics::Scene();
    }
 
    //******************************************************************************************************************

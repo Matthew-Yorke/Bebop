@@ -31,9 +31,71 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   Scene::Scene(int width, int height)
+   Scene::Scene() :
+      mpShadowMap(nullptr)
    {
-      mpShadowMap = al_create_bitmap(width, height);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: ~Scene
+   //
+   // Description:
+   //    Deconstructor for the Scene class that frees any allocated memory this class manages.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   Scene::~Scene()
+   {
+      RemoveShadowMap();
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: AddShadowMap
+   //
+   // Description:
+   //    Add a shadow map into the scene if it doesn't already exist.   
+   //
+   // Arguments:
+   //    aWidth  - The width of the shadow map. This typically should be the width of the window.
+   //    aHeight - The height of the shadow map. This typically should be the height of the window.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Scene::AddShadowMap(float aWidth, float aHeight)
+   {
+      if (mpShadowMap == nullptr)
+      {
+         mpShadowMap = al_create_bitmap(aWidth, aHeight);
+      }
+   }
+
+   //************************************************************************************************************
+   //
+   // Method: RemoveShadowMap
+   //
+   // Description:
+   //    Remove the shadow map from the scene.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //************************************************************************************************************
+   void Scene::RemoveShadowMap()
+   {
+      al_destroy_bitmap(mpShadowMap);
+      mpShadowMap = nullptr;
    }
 
    //******************************************************************************************************************
@@ -172,7 +234,10 @@ namespace Bebop { namespace Graphics
          (*iterator)->Draw();
       }
 
-      DrawShadowMap();
+      if (mpShadowMap != nullptr)
+      {
+         DrawShadowMap();
+      }
    }
 
 //*********************************************************************************************************************

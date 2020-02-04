@@ -100,13 +100,14 @@ namespace Bebop
          //    Create a window for the game. Requires initialization of the engine and graphics.
          //
          // Arguments:
-         //    N/A
+         //    aWidth  - The width in pixels for the window.
+         //    aHeight - The height in pixels for the window.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void CreateWindow();
+         void CreateWindow(float aWidth, float aHeight);
 
          //************************************************************************************************************
          //
