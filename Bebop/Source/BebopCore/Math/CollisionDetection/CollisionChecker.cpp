@@ -127,7 +127,7 @@ namespace Bebop { namespace Math
    {
       // Get the distance from the center of the first circle to the second circle.
       float distanceX = mpCircleOne->GetCoordinateX() - mpCircleTwo->GetCoordinateX();
-      float distanceY = mpCircleTwo->GetCoordinateY() - mpCircleTwo->GetCoordinateY();
+      float distanceY = mpCircleOne->GetCoordinateY() - mpCircleTwo->GetCoordinateY();
       float distance = sqrt((distanceX*distanceX) + (distanceY*distanceY));
 
       // Check if the distance found is less than the sum of the two circle's radius and if there is then collision has happened.
