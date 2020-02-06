@@ -77,13 +77,111 @@ namespace Bebop { namespace Math
 		   //************************************************************************************************************
          bool CircleCircleCollision(Objects::CircleObject* mpCircleOne, Objects::CircleObject* mpCircleTwo);
 
+         //************************************************************************************************************
+         //
+         // Method Name: LineRectangleCollision
+         //
+         // Description:
+         //    Checks line and rectangle collision.
+         //
+         // Arguments:
+         //    aOriginPointX - The origin X-Coordinate of the line being tested.
+         //    aOriginPointY - The origin Y-Coordinate of the line being tested. 
+         //    aEndPointX    - The end X-Coordinate of the line being tested.
+         //    aEndPointY    - The end Y-Coordinate of the line being tested.
+         //    mpRectangle   - The rectangle being tested against.
+         //
+         // Return:
+         //    True  - There is collision between the line and rectangle.
+         //    False - There is no collision between the line and rectangle.
+         //
+         //************************************************************************************************************
+         bool LineRectangleCollision(float aOriginPointX, float aOriginPointY,
+                                     float aEndPointX, float aEndPointY,
+                                     Objects::RectangleObject* mpRectangle);
+
+         //************************************************************************************************************
+         //
+         // Method Name: LineLineCollision
+         //
+         // Description:
+         //    Checks two lines for collision.
+         //
+         // Arguments:
+         //    aLineOneOriginPointX - The origin X-Coordinate of the first line being tested.
+         //    aLineOneOriginPointY - The origin Y-Coordinate of the first line being tested. 
+         //    aLineOneEndPointX    - The end X-Coordinate of the first line being tested.
+         //    aLineOneEndPointY    - The end Y-Coordinate of the first line being tested.
+         //    aLineTwoOriginPointX - The origin X-Coordinate of the second line being tested.
+         //    aLineTwoOriginPointY - The origin Y-Coordinate of the second line being tested. 
+         //    aLineTwoEndPointX    - The end X-Coordinate of the second line being tested.
+         //    aLineTwoEndPointY    - The end Y-Coordinate of the second line being tested.
+         //
+         // Return:
+         //    True  - There is collision between both lines.
+         //    False - There is no collision between both lines.
+         //
+         //************************************************************************************************************
+         bool LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
+                                float aLineOneEndPointX, float aLineOneEndPointY,
+                                float aLineTwoOriginPointX, float aLineTwoOriginPointY,
+                                float aLineTwoEndPointX, float aLineTwoEndPointY);
+
 	   protected:
 	
 	      // There are currently no protected methods for this class.
 	
 	   private:
 	
-	      // There are currently no private methods for this class.
+         //************************************************************************************************************
+         //
+         // Method Name: Orientation
+         //
+         // Description:
+         //    Find the orientation between ordered triplet points.
+         //
+         // Arguments:
+         //    aPointOneX   - The origin X-Coordinate of the first point.
+         //    aPointOneY   - The origin Y-Coordinate of the first point.
+         //    aPointTwoX   - The origin X-Coordinate of the two point.
+         //    aPointTwoY   - The origin Y-Coordinate of the two point.
+         //    aPointThreeX - The origin X-Coordinate of the three point.
+         //    aPointThreeY - The origin Y-Coordinate of the three point.
+         //
+         // Return:
+         //    0 = Points are collinear.
+         //    1 = Points are in Clockwise orientation.
+         //    2 = Points are in Counterclockwise orientation.
+         //
+         //************************************************************************************************************
+	      int Orientation(float aPointOneX, float aPointOneY,
+                         float aPointTwoX, float aPointTwoY,
+                         float aPointThreeX, float aPointThreeY);
+
+         //************************************************************************************************************
+         //
+         // Method Name: OnSegment
+         //
+         // Description:
+         //    Given three collinear points (One, two, and Three), this function checks if point Two lies on line
+         //    segment One->Three.
+         //
+         // Arguments:
+         //    aPointOneX   - The origin X-Coordinate of the first point.
+         //    aPointOneY   - The origin Y-Coordinate of the first point.
+         //    aPointTwoX   - The origin X-Coordinate of the two point.
+         //    aPointTwoY   - The origin Y-Coordinate of the two point.
+         //    aPointThreeX - The origin X-Coordinate of the three point.
+         //    aPointThreeY - The origin Y-Coordinate of the three point.
+         //
+         // Return:
+         //    True  - Point Two lies on line segment One->Three.
+         //    False - Point Two does not lie on line segment One->Three.
+         //
+         //************************************************************************************************************
+         bool OnSegment(float aPointOneX, float aPointOneY,
+                        float aPointTwoX, float aPointTwoY,
+                        float aPointThreeX, float aPointThreeY);
 	
    //******************************************************************************************************************
    // Methods - End
