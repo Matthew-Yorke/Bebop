@@ -82,7 +82,7 @@ namespace Bebop { namespace Math
          // Method Name: LineRectangleCollision
          //
          // Description:
-         //    Checks line and rectangle collision.
+         //    Checks line segment and rectangle collision.
          //
          // Arguments:
          //    aOriginPointX - The origin X-Coordinate of the line being tested.
@@ -90,22 +90,25 @@ namespace Bebop { namespace Math
          //    aEndPointX    - The end X-Coordinate of the line being tested.
          //    aEndPointY    - The end Y-Coordinate of the line being tested.
          //    mpRectangle   - The rectangle being tested against.
+         //    aCollisionX   - Pointer for the X-Coordinate of the intersection point.
+         //    aCollisionY   - Pointer for the Y-Coordinate of the intersection point.
          //
          // Return:
-         //    True  - There is collision between the line and rectangle.
-         //    False - There is no collision between the line and rectangle.
+         //    True  - There is collision between the line segment and rectangle.
+         //    False - There is no collision between the line segment and rectangle.
          //
          //************************************************************************************************************
          bool LineRectangleCollision(float aOriginPointX, float aOriginPointY,
                                      float aEndPointX, float aEndPointY,
-                                     Objects::RectangleObject* mpRectangle);
+                                     Objects::RectangleObject* mpRectangle,
+                                     float* aCollisionX, float* aCollisionY);
 
          //************************************************************************************************************
          //
          // Method Name: LineLineCollision
          //
          // Description:
-         //    Checks two lines for collision.
+         //    Checks two line segments for collision.
          //
          // Arguments:
          //    aLineOneOriginPointX - The origin X-Coordinate of the first line being tested.
@@ -116,6 +119,8 @@ namespace Bebop { namespace Math
          //    aLineTwoOriginPointY - The origin Y-Coordinate of the second line being tested. 
          //    aLineTwoEndPointX    - The end X-Coordinate of the second line being tested.
          //    aLineTwoEndPointY    - The end Y-Coordinate of the second line being tested.
+         //    aCollisionX          - Pointer for the X-Coordinate of the intersection point.
+         //    aCollisionY          - Pointer for the Y-Coordinate of the intersection point.
          //
          // Return:
          //    True  - There is collision between both lines.
@@ -125,7 +130,8 @@ namespace Bebop { namespace Math
          bool LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
                                 float aLineOneEndPointX, float aLineOneEndPointY,
                                 float aLineTwoOriginPointX, float aLineTwoOriginPointY,
-                                float aLineTwoEndPointX, float aLineTwoEndPointY);
+                                float aLineTwoEndPointX, float aLineTwoEndPointY,
+                                float* aCollisionX, float* aCollisionY);
 
 	   protected:
 	
@@ -183,6 +189,25 @@ namespace Bebop { namespace Math
                         float aPointTwoX, float aPointTwoY,
                         float aPointThreeX, float aPointThreeY);
 	
+         //************************************************************************************************************
+         //
+         // Method Name: PointDistances
+         //
+         // Description:
+         //    Returns the coordinates for the collision of two lines (One and Two).
+         //
+         // Arguments:
+         //    aOriginPointX - The origin X-Coordinate of the distance being tested.
+         //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
+         //    aEndPointX    - The end X-Coordinate of the distance being tested.
+         //    aEndPointY    - The end Y-Coordinate of the distance being tested.
+         //
+         // Return:
+         //    Returns the distances between two points.
+         //
+         //************************************************************************************************************
+         float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY);
+
    //******************************************************************************************************************
    // Methods - End
    //******************************************************************************************************************
