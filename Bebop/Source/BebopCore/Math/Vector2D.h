@@ -242,6 +242,22 @@ namespace Bebop { namespace Math
          //************************************************************************************************************
          Vector2D<T> GetNormalized() const;
 
+         //************************************************************************************************************
+         //
+         // Method: Dot
+         //
+         // Description:
+         //    Returns the dot product using the passed in vector.
+         //
+         // Arguments:
+         //    aOther - The vector being used for the dot product against this vector
+         //
+         // Return:
+         //    Returns a float of the dot product of this vector against another vector.
+         //
+         //************************************************************************************************************
+         float Dot(const Vector2D<T> aOther);
+
       protected:
 
          // There are currently no protected methods for this class.
@@ -585,7 +601,7 @@ namespace Bebop { namespace Math
    template<class T>
    T Vector2D<T>::GetMagnitude() const
    {
-      return sqrt((mComponentX * mComponentX) + (mComponentY * mComponentY));
+      return sqrtf((mComponentX * mComponentX) + (mComponentY * mComponentY));
    }
 
    //******************************************************************************************************************
@@ -608,6 +624,26 @@ namespace Bebop { namespace Math
    {
       float length = GetMagnitude();
       return Vector2D(mComponentX / length, mComponentY / length);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: Dot
+   //
+   // Description:
+   //    Returns the dot product using the passed in vector.
+   //
+   // Arguments:
+   //    aOther - The vector being used for the dot product against this vector
+   //
+   // Return:
+   //    Returns a float of the dot product of this vector against another vector.
+   //
+   //******************************************************************************************************************
+   template<class T>
+   float Vector2D<T>::Dot(const Vector2D<T> aOther)
+   {
+      return mComponentX * aOther.GetComponentX() + mComponentY * aOther.GetComponentY();
    }
 
 //*********************************************************************************************************************

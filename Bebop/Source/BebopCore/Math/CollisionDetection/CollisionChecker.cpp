@@ -10,6 +10,7 @@
 
 #include "CollisionChecker.h"
 #include "../MathConstants.h"
+#include "../Vector2D.h"
 // TODO: Delete this iostream when no longer needed
 #include <iostream>
 #include <algorithm>
@@ -269,6 +270,103 @@ namespace Bebop { namespace Math
       delete bottomY;
 
       return false;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: LineCircleCollision
+   //
+   // Description:
+   //    Checks line segment and circle collision. If there is a collision, the aCollisionX and aCollisionY varaibles
+   //    will be updated with the closest collision point (from the origin).
+   //
+   // Arguments:
+   //    aOriginPointX - The origin X-Coordinate of the line being tested.
+   //    aOriginPointY - The origin Y-Coordinate of the line being tested. 
+   //    aEndPointX    - The end X-Coordinate of the line being tested.
+   //    aEndPointY    - The end Y-Coordinate of the line being tested.
+   //    apCircle      - The circle being tested against.
+   //    aCollisionX   - Pointer for the X-Coordinate of the closest intersection point.
+   //    aCollisionY   - Pointer for the Y-Coordinate of the closest intersection point.
+   //
+   // Return:
+   //    True  - There is collision between the line segment and circle.
+   //    False - There is no collision between the line segment and circle.
+   //
+   //******************************************************************************************************************
+   bool CollisionChecker::LineCircleCollision(float aOriginPointX, float aOriginPointY,
+                                              float aEndPointX, float aEndPointY,
+                                              Objects::CircleObject* apCircle,
+                                              float* aCollisionX, float* aCollisionY)
+   {
+      Vector2D<float> origin(aOriginPointX, aOriginPointY);
+      Vector2D<float> end(aEndPointX, aEndPointY);
+      Vector2D<float> circleCenter(apCircle->GetCoordinateX(), apCircle->GetCoordinateY());
+
+      float originCircleDistance = PointDistances(aOriginPointX, aOriginPointY, apCircle->GetCoordinateX(), apCircle->GetStartingCoordinateY());
+      // Check if the origin is within the circle.
+      if (originCircleDistance <= apCircle->GetRadius())
+      {
+         *aCollisionX = aOriginPointX;
+         *aCollisionY = aOriginPointY;
+
+         return true;
+      }
+
+      Vector2D<float> endToOrigin = end - origin;
+      Vector2D<float> circleToOrigin = circleCenter - origin;
+      float a = endToOrigin.GetComponentX() * endToOrigin.GetComponentX() + endToOrigin.GetComponentY() * endToOrigin.GetComponentY();
+      float bBy2 = endToOrigin.Dot(circleToOrigin);
+      float c = circleToOrigin.Dot(circleToOrigin) - (apCircle->GetRadius() * apCircle->GetRadius());
+
+      float pBy2 = bBy2 / a;
+      float q = c / a;
+
+      // Check if there is not intersection from the line and circle.
+      float disc = pBy2 * pBy2 - q;
+      if (disc < 0.0F)
+      {
+         return false;
+      }
+
+      // Find the intersetion points of the line and circle.
+      float tmpSqrt = sqrtf(disc);
+      float abScalingFactor1 = -pBy2 + tmpSqrt;
+      float abScalingFactor2 = -pBy2 - tmpSqrt;
+      Vector2D<float> p1(origin.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor1,
+                         origin.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor1);
+      Vector2D<float> p2(origin.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor2,
+                         origin.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor2);
+
+      float p1ToOrigin = PointDistances(origin.GetComponentX(), origin.GetComponentY(), p1.GetComponentX(), p1.GetComponentY());
+      float p2ToOrigin = PointDistances(origin.GetComponentX(), origin.GetComponentY(), p2.GetComponentX(), p2.GetComponentY());
+
+      // Find the closest intersection point to the origin.
+      float closestX;
+      float closestY;
+      if (p1ToOrigin < p2ToOrigin)
+      {
+         closestX = p1.GetComponentX();
+         closestY = p1.GetComponentY();
+      }
+      else
+      {
+         closestX = p2.GetComponentX();
+         closestY = p2.GetComponentY();
+      }
+
+      // Find out if closest intersection is on the line segment.
+      float closestToOriginDistance = PointDistances(origin.GetComponentX(), origin.GetComponentY(), closestX, closestY);
+      float endToOriginDistance= PointDistances(origin.GetComponentX(), origin.GetComponentY(), end.GetComponentX(), end.GetComponentY());
+      if (closestToOriginDistance > endToOriginDistance)
+      {
+         return false;
+      }
+
+      *aCollisionX = closestX;
+      *aCollisionY = closestY;
+
+      return true;
    }
 
    //******************************************************************************************************************

@@ -105,6 +105,33 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
+         // Method Name: LineCircleCollision
+         //
+         // Description:
+         //    Checks line segment and circle collision. If there is a collision, the aCollisionX and aCollisionY
+         //    varaibles will be updated with the closest collision point (from the origin).
+         //
+         // Arguments:
+         //    aOriginPointX - The origin X-Coordinate of the line being tested.
+         //    aOriginPointY - The origin Y-Coordinate of the line being tested. 
+         //    aEndPointX    - The end X-Coordinate of the line being tested.
+         //    aEndPointY    - The end Y-Coordinate of the line being tested.
+         //    apCircle      - The circle being tested against.
+         //    aCollisionX   - Pointer for the X-Coordinate of the closest intersection point.
+         //    aCollisionY   - Pointer for the Y-Coordinate of the closest intersection point.
+         //
+         // Return:
+         //    True  - There is collision between the line segment and circle.
+         //    False - There is no collision between the line segment and circle.
+         //
+         //************************************************************************************************************
+         bool LineCircleCollision(float aOriginPointX, float aOriginPointY,
+                                     float aEndPointX, float aEndPointY,
+                                     Objects::CircleObject* apCircle,
+                                     float* aCollisionX, float* aCollisionY);
+
+         //************************************************************************************************************
+         //
          // Method Name: LineLineCollision
          //
          // Description:
