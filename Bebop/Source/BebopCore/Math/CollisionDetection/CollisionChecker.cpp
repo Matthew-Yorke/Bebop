@@ -17,10 +17,6 @@
 
 namespace Bebop { namespace Math
 {
-//*********************************************************************************************************************
-// Public Methods - Start
-//*********************************************************************************************************************
-
    //******************************************************************************************************************
    //
    // Method Name: RectangleRectangleCollision
@@ -35,8 +31,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool CollisionChecker::RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
-                                                      Objects::RectangleObject* mpRectangleTwo)
+   bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
+                                    Objects::RectangleObject* mpRectangleTwo)
    {
       if (mpRectangleOne->GetCoordinateX() < mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth() &&
           mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth() > mpRectangleTwo->GetCoordinateX() &&
@@ -66,8 +62,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool CollisionChecker::RectangleCircleCollision(Objects::RectangleObject* mpRectangle,
-                                                   Objects::CircleObject* mpCircle)
+   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle,
+                                 Objects::CircleObject* mpCircle)
    {
       //
       float tempCircleX = mpCircle->GetCoordinateX();
@@ -125,8 +121,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool CollisionChecker::CircleCircleCollision(Objects::CircleObject* mpCircleOne,
-                                                Objects::CircleObject* mpCircleTwo)
+   bool CircleCircleCollision(Objects::CircleObject* mpCircleOne,
+                              Objects::CircleObject* mpCircleTwo)
    {
       // Get the distance from the center of the first circle to the second circle.
       float distanceX = mpCircleOne->GetCoordinateX() - mpCircleTwo->GetCoordinateX();
@@ -164,10 +160,10 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and rectangle.
    //
    //******************************************************************************************************************
-   bool CollisionChecker::LineRectangleCollision(float aOriginPointX, float aOriginPointY,
-                                                 float aEndPointX, float aEndPointY,
-                                                 Objects::RectangleObject* mpRectangle,
-                                                 float* aCollisionX, float* aCollisionY)
+   bool LineRectangleCollision(float aOriginPointX, float aOriginPointY,
+                               float aEndPointX, float aEndPointY,
+                               Objects::RectangleObject* mpRectangle,
+                               float* aCollisionX, float* aCollisionY)
    {
       float* leftX = new float;
       float* leftY = new float;
@@ -294,10 +290,10 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and circle.
    //
    //******************************************************************************************************************
-   bool CollisionChecker::LineCircleCollision(float aOriginPointX, float aOriginPointY,
-                                              float aEndPointX, float aEndPointY,
-                                              Objects::CircleObject* apCircle,
-                                              float* aCollisionX, float* aCollisionY)
+   bool LineCircleCollision(float aOriginPointX, float aOriginPointY,
+                            float aEndPointX, float aEndPointY,
+                            Objects::CircleObject* apCircle,
+                            float* aCollisionX, float* aCollisionY)
    {
       Vector2D<float> origin(aOriginPointX, aOriginPointY);
       Vector2D<float> end(aEndPointX, aEndPointY);
@@ -393,11 +389,11 @@ namespace Bebop { namespace Math
    //    False - There is no collision between both lines.
    //
    //******************************************************************************************************************
-   bool CollisionChecker::LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
-                                            float aLineOneEndPointX, float aLineOneEndPointY,
-                                            float aLineTwoOriginPointX, float aLineTwoOriginPointY,
-                                            float aLineTwoEndPointX, float aLineTwoEndPointY,
-                                            float* aCollisionX, float* aCollisionY)
+   bool LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
+                          float aLineOneEndPointX, float aLineOneEndPointY,
+                          float aLineTwoOriginPointX, float aLineTwoOriginPointY,
+                          float aLineTwoEndPointX, float aLineTwoEndPointY,
+                          float* aCollisionX, float* aCollisionY)
    {
       // Retrieve the orientation possibilities.
       int o1 = Orientation(aLineOneOriginPointX, aLineOneOriginPointY,
@@ -503,121 +499,106 @@ namespace Bebop { namespace Math
       return false;
    }
 
-//*********************************************************************************************************************
-// Protected Methods - End
-//*********************************************************************************************************************
-
-   // There are currently no protected methods for this class.
-
-//*********************************************************************************************************************
-// Protected Methods - End
-//*********************************************************************************************************************
-
-//*********************************************************************************************************************
-// Private Methods - Start
-//*********************************************************************************************************************
-
-   //******************************************************************************************************************
-   //
-   // Method Name: Orientation
-   //
-   // Description:
-   //    Find the orientation between ordered triplet points.
-   //
-   // Arguments:
-   //    aPointOneX   - The origin X-Coordinate of the first point.
-   //    aPointOneY   - The origin Y-Coordinate of the first point.
-   //    aPointTwoX   - The origin X-Coordinate of the two point.
-   //    aPointTwoY   - The origin Y-Coordinate of the two point.
-   //    aPointThreeX - The origin X-Coordinate of the three point.
-   //    aPointThreeY - The origin Y-Coordinate of the three point.
-   //
-   // Return:
-   //    0 = Points are collinear.
-   //    1 = Points are in Clockwise orientation.
-   //    2 = Points are in Counterclockwise orientation.
-   //
-   //******************************************************************************************************************
-   int CollisionChecker::Orientation(float aPointOneX, float aPointOneY,
-                                     float aPointTwoX, float aPointTwoY,
-                                     float aPointThreeX, float aPointThreeY)
+   namespace
    {
-      int val = static_cast<int>((aPointTwoY - aPointOneY) * (aPointThreeX - aPointTwoX) -
-                                 (aPointTwoX - aPointOneX) * (aPointThreeY - aPointTwoY));
-
-      // Check if the points are collinear.
-      if (val == 0)
+      //***************************************************************************************************************
+      //
+      // Method Name: Orientation
+      //
+      // Description:
+      //    Find the orientation between ordered triplet points.
+      //
+      // Arguments:
+      //    aPointOneX   - The origin X-Coordinate of the first point.
+      //    aPointOneY   - The origin Y-Coordinate of the first point.
+      //    aPointTwoX   - The origin X-Coordinate of the two point.
+      //    aPointTwoY   - The origin Y-Coordinate of the two point.
+      //    aPointThreeX - The origin X-Coordinate of the three point.
+      //    aPointThreeY - The origin Y-Coordinate of the three point.
+      //
+      // Return:
+      //    0 = Points are collinear.
+      //    1 = Points are in Clockwise orientation.
+      //    2 = Points are in Counterclockwise orientation.
+      //
+      //***************************************************************************************************************
+      int Orientation(float aPointOneX, float aPointOneY,
+                      float aPointTwoX, float aPointTwoY,
+                      float aPointThreeX, float aPointThreeY)
       {
-         return 0;
+         int val = static_cast<int>((aPointTwoY - aPointOneY) * (aPointThreeX - aPointTwoX) -
+                                    (aPointTwoX - aPointOneX) * (aPointThreeY - aPointTwoY));
+
+         // Check if the points are collinear.
+         if (val == 0)
+         {
+            return 0;
+         }
+
+         // If the value is larger than 0 the points are in clockwise orientation.
+         // Else the value is less than 0 and the points are counterclockwise orientation.
+         return (val > 0) ? 1: 2;
       }
 
-      // If the value is larger than 0 the points are in clockwise orientation.
-      // Else the value is less than 0 and the points are counterclockwise orientation.
-      return (val > 0) ? 1: 2;
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method Name: OnSegment
-   //
-   // Description:
-   //    Given three collinear points (One, two, and Three), this function checks if point Two lies on line segment
-   //    One->Three.
-   //
-   // Arguments:
-   //    aPointOneX   - The origin X-Coordinate of the first point.
-   //    aPointOneY   - The origin Y-Coordinate of the first point.
-   //    aPointTwoX   - The origin X-Coordinate of the two point.
-   //    aPointTwoY   - The origin Y-Coordinate of the two point.
-   //    aPointThreeX - The origin X-Coordinate of the three point.
-   //    aPointThreeY - The origin Y-Coordinate of the three point.
-   //
-   // Return:
-   //    True  - Point Two lies on line segment One->Three.
-   //    False - Point Two does not lie on line segment One->Three.
-   //
-   //******************************************************************************************************************
-   bool CollisionChecker::OnSegment(float aPointOneX, float aPointOneY,
-                                    float aPointTwoX, float aPointTwoY,
-                                    float aPointThreeX, float aPointThreeY)
-   {
-      // Check if point Two lies on line segment One-Three.
-      if (aPointTwoX <= std::max(aPointOneX, aPointThreeX) &&
-          aPointTwoX >= std::min(aPointOneX, aPointThreeX) && 
-          aPointTwoY <= std::max(aPointOneY, aPointThreeY) &&
-          aPointTwoY >= std::min(aPointOneY, aPointThreeY))
+      //***************************************************************************************************************
+      //
+      // Method Name: OnSegment
+      //
+      // Description:
+      //    Given three collinear points (One, two, and Three), this function checks if point Two lies on line segment
+      //    One->Three.
+      //
+      // Arguments:
+      //    aPointOneX   - The origin X-Coordinate of the first point.
+      //    aPointOneY   - The origin Y-Coordinate of the first point.
+      //    aPointTwoX   - The origin X-Coordinate of the two point.
+      //    aPointTwoY   - The origin Y-Coordinate of the two point.
+      //    aPointThreeX - The origin X-Coordinate of the three point.
+      //    aPointThreeY - The origin Y-Coordinate of the three point.
+      //
+      // Return:
+      //    True  - Point Two lies on line segment One->Three.
+      //    False - Point Two does not lie on line segment One->Three.
+      //
+      //***************************************************************************************************************
+      bool OnSegment(float aPointOneX, float aPointOneY,
+                     float aPointTwoX, float aPointTwoY,
+                     float aPointThreeX, float aPointThreeY)
       {
-         return true; 
-      }
+         // Check if point Two lies on line segment One-Three.
+         if (aPointTwoX <= std::max(aPointOneX, aPointThreeX) &&
+             aPointTwoX >= std::min(aPointOneX, aPointThreeX) && 
+             aPointTwoY <= std::max(aPointOneY, aPointThreeY) &&
+             aPointTwoY >= std::min(aPointOneY, aPointThreeY))
+         {
+            return true; 
+         }
   
-      // Point Two does not lie on line segment One->Three.
-      return false; 
-   }
+         // Point Two does not lie on line segment One->Three.
+         return false; 
+      }
 
-   //******************************************************************************************************************
-   //
-   // Method Name: PointDistances
-   //
-   // Description:
-   //    Returns the coordinates for the collision of two lines (One and Two).
-   //
-   // Arguments:
-   //    aOriginPointX - The origin X-Coordinate of the distance being tested.
-   //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
-   //    aEndPointX    - The end X-Coordinate of the distance being tested.
-   //    aEndPointY    - The end Y-Coordinate of the distance being tested.
-   //
-   // Return:
-   //    Returns the distances between two points.
-   //
-   //******************************************************************************************************************
-   float CollisionChecker::PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY)
-   {
-      return sqrtf((aEndPointX - aOriginPointX)*(aEndPointX - aOriginPointX) + 
-                   (aEndPointY - aOriginPointY)*(aEndPointY - aOriginPointY));
+      //***************************************************************************************************************
+      //
+      // Method Name: PointDistances
+      //
+      // Description:
+      //    Returns the coordinates for the collision of two lines (One and Two).
+      //
+      // Arguments:
+      //    aOriginPointX - The origin X-Coordinate of the distance being tested.
+      //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
+      //    aEndPointX    - The end X-Coordinate of the distance being tested.
+      //    aEndPointY    - The end Y-Coordinate of the distance being tested.
+      //
+      // Return:
+      //    Returns the distances between two points.
+      //
+      //***************************************************************************************************************
+      float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY)
+      {
+         return sqrtf((aEndPointX - aOriginPointX)*(aEndPointX - aOriginPointX) + 
+                      (aEndPointY - aOriginPointY)*(aEndPointY - aOriginPointY));
+      }
    }
-
-//*********************************************************************************************************************
-// Private Methods - End
-//*********************************************************************************************************************
 }}
