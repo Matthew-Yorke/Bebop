@@ -38,9 +38,12 @@ namespace Bebop { namespace Graphics
    //
    //******************************************************************************************************************
    Light::Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
-                const int aLightIntensity) :
+                const int aLightIntensity, float aDitheringStepChange, unsigned int aDitheringSteps,
+                float aDitheringStepRate) :
       mOriginX(aOriginX), mOriginY(aOriginY), mRaidus(aRaidus), mLightColor(aLightColor),
-      mLightIntensity(aLightIntensity)
+      mLightIntensity(aLightIntensity),
+      mDitheringStepChange(aDitheringStepChange), mDitheringSteps(aDitheringSteps), mCurrentStep(0), mCurrentRadius(aRaidus),
+      mDitheringStepRate(aDitheringStepRate), mDiterhingStepTimeLeft(aDitheringStepRate), mIsDitheringDown(true)
    {
       CalculateLight();
    }
@@ -64,6 +67,39 @@ namespace Bebop { namespace Graphics
       mObjects.push_back(apObject);
    }
 
+   void Light::Update(const float aElapsedTime)
+   {
+      mDiterhingStepTimeLeft -= aElapsedTime;
+
+      if (mDiterhingStepTimeLeft < 0.0F)
+      {
+         mDiterhingStepTimeLeft = mDitheringStepRate;
+
+         if (mIsDitheringDown == true)
+         {
+            mCurrentRadius -= mDitheringStepChange;
+
+            if (++mCurrentStep == mDitheringSteps)
+            {
+               mCurrentStep = 0;
+               mIsDitheringDown = false;
+            }
+         }
+         else
+         {
+            mCurrentRadius += mDitheringStepChange;
+
+            if (++mCurrentStep == mDitheringSteps)
+            {
+               mCurrentStep = 0;
+               mIsDitheringDown = true;
+            }
+         }
+      }
+
+      CalculateLight();
+   }
+
    //******************************************************************************************************************
    //
    // Method: CalculateLight
@@ -84,7 +120,7 @@ namespace Bebop { namespace Graphics
 
       mPoints.clear();
 
-      for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 0.25F)
+      for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 0.1F)
       {
          float* endPointX = new float;
          float* endPointY = new float;
@@ -99,7 +135,7 @@ namespace Bebop { namespace Graphics
             {
                
                collision = Math::LineRectangleCollision(mOriginX, mOriginY,
-                                                        mOriginX + mRaidus*sin(i * Math::RADIANS_CONVERSION), mOriginY + mRaidus*cos(i * Math::RADIANS_CONVERSION),
+                                                        mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION), mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION),
                                                         dynamic_cast<Objects::RectangleObject*>(*iter), tempEndX, tempEndY);
 
                if (collision == true)
@@ -110,7 +146,7 @@ namespace Bebop { namespace Graphics
             else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
             {
                collision = Math::LineCircleCollision(mOriginX, mOriginY,
-                                                     mOriginX + mRaidus*sin(i * Math::RADIANS_CONVERSION), mOriginY + mRaidus*cos(i * Math::RADIANS_CONVERSION),
+                                                     mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION), mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION),
                                                      dynamic_cast<Objects::CircleObject*>(*iter), tempEndX, tempEndY);
 
                if (collision == true)
@@ -144,8 +180,8 @@ namespace Bebop { namespace Graphics
          }
          else
          {
-            *endPointX = mOriginX + mRaidus*sin(i * Math::RADIANS_CONVERSION);
-            *endPointY = mOriginY + mRaidus*cos(i * Math::RADIANS_CONVERSION);
+            *endPointX = mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION);
+            *endPointY = mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION);
          }
 
          mPoints.push_back(std::make_pair(*endPointX, *endPointY));
@@ -237,8 +273,8 @@ namespace Bebop { namespace Graphics
 
       if (true == aWithColor)
       {
-         float firstPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mRaidus) * firstDistance));
-         float secondPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mRaidus) * secondDistance));
+         float firstPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mCurrentRadius) * firstDistance));
+         float secondPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mCurrentRadius) * secondDistance));
 
          // Add the points of the triangle along with their colors at the point.
          ALLEGRO_VERTEX vertex[] =
@@ -256,8 +292,8 @@ namespace Bebop { namespace Graphics
       }
       else
       {
-         float firstPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mRaidus) * firstDistance));
-         float secondPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mRaidus) * secondDistance));
+         float firstPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mCurrentRadius) * firstDistance));
+         float secondPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mCurrentRadius) * secondDistance));
 
          // Add the points of the triangle along with their colors at the point.
          ALLEGRO_VERTEX vertex[] =

@@ -43,7 +43,8 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
-               const int aLightIntensity);
+               const int aLightIntensity, float aDitheringStepChange, unsigned int aDitheringSteps,
+               float aDitheringStepRate);
 
          //************************************************************************************************************
          //
@@ -60,6 +61,8 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void AddObject(Objects::Object* const apObject);
+
+         void Update(const float aElapsedTime);
 
          //************************************************************************************************************
          //
@@ -159,7 +162,17 @@ namespace Bebop { namespace Graphics
          // Vector of X and Y coordinate for each point in the light radius.
          std::vector<std::pair<float, float>> mPoints;
 
+         // Vector of objects that can block a light source.
          std::vector<Objects::Object*> mObjects;
+
+         float mDitheringStepChange;
+         unsigned int mDitheringSteps;
+         unsigned int mCurrentStep;
+         float mCurrentRadius;
+         float mDitheringStepRate;
+         float mDiterhingStepTimeLeft;
+
+         bool mIsDitheringDown;
 
    //******************************************************************************************************************
    // Member Variables - End

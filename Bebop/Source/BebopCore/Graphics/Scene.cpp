@@ -216,7 +216,7 @@ namespace Bebop { namespace Graphics
 
       for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
       {
-         (*iterator)->CalculateLight();
+         (*iterator)->Update(aElapsedTime);
       }
    }
 
@@ -237,7 +237,7 @@ namespace Bebop { namespace Graphics
    void Scene::Draw() const
    {
       // TODO: This is temporarily colored, but should be changed to black with no alpha being used.
-      al_clear_to_color(al_map_rgba(0, 100, 0, 255));
+      al_clear_to_color(al_map_rgb(0, 100, 0));
 
       DrawLightColors();
 
@@ -304,6 +304,9 @@ namespace Bebop { namespace Graphics
       {
          (*iterator)->Draw(true);
       }
+
+      // Set back to the default blender.
+      al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
    }
 
    //******************************************************************************************************************
@@ -328,16 +331,20 @@ namespace Bebop { namespace Graphics
       // Set bitmap to the shadow layer and clear it.
       al_set_target_bitmap(mpShadowMap);
       // TODO: This should be temprary 0 alpha. Eventually update to change this with a scene call.
-      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 0));
+      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 150));
 
       // Set to blend the colors together by subtracting the light from the shadow map.
-      al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+      al_set_separate_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA,
+                              ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
       // Draw the lights to the shadow map.
       for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
       {
          (*iterator)->Draw(false);
       }
+
+      // Set back to the default blender.
+      al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 
       // Set the target bitmap back to the main display and reset the blending options.
       al_set_target_bitmap(displayBitmap);
