@@ -152,6 +152,25 @@ namespace Bebop { namespace Math
                           float aLineTwoEndPointX, float aLineTwoEndPointY,
                           float* aCollisionX, float* aCollisionY);
 
+   //******************************************************************************************************************
+   //
+   // Method Name: PointDistances
+   //
+   // Description:
+   //    Returns the coordinates for the collision of two lines (One and Two).
+   //
+   // Arguments:
+   //    aOriginPointX - The origin X-Coordinate of the distance being tested.
+   //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
+   //    aEndPointX    - The end X-Coordinate of the distance being tested.
+   //    aEndPointY    - The end Y-Coordinate of the distance being tested.
+   //
+   // Return:
+   //    Returns the distances between two points.
+   //
+   //******************************************************************************************************************
+   float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY);
+
    namespace
    {
       //***************************************************************************************************************
@@ -203,25 +222,6 @@ namespace Bebop { namespace Math
       bool OnSegment(float aPointOneX, float aPointOneY,
                      float aPointTwoX, float aPointTwoY,
                      float aPointThreeX, float aPointThreeY);
-      
-      //***************************************************************************************************************
-      //
-      // Method Name: PointDistances
-      //
-      // Description:
-      //    Returns the coordinates for the collision of two lines (One and Two).
-      //
-      // Arguments:
-      //    aOriginPointX - The origin X-Coordinate of the distance being tested.
-      //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
-      //    aEndPointX    - The end X-Coordinate of the distance being tested.
-      //    aEndPointY    - The end Y-Coordinate of the distance being tested.
-      //
-      // Return:
-      //    Returns the distances between two points.
-      //
-      //***************************************************************************************************************
-      float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY);
    }
 }}
 

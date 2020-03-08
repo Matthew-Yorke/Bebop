@@ -59,6 +59,22 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: GetObject
+         //
+         // Description:
+         //    Retrieve object information of the particle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns pointer to the object information.
+         //
+         //************************************************************************************************************
+         Objects::Object* GetObject();
+
+         //************************************************************************************************************
+         //
          // Method Name: Update
          //
          // Description:

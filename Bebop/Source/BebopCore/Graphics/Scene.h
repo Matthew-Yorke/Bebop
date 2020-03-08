@@ -17,7 +17,6 @@
 #include "Particle.h"
 #include "Light.h"
 
-
 namespace Bebop { namespace Graphics
 {
    class Scene
@@ -101,13 +100,13 @@ namespace Bebop { namespace Graphics
          //    Pushes a sprite object onto the vector list of sprites. 
          //
          // Arguments:
-         //    aSprite - Pointer to the sprite object being pushed into the sprite vector.
+         //    apSprite - Pointer to the sprite object being pushed into the sprite vector.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void PushSprite(Sprite* const aSprite);
+         void PushSprite(Sprite* const apSprite);
 
          //************************************************************************************************************
          //
@@ -117,13 +116,13 @@ namespace Bebop { namespace Graphics
          //    Pushes a sprite object onto the vector list of animated sprites.
          //
          // Arguments:
-         //    aAnimatedSprite - Pointer to the sprite object being pushed into the animated sprite vector.
+         //    apAnimatedSprite - Pointer to the sprite object being pushed into the animated sprite vector.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void PushAnimatedSprite(AnimatedSprite* const aAnimatedSprite);
+         void PushAnimatedSprite(AnimatedSprite* const apAnimatedSprite);
 
          //************************************************************************************************************
          //
@@ -133,13 +132,13 @@ namespace Bebop { namespace Graphics
          //    Pushes a particle object onto the vector list of particles.
          //
          // Arguments:
-         //    aParticle - Pointer to the particle object being pushed into the particle vector.
+         //    apParticle - Pointer to the particle object being pushed into the particle vector.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void PushParticle(Particle* const aParticle);
+         void PushParticle(Particle* const apParticle);
 
          //************************************************************************************************************
          //
@@ -149,13 +148,13 @@ namespace Bebop { namespace Graphics
          //    Pushes a light object onto the vector list of lights.
          //
          // Arguments:
-         //    aLight - Pointer to the light object being pushed into the light vector.
+         //    apLight - Pointer to the light object being pushed into the light vector.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void PushLight(Light* const aLight);
+         void PushLight(Light* const apLight);
 
          //************************************************************************************************************
          //
@@ -254,8 +253,10 @@ namespace Bebop { namespace Graphics
          // Vector list of the particles within the scene.
          std::vector<Particle*> mParticles;
 
+         // Vector list of lights within the scene.
          std::vector<Light*> mLights;
 
+         // The shadowmap that is overlaid ontop of the scene to simulate lgith and darkness of a scene.
          ALLEGRO_BITMAP* mpShadowMap;
    
       //***************************************************************************************************************

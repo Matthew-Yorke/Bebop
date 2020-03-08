@@ -11,6 +11,7 @@
 #define Light_H
 
 #include "Color.h"
+#include "../Objects/Object.h"
 #include <vector>
 
 namespace Bebop { namespace Graphics
@@ -43,6 +44,22 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
                const int aLightIntensity);
+
+         //************************************************************************************************************
+         //
+         // Method: AddObject
+         //
+         // Description:
+         //    Add an object that can be blocked by light.
+         //
+         // Arguments:
+         //    apObject - The object to be blocked.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void AddObject(Objects::Object* const apObject);
 
          //************************************************************************************************************
          //
@@ -141,6 +158,8 @@ namespace Bebop { namespace Graphics
 
          // Vector of X and Y coordinate for each point in the light radius.
          std::vector<std::pair<float, float>> mPoints;
+
+         std::vector<Objects::Object*> mObjects;
 
    //******************************************************************************************************************
    // Member Variables - End

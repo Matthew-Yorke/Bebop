@@ -27,16 +27,19 @@ namespace Bebop { namespace Objects
    //    aWidthCenterPoint  - The center point of the width of the object.
    //    aHeightCenterPoint - The center point of the height of the object.
    //    aColor             - The color of the rectangle object.
+   //    aObjectType        - Determines what kind of object is created (rectangle, circle, etc.)
+   //    aBlocksLights      - Determines if this object should blocks lights from passing through.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    Object::Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
-                  const int aHeightCenterPoint, const Graphics::Color aColor) :
+                  const int aHeightCenterPoint, const Graphics::Color aColor, const ObjectType aObjectType,
+                  const bool aBlocksLight) :
       mCoordinateX(aCoordinateX), mCoordinateY(aCoordinateY), mWidthCenterPoint(aWidthCenterPoint),
       mHeightCenterPoint(aHeightCenterPoint), mStartingCoordinateX(aCoordinateX), mStartingCoordinateY(aCoordinateY),
-      mColor(aColor)
+      mColor(aColor), mObjectType(aObjectType), mBlocksLight(aBlocksLight)
    {
    }
    
@@ -190,6 +193,45 @@ namespace Bebop { namespace Objects
    int Object::GetHeightCenterPoint() const
    {
       return mHeightCenterPoint;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: GetObjectType
+   //
+   // Description:
+   //    This method returns the object type.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns the type of object.
+   //
+   //******************************************************************************************************************
+   ObjectType Object::GetObjectType() const
+   {
+      return mObjectType;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: GetBlocksLight
+   //
+   // Description:
+   //    This method returns if the object should be blocking light or not.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    True  - Should block lights.
+   //    False - Should NOT block lights.
+   //
+   //******************************************************************************************************************
+   bool Object::GetBlocksLight() const
+   {
+      return mBlocksLight;
    }
 
 //*********************************************************************************************************************

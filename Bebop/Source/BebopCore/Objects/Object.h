@@ -14,6 +14,13 @@
 
 namespace Bebop { namespace Objects
 {
+   enum ObjectType
+   {
+      RECTANGLE,
+      CIRCLE,
+      NONE
+   };
+
    class Object
    {
    //******************************************************************************************************************
@@ -34,13 +41,16 @@ namespace Bebop { namespace Objects
          //    aWidthCenterPoint  - The center point of the width of the object.
          //    aHeightCenterPoint - The center point of the height of the object.
          //    aColor             - The color of the rectangle object.
+         //    aObjectType        - Determines what kind of object is created (rectangle, circle, etc.)
+         //    aBlocksLights      - Determines if this object should blocks lights from passing through.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
-                const int aHeightCenterPoint, const Graphics::Color aColor);
+                const int aHeightCenterPoint, const Graphics::Color aColor, const ObjectType aObjectType,
+                const bool aBlocksLight);
       
          //************************************************************************************************************
          //
@@ -172,6 +182,39 @@ namespace Bebop { namespace Objects
       
          //************************************************************************************************************
          //
+         // Method Name: GetObjectType
+         //
+         // Description:
+         //    This method returns the object type.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the type of object.
+         //
+         //************************************************************************************************************
+         ObjectType GetObjectType() const;
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetBlocksLight
+         //
+         // Description:
+         //    This method returns if the object should be blocking light or not.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    True  - Should block lights.
+         //    False - Should NOT block lights.
+         //
+         //************************************************************************************************************
+         bool GetBlocksLight() const;
+
+         //************************************************************************************************************
+         //
          // Method: Draw
          //
          // Description:
@@ -256,8 +299,14 @@ namespace Bebop { namespace Objects
          // The center point along the height of an object.
          int mHeightCenterPoint;
 
-         // The color of the object
+         // The color of the object.
          Graphics::Color mColor;
+
+         // The type of object (e.g., circle, rectangle, etc.).
+         ObjectType mObjectType;
+
+         // Determines if this object should block lights.
+         bool mBlocksLight;
       
       private:
       

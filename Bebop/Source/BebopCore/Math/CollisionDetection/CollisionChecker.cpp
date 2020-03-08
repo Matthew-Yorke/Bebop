@@ -230,14 +230,14 @@ namespace Bebop { namespace Math
          }
          if (PointDistances(aOriginPointX, aOriginPointY, *rightX, *rightY) < closestDistance)
          {
-            closestPointX = topX;
-            closestPointY = topY;
+            closestPointX = rightX;
+            closestPointY = rightY;
             closestDistance = PointDistances(aOriginPointX, aOriginPointY, *rightX, *rightY);
          }
          if (PointDistances(aOriginPointX, aOriginPointY, *bottomX, *bottomY) < closestDistance)
          {
-            closestPointX = topX;
-            closestPointY = topY;
+            closestPointX = bottomX;
+            closestPointY = bottomY;
             closestDistance = PointDistances(aOriginPointX, aOriginPointY, *bottomX, *bottomY);
          }
 
@@ -352,9 +352,29 @@ namespace Bebop { namespace Math
       }
 
       // Find out if closest intersection is on the line segment.
-      float closestToOriginDistance = PointDistances(origin.GetComponentX(), origin.GetComponentY(), closestX, closestY);
-      float endToOriginDistance= PointDistances(origin.GetComponentX(), origin.GetComponentY(), end.GetComponentX(), end.GetComponentY());
-      if (closestToOriginDistance > endToOriginDistance)
+      //float closestToOriginDistance = PointDistances(origin.GetComponentX(), origin.GetComponentY(), closestX, closestY);
+      //float endToOriginDistance= PointDistances(origin.GetComponentX(), origin.GetComponentY(), end.GetComponentX(), end.GetComponentY());
+      //if (closestToOriginDistance > endToOriginDistance)
+      //{
+      //   return false;
+      //}
+      //float crossProduct = (closestY - origin.GetComponentY()) * (end.GetComponentX() - origin.GetComponentX()) -
+      //                     (closestX - origin.GetComponentX()) * (end.GetComponentY() - origin.GetComponentY());
+      //if (abs(crossProduct) < -0.00000001F)
+      //{
+      //   return false;
+      //}
+
+      float dotProduct = (closestX - origin.GetComponentX()) * (end.GetComponentX() - origin.GetComponentX()) +
+                         (closestY - origin.GetComponentY()) * (end.GetComponentY() - origin.GetComponentY());
+      if (dotProduct < 0.0F)
+      {
+         return false;
+      }
+
+      float squareLengthBA = (end.GetComponentX() - origin.GetComponentX()) * (end.GetComponentX() - origin.GetComponentX()) +
+                             (end.GetComponentY() - origin.GetComponentY()) * (end.GetComponentY() - origin.GetComponentY());
+      if (dotProduct > squareLengthBA)
       {
          return false;
       }
@@ -499,6 +519,29 @@ namespace Bebop { namespace Math
       return false;
    }
 
+   //******************************************************************************************************************
+   //
+   // Method Name: PointDistances
+   //
+   // Description:
+   //    Returns the coordinates for the collision of two lines (One and Two).
+   //
+   // Arguments:
+   //    aOriginPointX - The origin X-Coordinate of the distance being tested.
+   //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
+   //    aEndPointX    - The end X-Coordinate of the distance being tested.
+   //    aEndPointY    - The end Y-Coordinate of the distance being tested.
+   //
+   // Return:
+   //    Returns the distances between two points.
+   //
+   //******************************************************************************************************************
+   float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY)
+   {
+      return sqrtf((aEndPointX - aOriginPointX)*(aEndPointX - aOriginPointX) + 
+                   (aEndPointY - aOriginPointY)*(aEndPointY - aOriginPointY));
+   }
+
    namespace
    {
       //***************************************************************************************************************
@@ -576,29 +619,6 @@ namespace Bebop { namespace Math
   
          // Point Two does not lie on line segment One->Three.
          return false; 
-      }
-
-      //***************************************************************************************************************
-      //
-      // Method Name: PointDistances
-      //
-      // Description:
-      //    Returns the coordinates for the collision of two lines (One and Two).
-      //
-      // Arguments:
-      //    aOriginPointX - The origin X-Coordinate of the distance being tested.
-      //    aOriginPointY - The origin Y-Coordinate of the distance being tested. 
-      //    aEndPointX    - The end X-Coordinate of the distance being tested.
-      //    aEndPointY    - The end Y-Coordinate of the distance being tested.
-      //
-      // Return:
-      //    Returns the distances between two points.
-      //
-      //***************************************************************************************************************
-      float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY)
-      {
-         return sqrtf((aEndPointX - aOriginPointX)*(aEndPointX - aOriginPointX) + 
-                      (aEndPointY - aOriginPointY)*(aEndPointY - aOriginPointY));
       }
    }
 }}

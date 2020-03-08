@@ -24,18 +24,20 @@ namespace Bebop { namespace Objects
    //    Constructor that sets default values for member variables.
    //
    // Arguments:
-   //    aCoordinateX - The X-Coordinate the circular object is to be displayed on the window.
-   //    aCoordinateY - The Y-Coordinate the circular object is to be displayed on the window. 
-   //    aRadius      - The radius of the circular object.
-   //    aColor       - The color of the rectangle object.
+   //    aCoordinateX  - The X-Coordinate the circular object is to be displayed on the window.
+   //    aCoordinateY  - The Y-Coordinate the circular object is to be displayed on the window. 
+   //    aRadius       - The radius of the circular object.
+   //    aColor        - The color of the rectangle object.
+   //    aBlocksLights - Determines if this object should blocks lights from passing through.
    //
    // Return:
    //    N/A
    //
    //************************************************************************************************************
    CircleObject::CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius,
-                              const Graphics::Color aColor) :
-      Object(aCoordinateX, aCoordinateY, aRadius, aRadius, aColor), mRadius(aRadius)
+                              const Graphics::Color aColor, const bool aBlocksLights) :
+      Object(aCoordinateX, aCoordinateY, aRadius, aRadius, aColor, ObjectType::CIRCLE, aBlocksLights),
+      mRadius(aRadius)
    {
    }
    

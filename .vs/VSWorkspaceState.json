@@ -2,7 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Bebop",
-    "\\Bebop\\Source"
+    "\\Bebop\\Source",
+    "\\Bebop\\Source\\BebopCore",
+    "\\Bebop\\Source\\BebopCore\\Graphics",
+    "\\Bebop\\Source\\BebopCore\\Objects"
   ],
+  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\Particle.cpp",
   "PreviewInSolutionExplorer": false
 }

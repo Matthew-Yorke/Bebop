@@ -58,6 +58,25 @@ namespace Bebop { namespace Graphics
 
    //******************************************************************************************************************
    //
+   // Method: GetObject
+   //
+   // Description:
+   //    Retrieve object information of the particle.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns pointer to the object information.
+   //
+   //******************************************************************************************************************
+   Objects::Object* Particle::GetObject()
+   {
+      return mpObject;
+   }
+   
+   //******************************************************************************************************************
+   //
    // Method: Update
    //
    // Description:
@@ -74,8 +93,11 @@ namespace Bebop { namespace Graphics
    {
       mLivingTime += aElapsedTime;
 
-      mpObject->SetCoordinateX(mpObject->GetStartingCoordinateX() + mpMotion->GetPositionX(mLivingTime));
-      mpObject->SetCoordinateY(mpObject->GetStartingCoordinateY() + mpMotion->GetPositionY(mLivingTime));
+      if (mpMotion != nullptr)
+      {
+         mpObject->SetCoordinateX(mpObject->GetStartingCoordinateX() + mpMotion->GetPositionX(mLivingTime));
+         mpObject->SetCoordinateY(mpObject->GetStartingCoordinateY() + mpMotion->GetPositionY(mLivingTime));
+      }
    }
 
    //******************************************************************************************************************

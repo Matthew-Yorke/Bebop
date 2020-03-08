@@ -106,15 +106,15 @@ namespace Bebop { namespace Graphics
    //    Pushes a sprite object onto the vector list of sprites. 
    //
    // Arguments:
-   //    aSprite - Pointer to the sprite object being pushed into the sprite vector.
+   //    apSprite - Pointer to the sprite object being pushed into the sprite vector.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::PushSprite(Sprite* const aSprite)
+   void Scene::PushSprite(Sprite* const apSprite)
    {
-      mSprites.push_back(aSprite);
+      mSprites.push_back(apSprite);
    }
 
    //******************************************************************************************************************
@@ -125,15 +125,15 @@ namespace Bebop { namespace Graphics
    //    Pushes a sprite object onto the vector list of animated sprites.
    //
    // Arguments:
-   //    aAnimatedSprite - Pointer to the sprite object being pushed into the animated sprite vector.
+   //    apAnimatedSprite - Pointer to the sprite object being pushed into the animated sprite vector.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::PushAnimatedSprite(AnimatedSprite* const aAnimatedSprite)
+   void Scene::PushAnimatedSprite(AnimatedSprite* const apAnimatedSprite)
    {
-      mAnimatedSprites.push_back(aAnimatedSprite);
+      mAnimatedSprites.push_back(apAnimatedSprite);
    }
 
    //******************************************************************************************************************
@@ -144,15 +144,22 @@ namespace Bebop { namespace Graphics
    //    Pushes a particle object onto the vector list of particles.
    //
    // Arguments:
-   //    aParticle - Pointer to the particle object being pushed into the particle vector.
+   //    apParticle - Pointer to the particle object being pushed into the particle vector.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::PushParticle(Particle* const aParticle)
+   void Scene::PushParticle(Particle* const apParticle)
    {
-      mParticles.push_back(aParticle);
+      mParticles.push_back(apParticle);
+      if (apParticle->GetObject()->GetBlocksLight() == true)
+      {
+         for (auto iter = mLights.begin(); iter != mLights.end(); ++iter)
+         {
+            (*iter)->AddObject(apParticle->GetObject());
+         }
+      }
    }
 
    //******************************************************************************************************************
@@ -163,15 +170,22 @@ namespace Bebop { namespace Graphics
    //    Pushes a light object onto the vector list of lights.
    //
    // Arguments:
-   //    aLight - Pointer to the light object being pushed into the light vector.
+   //    apLight - Pointer to the light object being pushed into the light vector.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::PushLight(Light* const aLight)
+   void Scene::PushLight(Light* const apLight)
    {
-      mLights.push_back(aLight);
+      for (auto iter = mParticles.begin(); iter != mParticles.end(); ++iter)
+      {
+         if ((*iter)->GetObject()->GetBlocksLight() == true)
+         {
+            apLight->AddObject((*iter)->GetObject());
+         }
+      }
+      mLights.push_back(apLight);
    }
 
    //******************************************************************************************************************
@@ -194,10 +208,15 @@ namespace Bebop { namespace Graphics
       {
          (*iterator)->Update(aElapsedTime);
       }
-
+      
       for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
       {
          (*iterator)->Update(aElapsedTime);
+      }
+
+      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
+      {
+         (*iterator)->CalculateLight();
       }
    }
 
@@ -217,6 +236,9 @@ namespace Bebop { namespace Graphics
    //************************************************************************************************************
    void Scene::Draw() const
    {
+      // TODO: This is temporarily colored, but should be changed to black with no alpha being used.
+      al_clear_to_color(al_map_rgba(0, 100, 0, 255));
+
       DrawLightColors();
 
       for (auto iterator = mSprites.begin(); iterator != mSprites.end(); ++iterator)
@@ -305,7 +327,8 @@ namespace Bebop { namespace Graphics
 
       // Set bitmap to the shadow layer and clear it.
       al_set_target_bitmap(mpShadowMap);
-      al_clear_to_color(al_map_rgb(NO_COLOR, NO_COLOR, NO_COLOR));
+      // TODO: This should be temprary 0 alpha. Eventually update to change this with a scene call.
+      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 0));
 
       // Set to blend the colors together by subtracting the light from the shadow map.
       al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);

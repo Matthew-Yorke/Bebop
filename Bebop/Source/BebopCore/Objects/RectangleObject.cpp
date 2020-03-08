@@ -24,19 +24,21 @@ namespace Bebop { namespace Objects
    //    Constructor that sets default values for member variables.
    //
    // Arguments:
-   //    aCoordinateX - The X-Coordinate the rectangular object is to be displayed on the window.
-   //    aCoordinateY - The Y-Coordinate the rectangular object is to be displayed on the window. 
-   //    aWidth       - The width of the rectangular object.
-   //    aHeight      - The height of the rectangular object.
-   //    aColor       - The color of the rectangle object.
+   //    aCoordinateX  - The X-Coordinate the rectangular object is to be displayed on the window.
+   //    aCoordinateY  - The Y-Coordinate the rectangular object is to be displayed on the window. 
+   //    aWidth        - The width of the rectangular object.
+   //    aHeight       - The height of the rectangular object.
+   //    aColor        - The color of the rectangle object.
+   //    aBlocksLights - Determines if this object should blocks lights from passing through.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    RectangleObject::RectangleObject(const float aCoordinateX, const float aCoordinateY, const int aWidth,
-                                    const int aHeight, const Graphics::Color aColor) :
-      Object(aCoordinateX, aCoordinateY, (aWidth / 2), (aHeight / 2), aColor), mWidth(aWidth), mHeight(aHeight)
+                                    const int aHeight, const Graphics::Color aColor, const bool aBlocksLights) :
+      Object(aCoordinateX, aCoordinateY, (aWidth / 2), (aHeight / 2), aColor, ObjectType::RECTANGLE, aBlocksLights),
+      mWidth(aWidth), mHeight(aHeight)
    {
    }
    
