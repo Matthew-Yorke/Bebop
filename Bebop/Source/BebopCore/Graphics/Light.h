@@ -13,6 +13,7 @@
 #include "Color.h"
 #include "../Objects/Object.h"
 #include <vector>
+#include "../Objects//RectangleObject.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -34,7 +35,7 @@ namespace Bebop { namespace Graphics
          // Arguments:
          //    aOriginX        - The X-Coordinate of the light origin point.
          //    aOriginY        - The Y-Coordinate of the light origin point.
-         //    aRaidus         - The radius of the light source.
+         //    aRadius         - The radius of the light source.
          //    aLightColor     - The color of the light source.
          //    aLightIntensity - Th intensity of the light itself.
          //
@@ -42,9 +43,8 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
-               const int aLightIntensity, float aDitheringStepChange, unsigned int aDitheringSteps,
-               float aDitheringStepRate);
+         Light(const float aOriginX, const float aOriginY, const float aRadius, const Color aLightColor,
+               const int aLightIntensity);
 
          //************************************************************************************************************
          //
@@ -62,6 +62,20 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          void AddObject(Objects::Object* const apObject);
 
+         //************************************************************************************************************
+         //
+         // Method: Update
+         //
+         // Description:
+         //    Update the light calculations.
+         //
+         // Arguments:
+         //    aElapsedTime - The amount of time since the last update.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
          void Update(const float aElapsedTime);
 
          //************************************************************************************************************
@@ -126,6 +140,24 @@ namespace Bebop { namespace Graphics
          void DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
                            const float aSecondPointY, const bool aWithColor) const;
 
+         //************************************************************************************************************
+         //
+         // Method: RectangleCollisionPoint
+         //
+         // Description:
+         //    Checks light collision against a point on a rectangle.
+         //
+         // Arguments:
+         //    aCoordinateX   - X-Coordinate of the point on the rectangle being checked..
+         //    aCoordinateY   - Y-Coordinate of the point on the rectangle being checked..
+         //    aThisRectangle - Pointer to the rectangle being checked..
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RectangleCollisionPoint(float aCoordinateX, float aCoordinateY, Objects::Object* aThisRectangle);
+
    //******************************************************************************************************************
    // Methods - End
    //******************************************************************************************************************
@@ -151,7 +183,7 @@ namespace Bebop { namespace Graphics
          float mOriginY;
 
          // The radius of the light.
-         float mRaidus;
+         float mRadius;
 
          // The color of the light.
          Color mLightColor;
@@ -160,19 +192,12 @@ namespace Bebop { namespace Graphics
          int mLightIntensity;
 
          // Vector of X and Y coordinate for each point in the light radius.
-         std::vector<std::pair<float, float>> mPoints;
+         std::vector<std::pair<float, std::pair<float, float>>> mPoints;
+
+         std::vector<float> mAnglesToCheck;
 
          // Vector of objects that can block a light source.
          std::vector<Objects::Object*> mObjects;
-
-         float mDitheringStepChange;
-         unsigned int mDitheringSteps;
-         unsigned int mCurrentStep;
-         float mCurrentRadius;
-         float mDitheringStepRate;
-         float mDiterhingStepTimeLeft;
-
-         bool mIsDitheringDown;
 
    //******************************************************************************************************************
    // Member Variables - End

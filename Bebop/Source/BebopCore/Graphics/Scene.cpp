@@ -153,6 +153,7 @@ namespace Bebop { namespace Graphics
    void Scene::PushParticle(Particle* const apParticle)
    {
       mParticles.push_back(apParticle);
+      
       if (apParticle->GetObject()->GetBlocksLight() == true)
       {
          for (auto iter = mLights.begin(); iter != mLights.end(); ++iter)
@@ -181,9 +182,7 @@ namespace Bebop { namespace Graphics
       for (auto iter = mParticles.begin(); iter != mParticles.end(); ++iter)
       {
          if ((*iter)->GetObject()->GetBlocksLight() == true)
-         {
             apLight->AddObject((*iter)->GetObject());
-         }
       }
       mLights.push_back(apLight);
    }
@@ -237,7 +236,7 @@ namespace Bebop { namespace Graphics
    void Scene::Draw() const
    {
       // TODO: This is temporarily colored, but should be changed to black with no alpha being used.
-      al_clear_to_color(al_map_rgb(0, 100, 0));
+      al_clear_to_color(al_map_rgb(0, 0, 0));
 
       DrawLightColors();
 
@@ -331,11 +330,10 @@ namespace Bebop { namespace Graphics
       // Set bitmap to the shadow layer and clear it.
       al_set_target_bitmap(mpShadowMap);
       // TODO: This should be temprary 0 alpha. Eventually update to change this with a scene call.
-      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 150));
+      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 250));
 
       // Set to blend the colors together by subtracting the light from the shadow map.
-      al_set_separate_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA,
-                              ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+      al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
       // Draw the lights to the shadow map.
       for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)

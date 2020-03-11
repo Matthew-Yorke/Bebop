@@ -178,6 +178,18 @@ namespace Bebop { namespace Math
       bool rightCollided = false;
       bool bottomCollided = false;
 
+      if (aOriginPointX >= mpRectangle->GetCoordinateX() &&
+          aOriginPointX <= mpRectangle->GetCoordinateX() + mpRectangle->GetWidth() &&
+          aOriginPointY >= mpRectangle->GetCoordinateY() &&
+          aOriginPointY <= mpRectangle->GetCoordinateY() + mpRectangle->GetHeight())
+      {
+         if (aCollisionX != nullptr)
+            *aCollisionX = aOriginPointX;
+         if (aCollisionY != nullptr)
+            *aCollisionY = aOriginPointY;
+         return true;
+      }
+
       // Check line collision on left side of the rectangle.
       if (true == LineLineCollision(aOriginPointX, aOriginPointY,
                                     aEndPointX, aEndPointY,
@@ -241,8 +253,10 @@ namespace Bebop { namespace Math
             closestDistance = PointDistances(aOriginPointX, aOriginPointY, *bottomX, *bottomY);
          }
 
-         *aCollisionX = *closestPointX;
-         *aCollisionY = *closestPointY;
+         if (aCollisionX != nullptr)
+            *aCollisionX = *closestPointX;
+         if (aCollisionY != nullptr)
+            *aCollisionY = *closestPointY;
 
          delete leftX;
          delete leftY;
@@ -303,8 +317,10 @@ namespace Bebop { namespace Math
       // Check if the origin is within the circle.
       if (originCircleDistance <= apCircle->GetRadius())
       {
-         *aCollisionX = aOriginPointX;
-         *aCollisionY = aOriginPointY;
+         if (aCollisionX != nullptr)
+            *aCollisionX = aOriginPointX;
+         if (aCollisionY != nullptr)
+            *aCollisionY = aOriginPointY;
 
          return true;
       }
@@ -351,20 +367,6 @@ namespace Bebop { namespace Math
          closestY = p2.GetComponentY();
       }
 
-      // Find out if closest intersection is on the line segment.
-      //float closestToOriginDistance = PointDistances(origin.GetComponentX(), origin.GetComponentY(), closestX, closestY);
-      //float endToOriginDistance= PointDistances(origin.GetComponentX(), origin.GetComponentY(), end.GetComponentX(), end.GetComponentY());
-      //if (closestToOriginDistance > endToOriginDistance)
-      //{
-      //   return false;
-      //}
-      //float crossProduct = (closestY - origin.GetComponentY()) * (end.GetComponentX() - origin.GetComponentX()) -
-      //                     (closestX - origin.GetComponentX()) * (end.GetComponentY() - origin.GetComponentY());
-      //if (abs(crossProduct) < -0.00000001F)
-      //{
-      //   return false;
-      //}
-
       float dotProduct = (closestX - origin.GetComponentX()) * (end.GetComponentX() - origin.GetComponentX()) +
                          (closestY - origin.GetComponentY()) * (end.GetComponentY() - origin.GetComponentY());
       if (dotProduct < 0.0F)
@@ -379,8 +381,10 @@ namespace Bebop { namespace Math
          return false;
       }
 
-      *aCollisionX = closestX;
-      *aCollisionY = closestY;
+      if (aCollisionX != nullptr)
+         *aCollisionX = closestX;
+      if (aCollisionX != nullptr)
+         *aCollisionY = closestY;
 
       return true;
    }
@@ -447,8 +451,10 @@ namespace Bebop { namespace Math
 
             float determinant = a1*b2 - a2*b1;
 
-            *aCollisionX = (b2*c1 - b1*c2)/determinant;
-            *aCollisionY = (a1*c2 - a2*c1)/determinant;
+            if (aCollisionX != nullptr)
+               *aCollisionX = (b2*c1 - b1*c2)/determinant;
+            if (aCollisionY != nullptr)
+               *aCollisionY = (a1*c2 - a2*c1)/determinant;
          }
 
          return true;
@@ -461,11 +467,10 @@ namespace Bebop { namespace Math
                                aLineTwoOriginPointX, aLineTwoOriginPointY,
                                aLineOneEndPointX, aLineOneEndPointY))
       {
-         if (aCollisionX != nullptr && aCollisionY != nullptr)
-         {
+         if (aCollisionX != nullptr)
             *aCollisionX = aLineTwoOriginPointX;
+         if (aCollisionY != nullptr)
             *aCollisionY = aLineTwoOriginPointY;
-         }
 
          return true;
       }
@@ -476,11 +481,10 @@ namespace Bebop { namespace Math
                                aLineTwoEndPointX, aLineTwoEndPointY,
                                aLineOneEndPointX, aLineOneEndPointY))
       {
-         if (aCollisionX != nullptr && aCollisionY != nullptr)
-         {
+         if (aCollisionX != nullptr)
             *aCollisionX = aLineTwoEndPointX;
+         if (aCollisionY != nullptr)
             *aCollisionY = aLineTwoEndPointY;
-         }
 
          return true;
       }
@@ -491,11 +495,10 @@ namespace Bebop { namespace Math
                                aLineOneOriginPointX, aLineOneOriginPointY,
                                aLineTwoEndPointX, aLineTwoEndPointY))
       {
-         if (aCollisionX != nullptr && aCollisionY != nullptr)
-         {
+         if (aCollisionX != nullptr)
             *aCollisionX = aLineOneOriginPointX;
+         if (aCollisionY != nullptr)
             *aCollisionY = aLineOneOriginPointY;
-         }
 
          return true;
       }
@@ -506,11 +509,10 @@ namespace Bebop { namespace Math
                                aLineOneEndPointX, aLineOneEndPointY,
                                aLineTwoEndPointX, aLineTwoEndPointY))
       {
-         if (aCollisionX != nullptr && aCollisionY != nullptr)
-         {
+         if (aCollisionX != nullptr)
             *aCollisionX = aLineOneEndPointX;
+         if (aCollisionY != nullptr)
             *aCollisionY = aLineOneEndPointY;
-         }
 
          return true;
       }

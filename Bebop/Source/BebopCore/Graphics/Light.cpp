@@ -12,6 +12,7 @@
 #include "GraphicsConstants.h"
 #include "../Math/Vector2D.h"
 #include "../Math/CollisionDetection/CollisionChecker.h"
+#include <algorithm>
 
 namespace Bebop { namespace Graphics
 {
@@ -29,7 +30,7 @@ namespace Bebop { namespace Graphics
    // Arguments:
    //    aOriginX        - The X-Coordinate of the light origin point.
    //    aOriginY        - The Y-Coordinate of the light origin point.
-   //    aRaidus         - The radius of the light source.
+   //    aRadius         - The radius of the light source.
    //    aLightColor     - The color of the light source.
    //    aLightIntensity - Th intensity of the light itself.
    //
@@ -37,13 +38,10 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   Light::Light(const float aOriginX, const float aOriginY, const float aRaidus, const Color aLightColor,
-                const int aLightIntensity, float aDitheringStepChange, unsigned int aDitheringSteps,
-                float aDitheringStepRate) :
-      mOriginX(aOriginX), mOriginY(aOriginY), mRaidus(aRaidus), mLightColor(aLightColor),
-      mLightIntensity(aLightIntensity),
-      mDitheringStepChange(aDitheringStepChange), mDitheringSteps(aDitheringSteps), mCurrentStep(0), mCurrentRadius(aRaidus),
-      mDitheringStepRate(aDitheringStepRate), mDiterhingStepTimeLeft(aDitheringStepRate), mIsDitheringDown(true)
+   Light::Light(const float aOriginX, const float aOriginY, const float aRadius, const Color aLightColor,
+                const int aLightIntensity) :
+      mOriginX(aOriginX), mOriginY(aOriginY), mRadius(aRadius), mLightColor(aLightColor),
+      mLightIntensity(aLightIntensity)
    {
       CalculateLight();
    }
@@ -64,39 +62,42 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Light::AddObject(Objects::Object* const apObject)
    {
-      mObjects.push_back(apObject);
+      bool collides = false;
+      Objects::CircleObject* thisLight = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Graphics::Color(0,0,0,0), false);
+
+      // Check if the object being added collides within the light radius
+      if (apObject->GetObjectType() == Objects::ObjectType::RECTANGLE)
+      {
+         collides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(apObject), thisLight);
+      }
+      else if (apObject->GetObjectType() == Objects::ObjectType::CIRCLE)
+      {
+         collides = Math::CircleCircleCollision(dynamic_cast<Objects::CircleObject*>(apObject), thisLight);
+      }
+      delete thisLight;
+
+      if (collides == true)
+      {
+         mObjects.push_back(apObject);
+      }
    }
 
+   //******************************************************************************************************************
+   //
+   // Method: Update
+   //
+   // Description:
+   //    Update the light calculations.
+   //
+   // Arguments:
+   //    aElapsedTime - The amount of time since the last update.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
    void Light::Update(const float aElapsedTime)
    {
-      mDiterhingStepTimeLeft -= aElapsedTime;
-
-      if (mDiterhingStepTimeLeft < 0.0F)
-      {
-         mDiterhingStepTimeLeft = mDitheringStepRate;
-
-         if (mIsDitheringDown == true)
-         {
-            mCurrentRadius -= mDitheringStepChange;
-
-            if (++mCurrentStep == mDitheringSteps)
-            {
-               mCurrentStep = 0;
-               mIsDitheringDown = false;
-            }
-         }
-         else
-         {
-            mCurrentRadius += mDitheringStepChange;
-
-            if (++mCurrentStep == mDitheringSteps)
-            {
-               mCurrentStep = 0;
-               mIsDitheringDown = true;
-            }
-         }
-      }
-
       CalculateLight();
    }
 
@@ -116,78 +117,82 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Light::CalculateLight()
    {
-      bool collision = false;
-
       mPoints.clear();
+      mAnglesToCheck.clear();
+      Objects::CircleObject* tempCircle = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Color(0,0,0,0), false);
 
-      for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 0.1F)
+      for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
       {
-         float* endPointX = new float;
-         float* endPointY = new float;
-         std::vector<std::pair<float, float>> mCollisionPoints;
+         if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+         {
+            Objects::RectangleObject* tempRectangle = dynamic_cast<Objects::RectangleObject*>(*iter);
+            if (Math::RectangleCircleCollision(tempRectangle, tempCircle))
+            {
+               RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY(), tempRectangle);
+               RectangleCollisionPoint(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY(), tempRectangle);
+               RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight(), tempRectangle);
+               RectangleCollisionPoint(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight(), tempRectangle);
+            }
+         }
+         else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
+         {
+            // TODO: Calculate circle stuff.
+         }
+      }
+      delete tempCircle;
 
+      // Add remaining angles to check and the sort them in ascending order.
+      for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 15.0F)
+      {
+         mAnglesToCheck.push_back(i);
+      }
+      std::sort(mAnglesToCheck.begin(), mAnglesToCheck.end(), [](auto &left, auto &right)
+      {
+         return left < right;
+      });
+
+      bool redundantCollision = false;
+      // Check all the angles to be checked.
+      for (auto i = mAnglesToCheck.begin(); i < mAnglesToCheck.end(); ++i)
+      {
+         // Check if the ray collides with an object. In the case it does it would be a redundant calculations so this ray is skipped.
          for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
          {
-            float* tempEndX = new float;
-            float* tempEndY = new float;
-
             if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
             {
-               
-               collision = Math::LineRectangleCollision(mOriginX, mOriginY,
-                                                        mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION), mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION),
-                                                        dynamic_cast<Objects::RectangleObject*>(*iter), tempEndX, tempEndY);
-
-               if (collision == true)
+               if (true == Math::LineRectangleCollision(mOriginX, mOriginY,
+                                                        mOriginX + mRadius*cos(*i * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(*i * Math::RADIANS_CONVERSION),
+                                                        dynamic_cast<Objects::RectangleObject*>(*iter),
+                                                        nullptr, nullptr))
                {
-                  mCollisionPoints.push_back(std::make_pair(*tempEndX, *tempEndY));
+                  redundantCollision = true;
+                  break;
                }
             }
             else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
             {
-               collision = Math::LineCircleCollision(mOriginX, mOriginY,
-                                                     mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION), mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION),
-                                                     dynamic_cast<Objects::CircleObject*>(*iter), tempEndX, tempEndY);
-
-               if (collision == true)
-               {
-                  mCollisionPoints.push_back(std::make_pair(*tempEndX, *tempEndY));
-               }
+               // TODO: Calculate circle stuff.
             }
-
-            delete tempEndX;
-            delete tempEndY;
-            collision = false;
          }
 
-         if (mCollisionPoints.size() > 0)
+         // If there was no redundancy then add the coordinate to the list.
+         if (redundantCollision == false)
          {
-            float closestX = mCollisionPoints.begin()->first;
-            float closestY = mCollisionPoints.begin()->second;
-            mCollisionPoints.erase(mCollisionPoints.begin());
+            float endPointX = mOriginX + mRadius*cos(*i * Math::RADIANS_CONVERSION);
+            float endPointY = mOriginY + mRadius*sin(*i * Math::RADIANS_CONVERSION);
 
-            for (auto iter = mCollisionPoints.begin(); iter != mCollisionPoints.end(); ++iter)
-            {
-               if (Math::PointDistances(mOriginX, mOriginY, closestX, closestY) > Math::PointDistances(mOriginX, mOriginY, iter->first, iter->second))
-               {
-                  closestX = iter->first;
-                  closestY = iter->second;
-               }
-            }
-
-            *endPointX = closestX;
-            *endPointY = closestY;
-         }
-         else
-         {
-            *endPointX = mOriginX + mCurrentRadius*sin(i * Math::RADIANS_CONVERSION);
-            *endPointY = mOriginY + mCurrentRadius*cos(i * Math::RADIANS_CONVERSION);
+            mPoints.push_back(std::make_pair(*i, std::make_pair(endPointX, endPointY)));
          }
 
-         mPoints.push_back(std::make_pair(*endPointX, *endPointY));
-         delete endPointX;
-         delete endPointY;
+         // Reset redundancy check.
+         redundantCollision = false;
       }
+
+      // Sort the list based on degrees in increasing order.
+      std::sort(mPoints.begin(), mPoints.end(), [](auto &left, auto &right)
+      {
+         return left.first < right.first;
+      });
    }
 
    //******************************************************************************************************************
@@ -216,13 +221,13 @@ namespace Bebop { namespace Graphics
          if (isNext == mPoints.end())
          {
             auto firstPoint = mPoints.begin();
-            DrawTriangle(iterator->first, iterator->second, firstPoint->first, firstPoint->second, aWithColor);
+            DrawTriangle(iterator->second.first, iterator->second.second, firstPoint->second.first, firstPoint->second.second, aWithColor);
          }
          // Otherwise connect the points to the next point in the vector.
          else
          {
             auto nextPoint = iterator + 1;
-            DrawTriangle(iterator->first, iterator->second, nextPoint->first, nextPoint->second, aWithColor);
+            DrawTriangle(iterator->second.first, iterator->second.second, nextPoint->second.first, nextPoint->second.second, aWithColor);
          }
       }
    }
@@ -273,18 +278,28 @@ namespace Bebop { namespace Graphics
 
       if (true == aWithColor)
       {
-         float firstPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mCurrentRadius) * firstDistance));
-         float secondPecentDistance = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * ((1.0F / mCurrentRadius) * secondDistance));
+         float firstPecentDistance = (1.0F / mRadius) * firstDistance;
+         float secondPecentDistance = (1.0F / mRadius) * secondDistance;
+
+         float firstRed = mLightColor.GetRedColor() - (mLightColor.GetRedColor() * firstPecentDistance);
+         float firstGreen = mLightColor.GetGreenColor() - (mLightColor.GetGreenColor() * firstPecentDistance);
+         float firstBlue = mLightColor.GetBlueColor() - (mLightColor.GetBlueColor() * firstPecentDistance);
+         float firstAlpha = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * firstPecentDistance);
+
+         float secondRed = mLightColor.GetRedColor() - (mLightColor.GetRedColor() * secondPecentDistance);
+         float secondGreen = mLightColor.GetGreenColor() - (mLightColor.GetGreenColor() * secondPecentDistance);
+         float secondBlue = mLightColor.GetBlueColor() - (mLightColor.GetBlueColor() * secondPecentDistance);
+         float secondAlpha = mLightColor.GetAlpha() - (mLightColor.GetAlpha() * secondPecentDistance);
 
          // Add the points of the triangle along with their colors at the point.
          ALLEGRO_VERTEX vertex[] =
          {
             {mOriginX, mOriginY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
                                                       mLightColor.GetBlueColor(), mLightColor.GetAlpha())},
-            {aFirstPointX, aFirstPointY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
-                                                              mLightColor.GetBlueColor(), firstPecentDistance)},
-            {aSecondPointX, aSecondPointY, 0, 0, 0, al_map_rgba(mLightColor.GetRedColor(), mLightColor.GetGreenColor(),
-                                                                mLightColor.GetBlueColor(), secondPecentDistance)},
+            {aFirstPointX, aFirstPointY, 0, 0, 0, al_map_rgba(firstRed, firstGreen,
+                                                              firstBlue, firstAlpha)},
+            {aSecondPointX, aSecondPointY, 0, 0, 0, al_map_rgba(secondRed, secondGreen,
+                                                                secondBlue, secondAlpha)},
          };
          
          // Draw the gradient triangle
@@ -292,8 +307,8 @@ namespace Bebop { namespace Graphics
       }
       else
       {
-         float firstPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mCurrentRadius) * firstDistance));
-         float secondPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mCurrentRadius) * secondDistance));
+         float firstPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mRadius) * firstDistance));
+         float secondPecentDistance = mLightIntensity - (mLightIntensity * ((1.0F / mRadius) * secondDistance));
 
          // Add the points of the triangle along with their colors at the point.
          ALLEGRO_VERTEX vertex[] =
@@ -306,6 +321,92 @@ namespace Bebop { namespace Graphics
          // Draw the gradient triangle
          al_draw_prim(vertex, NULL, NULL, 0, 3, ALLEGRO_PRIM_TRIANGLE_STRIP);
       }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RectangleCollisionPoint
+   //
+   // Description:
+   //    Checks light collision against a point on a rectangle.
+   //
+   // Arguments:
+   //    aCoordinateX   - X-Coordinate of the point on the rectangle being checked..
+   //    aCoordinateY   - Y-Coordinate of the point on the rectangle being checked..
+   //    aThisRectangle - Pointer to the rectangle being checked..
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::RectangleCollisionPoint(float aCoordinateX, float aCoordinateY, Objects::Object* aThisRectangle)
+   {
+      float distance = Math::PointDistances(mOriginX, mOriginY, aCoordinateX, aCoordinateY);
+
+      // Point is outside light radius range.
+      if (distance > mRadius)
+      {
+         return;
+      }
+
+      // Check if ray to the point is reachable without passing through the rectangle. Return if it would have to pass
+      // through the rectangle.
+      float* x = new float;
+      float* y = new float;
+      Math::LineRectangleCollision(mOriginX, mOriginY, aCoordinateX, aCoordinateY, dynamic_cast<Objects::RectangleObject*>(aThisRectangle), x, y);
+      float collisionDistance = Math::PointDistances(mOriginX, mOriginY, *x, *y);
+      if (collisionDistance < distance)
+      {
+         delete x;
+         delete y;
+         return;
+      }
+
+      // Check if the array for this rectangle point will pass through another object.
+      for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
+      {
+         // Skip checking itself.
+         if (*iter == aThisRectangle)
+         {
+            continue;
+         }
+         // Object check is rectangular.
+         else if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+         {
+            
+            // Check if there is collision against the ray. Collision would mean there this array passed through this
+            // object before reaching the rectangle point.
+            if (true == Math::LineRectangleCollision(mOriginX, mOriginY,
+                                                     aCoordinateX, aCoordinateY,
+                                                     dynamic_cast<Objects::RectangleObject*>(*iter),
+                                                     x, y))
+            {
+               delete x;
+               delete y;
+               return;
+            }
+         }
+         else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
+         {
+            // TODO: Calculate circle stuff.
+         }
+      }
+      delete x;
+      delete y;
+
+      float angleDegrees = atan2f(aCoordinateY - mOriginY, aCoordinateX - mOriginX) * 180.0F / Math::PI;
+      while (angleDegrees < 0.0F)
+      {
+         angleDegrees += 360.0F;
+      }
+      while (angleDegrees > 360.0F)
+      {
+         angleDegrees -= 360.0F;
+      }
+
+      mPoints.push_back(std::make_pair(angleDegrees, std::make_pair(aCoordinateX, aCoordinateY)));
+      mAnglesToCheck.push_back(angleDegrees + 0.1F);
+      mAnglesToCheck.push_back(angleDegrees - 0.1F);
    }
 
 //*********************************************************************************************************************
