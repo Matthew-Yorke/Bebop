@@ -14,6 +14,7 @@
 #include "../Objects/Object.h"
 #include <vector>
 #include "../Objects//RectangleObject.h"
+#include "../Objects//CircleObject.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -157,6 +158,42 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void RectangleCollisionPoint(float aCoordinateX, float aCoordinateY, Objects::Object* aThisRectangle);
+
+         //******************************************************************************************************************
+         //
+         // Method: CircleCollisionPoints
+         //
+         // Description:
+         //    Gets light blocking points along a circle.
+         //
+         // Arguments:
+         //    aThisCircle - Pointer to the rectangle being checked.
+         //
+         // Return:
+         //    N/A
+         //
+         //******************************************************************************************************************
+         void CircleCollisionPoints(Objects::CircleObject* aThisCircle);
+
+         //************************************************************************************************************
+         //
+         // Method: CheckObjectCollisions
+         //
+         // Description:
+         //    Checks if the ray from the light origin to the end point will pass through any other objects. Returns a
+         //    bool based on the results.
+         //
+         // Arguments:
+         //    aEndPointX - The X-Coordinate of the end point being checked against the light origin.
+         //    aEndPointY - The Y-Coordinate of the end point being checked against the light origin.
+         //    testingObject - The object being tested, used to not test itself.
+         //
+         // Return:
+         //    True  - The ray passes through some other object.
+         //    False - The ray doesn't pass through any other objects.
+         //
+         //************************************************************************************************************
+         bool CheckObjectCollisions(float aEndPointX, float aEndPointY, Objects::Object* testingObject);
 
    //******************************************************************************************************************
    // Methods - End

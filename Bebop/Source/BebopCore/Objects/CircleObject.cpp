@@ -76,7 +76,7 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void CircleObject::Draw() const
    {
-      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius, al_map_rgba(mColor.GetRedColor(),
+      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius-1, al_map_rgba(mColor.GetRedColor(),
                                                                              mColor.GetGreenColor(),
                                                                              mColor.GetBlueColor(),
                                                                              mColor.GetAlpha()));

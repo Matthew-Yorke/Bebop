@@ -23,6 +23,9 @@ namespace Bebop { namespace Math
    // Conversion from degrees to radians.
    const float RADIANS_CONVERSION = static_cast<float>(PI) / 180.0F;
 
+   // Conversion from degrees to radians.
+   const float DEGREES_CONVERSION = 180.0F / static_cast<float>(PI);
+
    // The number of columns and rows in a 2D matrix.
    const int MATRIX_SIZE_2D = 2;
 
