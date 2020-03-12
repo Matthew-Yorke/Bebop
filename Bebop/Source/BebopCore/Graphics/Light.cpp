@@ -126,6 +126,7 @@ namespace Bebop { namespace Graphics
          if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
          {
             Objects::RectangleObject* tempRectangle = dynamic_cast<Objects::RectangleObject*>(*iter);
+            int test = mAnglesToCheck.size();
             if (Math::RectangleCircleCollision(tempRectangle, ligthCircle))
             {
                RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY(), tempRectangle);
@@ -352,7 +353,7 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Light::RectangleCollisionPoint(float aCoordinateX, float aCoordinateY, Objects::Object* aThisRectangle)
    {
-      // Get distance from the origin of the light the point ont he rectangle.
+      // Get distance from the origin of the light to the point on the rectangle.
       float distance = Math::PointDistances(mOriginX, mOriginY, aCoordinateX, aCoordinateY);
 
       // Point is outside light radius range.
@@ -363,22 +364,23 @@ namespace Bebop { namespace Graphics
 
       // Check if ray to the point is reachable without passing through the rectangle. Return if it would have to pass
       // through the rectangle.
+      // Note: Floor the comparison values to get a close approximation.
       float* x = new float;
       float* y = new float;
       Math::LineRectangleCollision(mOriginX, mOriginY, aCoordinateX, aCoordinateY, dynamic_cast<Objects::RectangleObject*>(aThisRectangle), x, y);
       float collisionDistance = Math::PointDistances(mOriginX, mOriginY, *x, *y);
-      delete x;
-      delete y;
-      if (collisionDistance < distance)
+      if (floor(collisionDistance) < floor(distance))
       {
          return;
       }
+      delete x;
+      delete y;
 
       // Check to amke sure the ray doesn't pass through another object from the origin to the rectangle point.
       if (CheckObjectCollisions(aCoordinateX, aCoordinateY, aThisRectangle) == false)
       {
          // Get the angle from the light origin to the rectangle point.
-         float angleDegrees = atan2f(aCoordinateY - mOriginY, aCoordinateX - mOriginX) * 180.0F / Math::PI;
+         float angleDegrees = atan2f(aCoordinateY - mOriginY, aCoordinateX - mOriginX) * Math::DEGREES_CONVERSION;
          while (angleDegrees < 0.0F)
          {
             angleDegrees += 360.0F;
@@ -419,7 +421,7 @@ namespace Bebop { namespace Graphics
       float angleCircleToEdge = 180.0F - 90.0F - angleOriginToEdge;
 
       // Get the angle from light origin to the circle center.
-      float angleDegrees = atan2f(aThisCircle->GetCoordinateY() - mOriginY, aThisCircle->GetCoordinateX() - mOriginX) * 180.0F / Math::PI;
+      float angleDegrees = atan2f(aThisCircle->GetCoordinateY() - mOriginY, aThisCircle->GetCoordinateX() - mOriginX) * Math::DEGREES_CONVERSION;
       while (angleDegrees < 0.0F)
       {
          angleDegrees += 360.0F;
