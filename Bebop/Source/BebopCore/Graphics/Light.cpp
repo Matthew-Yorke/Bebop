@@ -43,43 +43,6 @@ namespace Bebop { namespace Graphics
       mOriginX(aOriginX), mOriginY(aOriginY), mRadius(aRadius), mLightColor(aLightColor),
       mLightIntensity(aLightIntensity)
    {
-      CalculateLight();
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method: AddObject
-   //
-   // Description:
-   //    Add an object that can be blocked by light.
-   //
-   // Arguments:
-   //    apObject - The object to be blocked.
-   //
-   // Return:
-   //    N/A
-   //
-   //******************************************************************************************************************
-   void Light::AddObject(Objects::Object* const apObject)
-   {
-      bool collides = false;
-      Objects::CircleObject* thisLight = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Graphics::Color(0,0,0,0), false);
-
-      // Check if the object being added collides within the light radius
-      if (apObject->GetObjectType() == Objects::ObjectType::RECTANGLE)
-      {
-         collides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(apObject), thisLight);
-      }
-      else if (apObject->GetObjectType() == Objects::ObjectType::CIRCLE)
-      {
-         collides = Math::CircleCircleCollision(dynamic_cast<Objects::CircleObject*>(apObject), thisLight);
-      }
-      delete thisLight;
-
-      if (collides == true)
-      {
-         mObjects.push_back(apObject);
-      }
    }
 
    //******************************************************************************************************************
@@ -96,9 +59,9 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Light::Update(const float aElapsedTime)
+   void Light::Update(const float aElapsedTime, std::vector<Objects::Object*> aBlockingObjects)
    {
-      CalculateLight();
+      CalculateLight(aBlockingObjects);
    }
 
    //******************************************************************************************************************
@@ -115,18 +78,43 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   void Light::CalculateLight()
+   void Light::CalculateLight(std::vector<Objects::Object*> aBlockingObjects)
    {
       mPoints.clear();
       mAnglesToCheck.clear();
       Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Color(0,0,0,0), false);
+
+      // Check if a light blocking object will collide within the radius of the light source. Add this light blocking object
+      // to a list to check fro collision points, otherwise the object doesn't need to be checked.
+      mObjects.clear();
+      bool collides = false;
+      for (auto iterator = aBlockingObjects.begin(); iterator != aBlockingObjects.end(); ++iterator)
+      {
+         Objects::CircleObject* thisLight = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Graphics::Color(0,0,0,0), false);
+
+         // Check if the object being added collides within the light radius
+         if ((*iterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+         {
+            collides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*iterator), thisLight);
+         }
+         else if ((*iterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
+         {
+            collides = Math::CircleCircleCollision(dynamic_cast<Objects::CircleObject*>(*iterator), thisLight);
+         }
+         delete thisLight;
+
+         if (collides == true)
+         {
+            mObjects.push_back(*iterator);
+            collides = false;
+         }
+      }
 
       for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
       {
          if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
          {
             Objects::RectangleObject* tempRectangle = dynamic_cast<Objects::RectangleObject*>(*iter);
-            int test = mAnglesToCheck.size();
             if (Math::RectangleCircleCollision(tempRectangle, ligthCircle))
             {
                RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY(), tempRectangle);

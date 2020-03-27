@@ -49,22 +49,6 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
-         // Method: AddObject
-         //
-         // Description:
-         //    Add an object that can be blocked by light.
-         //
-         // Arguments:
-         //    apObject - The object to be blocked.
-         //
-         // Return:
-         //    N/A
-         //
-         //************************************************************************************************************
-         void AddObject(Objects::Object* const apObject);
-
-         //************************************************************************************************************
-         //
          // Method: Update
          //
          // Description:
@@ -77,7 +61,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void Update(const float aElapsedTime);
+         void Update(const float aElapsedTime, std::vector<Objects::Object*> aBlockingObjects);
 
          //************************************************************************************************************
          //
@@ -93,7 +77,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void CalculateLight();
+         void CalculateLight(std::vector<Objects::Object*> aBlockingObjects);
 
          //************************************************************************************************************
          //
@@ -229,8 +213,11 @@ namespace Bebop { namespace Graphics
          int mLightIntensity;
 
          // Vector of X and Y coordinate for each point in the light radius.
+         // Vector Composition: <Angle <X-Coordiante, Y-Coordinate>>
          std::vector<std::pair<float, std::pair<float, float>>> mPoints;
 
+         // Vectors of angles to check for the light sweeping checks. This sweeping check is to check each angle
+         // to determine points where the light will reach at these angles.
          std::vector<float> mAnglesToCheck;
 
          // Vector of objects that can block a light source.

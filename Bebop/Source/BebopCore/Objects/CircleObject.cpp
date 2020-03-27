@@ -9,6 +9,7 @@
 
 #include "CircleObject.h"
 #include <allegro5/allegro_primitives.h>
+#include "../Graphics/GraphicsConstants.h"
 
 namespace Bebop { namespace Objects
 {
@@ -77,9 +78,29 @@ namespace Bebop { namespace Objects
    void CircleObject::Draw() const
    {
       al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius-1, al_map_rgba(mColor.GetRedColor(),
-                                                                             mColor.GetGreenColor(),
-                                                                             mColor.GetBlueColor(),
-                                                                             mColor.GetAlpha()));
+                                                                               mColor.GetGreenColor(),
+                                                                               mColor.GetBlueColor(),
+                                                                               mColor.GetAlpha()));
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: DrawForLightBlocking
+   //
+   // Description:
+   //    The drawing call to handle drawing the current circular object without any color and using a passed in alpha.
+   //
+   // Arguments:
+   //    aAlpha - The alpha for the color of the object.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void CircleObject::DrawForLightBlocking(int aAlpha) const
+   {
+      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius,
+                            al_map_rgba(Graphics::NO_COLOR, Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));
    }
 
 //*********************************************************************************************************************

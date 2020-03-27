@@ -9,6 +9,7 @@
 
 #include "RectangleObject.h"
 #include <allegro5/allegro_primitives.h>
+#include "../Graphics/GraphicsConstants.h"
 
 namespace Bebop { namespace Objects
 {
@@ -139,6 +140,27 @@ namespace Bebop { namespace Objects
       al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
                                al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
                                            mColor.GetAlpha()));
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: DrawForLightBlocking
+   //
+   // Description:
+   //    The drawing call to handle drawing the current rectangular object without any color and using a passed in
+   //    alpha.
+   //
+   // Arguments:
+   //    aAlpha - The alpha for the color of the object.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void RectangleObject::DrawForLightBlocking(int aAlpha) const
+   {
+      al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
+                               al_map_rgba(Graphics::NO_COLOR , Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));
    }
 
 //*********************************************************************************************************************

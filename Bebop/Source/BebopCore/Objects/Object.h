@@ -179,7 +179,7 @@ namespace Bebop { namespace Objects
          //
          //************************************************************************************************************
          int GetHeightCenterPoint() const;
-      
+
          //************************************************************************************************************
          //
          // Method Name: GetObjectType
@@ -198,23 +198,6 @@ namespace Bebop { namespace Objects
 
          //************************************************************************************************************
          //
-         // Method Name: GetBlocksLight
-         //
-         // Description:
-         //    This method returns if the object should be blocking light or not.
-         //
-         // Arguments:
-         //    N/A
-         //
-         // Return:
-         //    True  - Should block lights.
-         //    False - Should NOT block lights.
-         //
-         //************************************************************************************************************
-         bool GetBlocksLight() const;
-
-         //************************************************************************************************************
-         //
          // Method: Draw
          //
          // Description:
@@ -228,6 +211,22 @@ namespace Bebop { namespace Objects
          //
          //************************************************************************************************************
          virtual void Draw() const = 0;
+
+         //************************************************************************************************************
+         //
+         // Method: DrawForLightBlocking
+         //
+         // Description:
+         //    The drawing call to handle drawing the current object without any color and using a passed in alpha.
+         //
+         // Arguments:
+         //    aAlpha - The alpha for the color of the object.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         virtual void DrawForLightBlocking(int aAlpha) const = 0;
 
       protected:
       
@@ -304,9 +303,6 @@ namespace Bebop { namespace Objects
 
          // The type of object (e.g., circle, rectangle, etc.).
          ObjectType mObjectType;
-
-         // Determines if this object should block lights.
-         bool mBlocksLight;
       
       private:
       

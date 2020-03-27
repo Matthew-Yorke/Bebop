@@ -124,6 +124,23 @@ namespace Bebop { namespace Objects
          //************************************************************************************************************
          void Draw() const override;
 
+         //************************************************************************************************************
+         //
+         // Method: DrawForLightBlocking
+         //
+         // Description:
+         //    The drawing call to handle drawing the current rectangular object without any color and using a passed
+         //    in alpha.
+         //
+         // Arguments:
+         //    aAlpha - The alpha for the color of the object.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void DrawForLightBlocking(int aAlpha) const override;
+
       protected:
       
          // There are currently no protected methods for this class.

@@ -39,7 +39,7 @@ namespace Bebop { namespace Objects
                   const bool aBlocksLight) :
       mCoordinateX(aCoordinateX), mCoordinateY(aCoordinateY), mWidthCenterPoint(aWidthCenterPoint),
       mHeightCenterPoint(aHeightCenterPoint), mStartingCoordinateX(aCoordinateX), mStartingCoordinateY(aCoordinateY),
-      mColor(aColor), mObjectType(aObjectType), mBlocksLight(aBlocksLight)
+      mColor(aColor), mObjectType(aObjectType)
    {
    }
    
@@ -212,26 +212,6 @@ namespace Bebop { namespace Objects
    ObjectType Object::GetObjectType() const
    {
       return mObjectType;
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method Name: GetBlocksLight
-   //
-   // Description:
-   //    This method returns if the object should be blocking light or not.
-   //
-   // Arguments:
-   //    N/A
-   //
-   // Return:
-   //    True  - Should block lights.
-   //    False - Should NOT block lights.
-   //
-   //******************************************************************************************************************
-   bool Object::GetBlocksLight() const
-   {
-      return mBlocksLight;
    }
 
 //*********************************************************************************************************************

@@ -3,8 +3,9 @@
 // File: Sprite.cpp
 //
 // Description:
-//    This class handles an individual scene with ability to call to update and draw what objects are part of the
-//    scene.
+//    This class handles an individual scene with ability to call to update and draw the scene. Additionally, this
+//    class handles calling to draw the shadow map over the scene if it exist. This class also holds the list of layers
+//    within the scene and uses these layers to callf or updating and drawing of objects.
 //
 //*********************************************************************************************************************
 
@@ -78,7 +79,7 @@ namespace Bebop { namespace Graphics
       }
    }
 
-   //************************************************************************************************************
+   //******************************************************************************************************************
    //
    // Method: RemoveShadowMap
    //
@@ -91,7 +92,7 @@ namespace Bebop { namespace Graphics
    // Return:
    //    N/A
    //
-   //************************************************************************************************************
+   //******************************************************************************************************************
    void Scene::RemoveShadowMap()
    {
       al_destroy_bitmap(mpShadowMap);
@@ -100,91 +101,48 @@ namespace Bebop { namespace Graphics
 
    //******************************************************************************************************************
    //
-   // Method: PushSprite
+   // Method: AddLayer
    //
    // Description:
-   //    Pushes a sprite object onto the vector list of sprites. 
+   //    Add a new layer to the list of layers in the scene.
    //
    // Arguments:
-   //    apSprite - Pointer to the sprite object being pushed into the sprite vector.
+   //    aLayerID - The identifier for the layer.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Scene::PushSprite(Sprite* const apSprite)
+   void Scene::AddNewLayer(int aLayerID)
    {
-      mSprites.push_back(apSprite);
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method: PushAnimatedSprite
-   //
-   // Description:
-   //    Pushes a sprite object onto the vector list of animated sprites.
-   //
-   // Arguments:
-   //    apAnimatedSprite - Pointer to the sprite object being pushed into the animated sprite vector.
-   //
-   // Return:
-   //    N/A
-   //
-   //******************************************************************************************************************
-   void Scene::PushAnimatedSprite(AnimatedSprite* const apAnimatedSprite)
-   {
-      mAnimatedSprites.push_back(apAnimatedSprite);
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method: PushParticle
-   //
-   // Description:
-   //    Pushes a particle object onto the vector list of particles.
-   //
-   // Arguments:
-   //    apParticle - Pointer to the particle object being pushed into the particle vector.
-   //
-   // Return:
-   //    N/A
-   //
-   //******************************************************************************************************************
-   void Scene::PushParticle(Particle* const apParticle)
-   {
-      mParticles.push_back(apParticle);
-      
-      if (apParticle->GetObject()->GetBlocksLight() == true)
+      if (mLayers.find(aLayerID) == mLayers.end())
       {
-         for (auto iter = mLights.begin(); iter != mLights.end(); ++iter)
-         {
-            (*iter)->AddObject(apParticle->GetObject());
-         }
+         mLayers.insert(std::pair<int, SceneLayer*>(aLayerID, new SceneLayer()));
       }
    }
 
    //******************************************************************************************************************
    //
-   // Method: PushLight
+   // Method: GetLayer
    //
    // Description:
-   //    Pushes a light object onto the vector list of lights.
+   //    TODO: Add description.
    //
    // Arguments:
-   //    apLight - Pointer to the light object being pushed into the light vector.
+   //    aLayerID - The identifier for the layer.
    //
    // Return:
-   //    N/A
+   //    Returns pointer to the layer information.
    //
    //******************************************************************************************************************
-   void Scene::PushLight(Light* const apLight)
+   SceneLayer* Scene::GetLayer(int aLayerID)
    {
-      for (auto iter = mParticles.begin(); iter != mParticles.end(); ++iter)
+      if (mLayers.find(aLayerID) != mLayers.end())
       {
-         if ((*iter)->GetObject()->GetBlocksLight() == true)
-            apLight->AddObject((*iter)->GetObject());
+         return mLayers[aLayerID];
       }
-      mLights.push_back(apLight);
+
+      return nullptr;
    }
 
    //******************************************************************************************************************
@@ -203,19 +161,9 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Scene::Update(const float aElapsedTime) const
    {
-      for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
+      for (auto iterator = mLayers.begin(); iterator != mLayers.end(); ++iterator)
       {
-         (*iterator)->Update(aElapsedTime);
-      }
-      
-      for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
-      {
-         (*iterator)->Update(aElapsedTime);
-      }
-
-      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
-      {
-         (*iterator)->Update(aElapsedTime);
+         iterator->second->Update(aElapsedTime);
       }
    }
 
@@ -235,30 +183,16 @@ namespace Bebop { namespace Graphics
    //************************************************************************************************************
    void Scene::Draw() const
    {
-      // TODO: This is temporarily colored, but should be changed to black with no alpha being used.
       al_clear_to_color(al_map_rgb(0, 0, 0));
+      ResetShadowMap();
 
-      DrawLightColors();
-
-      for (auto iterator = mSprites.begin(); iterator != mSprites.end(); ++iterator)
+      for (auto iterator = mLayers.begin(); iterator != mLayers.end(); ++iterator)
       {
-         (*iterator)->Draw();
+         iterator->second->Draw(mpShadowMap);
       }
 
-      for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
-      {
-         (*iterator)->Draw();
-      }
-
-      for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
-      {
-         (*iterator)->Draw();
-      }
-
-      if (mpShadowMap != nullptr)
-      {
-         DrawShadowMap();
-      }
+      // Draw the shadow map onto the main display.
+      al_draw_bitmap(mpShadowMap, SCENE_ORIGIN, SCENE_ORIGIN, NO_DRAW_FLAGS);
    }
 
 //*********************************************************************************************************************
@@ -279,76 +213,19 @@ namespace Bebop { namespace Graphics
 // Private Methods - Start
 //*********************************************************************************************************************
 
-   //******************************************************************************************************************
-   //
-   // Method: DrawLightColors
-   //
-   // Description:
-   //    Draw light's color onto the main display.
-   //
-   // Arguments:
-   //    N/A
-   //
-   // Return:
-   //    N/A
-   //
-   //******************************************************************************************************************
-   void Scene::DrawLightColors() const
-   {
-      // Set to blend the colors together by adding the values together.
-      al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-
-      // Draw the lights to the shadow map.
-      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
-      {
-         (*iterator)->Draw(true);
-      }
-
-      // Set back to the default blender.
-      al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-   }
-
-   //******************************************************************************************************************
-   //
-   // Method: DrawShadowMap
-   //
-   // Description:
-   //    Draw shadow map for the lights onto the main display, this does not include the light's color.
-   //
-   // Arguments:
-   //    N/A
-   //
-   // Return:
-   //    N/A
-   //
-   //******************************************************************************************************************
-   void Scene::DrawShadowMap() const
+   void Scene::ResetShadowMap() const
    {
       // Retain the display bitmap information.
       ALLEGRO_BITMAP* displayBitmap = al_get_target_bitmap();
 
       // Set bitmap to the shadow layer and clear it.
       al_set_target_bitmap(mpShadowMap);
+
       // TODO: This should be temprary 0 alpha. Eventually update to change this with a scene call.
       al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 250));
 
-      // Set to blend the colors together by subtracting the light from the shadow map.
-      al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-
-      // Draw the lights to the shadow map.
-      for (auto iterator = mLights.begin(); iterator != mLights.end(); ++iterator)
-      {
-         (*iterator)->Draw(false);
-      }
-
-      // Set back to the default blender.
-      al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-
       // Set the target bitmap back to the main display and reset the blending options.
       al_set_target_bitmap(displayBitmap);
-
-      // Draw the shadow map onto the main display.
-      al_draw_bitmap(mpShadowMap, SCENE_ORIGIN, SCENE_ORIGIN, NO_DRAW_FLAGS);
    }
 
 //*********************************************************************************************************************
