@@ -29,7 +29,8 @@ namespace Bebop
    //    N/A
    //
    //******************************************************************************************************************
-   Bebop::Bebop() : mBebopInitalized(false), mGraphicsIntialized(false), mpWindow(nullptr), mpScene(nullptr)
+   Bebop::Bebop() : mBebopInitalized(false), mGraphicsIntialized(false), mpWindow(nullptr), mpScene(nullptr),
+      mpEventHandler(nullptr)
    {
    }
 
@@ -77,7 +78,7 @@ namespace Bebop
       {
          return false;
       }
-   
+
       // Primary initialization is successful.
       mBebopInitalized = true;
       return true;
@@ -118,6 +119,43 @@ namespace Bebop
       }
    
       mGraphicsIntialized = true;
+      return true;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: InitializeEvents
+   //
+   // Description:
+   //    Initialization for the event portion of the engine. Initializes pieces needed for the events properties.
+   //    Requires the primary initialization to have already happened.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    True  - Initialization was successful.
+   //    False - Initialization was NOT successful.
+   //
+   //******************************************************************************************************************
+   bool Bebop::InitializeEvents()
+   {
+      // Primary initialization must come first.
+      if (mBebopInitalized == false)
+      {
+         return false;
+      }
+
+      if (!al_install_keyboard())
+      {
+         return false;
+      }
+
+      if (mpEventHandler == nullptr)
+      {
+         mpEventHandler = new Events::Event();
+      }
+
       return true;
    }
 
@@ -184,10 +222,10 @@ namespace Bebop
 
    //******************************************************************************************************************
    //
-   // Method: Draw
+   // Method: Update
    //
    // Description:
-   //    Draw the scene onto the display.
+   //    Checks any events that have happened and calls to draw the scene on a event timeout.
    //
    // Arguments:
    //    N/A
@@ -196,13 +234,19 @@ namespace Bebop
    //    N/A
    //
    //******************************************************************************************************************
-   void Bebop::Draw()
+   void Bebop::Update()
    {
-      al_clear_to_color(al_map_rgb(0, 0, 0));
+      if (mpEventHandler != nullptr)
+      {
+         mpEventHandler->Execute();
 
-      mpScene->Draw();
-
-      al_flip_display();
+         if (mpEventHandler->GetTimedOut() == true)
+         {
+            mpScene->Update(mpEventHandler->GetUpdateTimeDifference());
+            Draw();
+            mpEventHandler->SetTimedOut(false);
+         }
+      }
    }
 
 //*********************************************************************************************************************
@@ -223,7 +267,33 @@ namespace Bebop
 // Private Methods - Start
 //*********************************************************************************************************************
 
-   // There are currently no private methods for this class.
+   //******************************************************************************************************************
+   //
+   // Method: Draw
+   //
+   // Description:
+   //    Draw the scene onto the display.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Bebop::Draw()
+   {
+      if (mpEventHandler->GetTimedOut() == true)
+      {
+         al_clear_to_color(al_map_rgb(0, 0, 0));
+
+         mpScene->Draw();
+
+         al_flip_display();
+
+         mpEventHandler->SetTimedOut(false);
+      }
+   }
 
 //*********************************************************************************************************************
 // Private Methods - End

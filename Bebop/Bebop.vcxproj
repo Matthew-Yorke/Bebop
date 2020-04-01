@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Bebop.cpp" />
+    <ClCompile Include="Source\BebopCore\Events\Event.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Color.cpp" />
     <ClCompile Include="Source\BebopCore\Graphics\Light.cpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Bebop.h" />
+    <ClInclude Include="Source\BebopCore\Events\Event.h" />
     <ClInclude Include="Source\BebopCore\Graphics\AnimatedSprite.h" />
     <ClInclude Include="Source\BebopCore\Graphics\Color.h" />
     <ClInclude Include="Source\BebopCore\Graphics\GraphicsConstants.h" />

@@ -14,6 +14,7 @@
 #include <allegro5/allegro_primitives.h>
 #include "BebopCore/Graphics/Window.h"
 #include "BebopCore/Graphics/Scene.h"
+#include "BebopCore/Events/Event.h"
 
 namespace Bebop
 {
@@ -94,6 +95,24 @@ namespace Bebop
 
          //************************************************************************************************************
          //
+         // Method: InitializeEvents
+         //
+         // Description:
+         //    Initialization for the event portion of the engine. Initializes pieces needed for the events 
+         //    properties. Requires the primary initialization to have already happened.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    True  - Initialization was successful.
+         //    False - Initialization was NOT successful.
+         //
+         //************************************************************************************************************
+         bool InitializeEvents();
+
+         //************************************************************************************************************
+         //
          // Method: CreateWindow
          //
          // Description:
@@ -143,6 +162,28 @@ namespace Bebop
 
          //************************************************************************************************************
          //
+         // Method: Update
+         //
+         // Description:
+         //    Checks any events that have happened and calls to draw the scene on a event timeout.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void Update();
+
+      protected:
+
+         // There are currently no protected methods for this class.
+
+      private:
+
+         //************************************************************************************************************
+         //
          // Method: Draw
          //
          // Description:
@@ -156,14 +197,6 @@ namespace Bebop
          //
          //************************************************************************************************************
          void Draw();
-
-      protected:
-
-         // There are currently no protected methods for this class.
-
-      private:
-
-         // There are currently no private methods for this class.
 
       //***************************************************************************************************************
       // Methods - End
@@ -194,6 +227,9 @@ namespace Bebop
 
          // Tracks the scene for the game.
          Graphics::Scene* mpScene;
+
+         // Pointer to the event class to handle events such as key presses and timing of updates.
+         Events::Event* mpEventHandler;
 
       //***************************************************************************************************************
       // Member Variables - Start

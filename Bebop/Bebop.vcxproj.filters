@@ -29,6 +29,9 @@
     <Filter Include="Source\BebopCore\Math\CollisionDetection">
       <UniqueIdentifier>{cb144d87-afbc-4f7e-a3af-214316189e3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\BebopCore\Events">
+      <UniqueIdentifier>{eb8d223d-941a-4d54-a499-6c3ece2892a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BebopCore\Graphics\Window.cpp">
@@ -78,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="Source\BebopCore\Graphics\SceneLayer.cpp">
       <Filter>Source\BebopCore\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BebopCore\Events\Event.cpp">
+      <Filter>Source\BebopCore\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="Source\BebopCore\Math\MathConstants.h">
       <Filter>Source\BebopCore\Math\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BebopCore\Events\Event.h">
+      <Filter>Source\BebopCore\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

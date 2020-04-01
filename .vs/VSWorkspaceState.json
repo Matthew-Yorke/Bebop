@@ -4,9 +4,8 @@
     "\\Bebop",
     "\\Bebop\\Source",
     "\\Bebop\\Source\\BebopCore",
-    "\\Bebop\\Source\\BebopCore\\Graphics",
-    "\\Bebop\\Source\\BebopCore\\Objects"
+    "\\Bebop\\Source\\BebopCore\\Events",
+    "\\Bebop\\Source\\BebopCore\\Graphics"
   ],
-  "SelectedNode": "\\Bebop\\Source\\BebopCore\\Graphics\\SceneLayer.cpp",
   "PreviewInSolutionExplorer": false
 }
