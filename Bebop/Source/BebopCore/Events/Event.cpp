@@ -30,7 +30,7 @@ namespace Bebop { namespace Events
    //    N/A
    //
    //******************************************************************************************************************
-   Event::Event() : mTimedOut(false), mUpdateTimeDifference(0.0F)
+   Event::Event() : mpTimer(nullptr), mTimedOut(false), mUpdateTimeDifference(0.0F)
    {
       mLastUpdate = static_cast<float>(al_current_time());
 
@@ -43,6 +43,7 @@ namespace Bebop { namespace Events
       // TODO: Allow user to set FPS
       mpTimer = al_create_timer(1.0 / 60.0);
 
+      mpEventQueue = al_create_event_queue();
       al_register_event_source(mpEventQueue, al_get_keyboard_event_source());
       al_register_event_source(mpEventQueue, al_get_timer_event_source(mpTimer));
       al_start_timer(mpTimer);
