@@ -13,6 +13,7 @@
 #include "../Math/Vector2D.h"
 #include "../Math/CollisionDetection/CollisionChecker.h"
 #include <algorithm>
+#include <limits>
 
 namespace Bebop { namespace Graphics
 {
@@ -137,7 +138,7 @@ namespace Bebop { namespace Graphics
       // Add remaining angles to check and the sort them in ascending order.
       for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 15.0F)
       {
-         mAnglesToCheck.push_back(i);
+         mAnglesToCheck.push_back(std::make_pair(i, false));
       }
       std::sort(mAnglesToCheck.begin(), mAnglesToCheck.end(), [](auto &left, auto &right)
       {
@@ -145,32 +146,54 @@ namespace Bebop { namespace Graphics
       });
 
       bool redundantCollision = false;
+      float* x = new float;
+      float* y = new float;
+      float tempX = std::numeric_limits<float>::max();
+      float tempY = std::numeric_limits<float>::max();
       // Check all the angles to be checked.
       for (auto i = mAnglesToCheck.begin(); i < mAnglesToCheck.end(); ++i)
-      {
+      {     
          // Check if the ray collides with an object. In the case it does it would be a redundant calculations so this ray is skipped.
          for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
          {
             if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
             {
                if (true == Math::LineRectangleCollision(mOriginX, mOriginY,
-                                                        mOriginX + mRadius*cos(*i * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(*i * Math::RADIANS_CONVERSION),
+                                                        mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION),
                                                         dynamic_cast<Objects::RectangleObject*>(*iter),
-                                                        nullptr, nullptr))
+                                                        x, y))
                {
-                  redundantCollision = true;
-                  break;
+                  if (i->second == false)
+                  {
+                     redundantCollision = true;
+                     break;
+                  }
+
+                  if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) > Math::PointDistances(mOriginX, mOriginY, *x, *y))
+                  {
+                     tempX = *x;
+                     tempY = *y;
+                  }
                }
             }
             else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
             {
                if (true == Math::LineCircleCollision(mOriginX, mOriginY,
-                                                     mOriginX + mRadius*cos(*i * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(*i * Math::RADIANS_CONVERSION),
+                                                     mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION),
                                                      dynamic_cast<Objects::CircleObject*>(*iter),
-                                                     nullptr, nullptr))
+                                                     x, y))
                {
-                  redundantCollision = true;
-                  break;
+                  if (i->second == false)
+                  {
+                     redundantCollision = true;
+                     break;
+                  }
+
+                  if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) > Math::PointDistances(mOriginX, mOriginY, *x, *y))
+                  {
+                     tempX = *x;
+                     tempY = *y;
+                  }
                }
             }
          }
@@ -178,15 +201,47 @@ namespace Bebop { namespace Graphics
          // If there was no redundancy then add the coordinate to the list.
          if (redundantCollision == false)
          {
-            float endPointX = mOriginX + mRadius*cos(*i * Math::RADIANS_CONVERSION);
-            float endPointY = mOriginY + mRadius*sin(*i * Math::RADIANS_CONVERSION);
+            float endPointX = 0.0F;
+            float endPointY = 0.0F;
 
-            mPoints.push_back(std::make_pair(*i, std::make_pair(endPointX, endPointY)));
+            // If the second in the pair is true, then redundancy was never a matter so use the values gathered from
+            // the collision check.
+            if (i->second == true)
+            {
+               // Make sure the end points found during the sweeping check are within the light's raddius. If not then
+               // use the point at the same angle up to the circles radius edge.
+               if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) >
+                   Math::PointDistances(mOriginX, mOriginY,
+                                        mOriginX + mRadius * cos(i->first * Math::RADIANS_CONVERSION),
+                                        mOriginY + mRadius * sin(i->first * Math::RADIANS_CONVERSION)))
+               {
+                  endPointX = mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION);
+                  endPointY = mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION);
+               }
+               else
+               {
+                  endPointX = tempX;
+                  endPointY = tempY;
+               }
+            }
+            // Redundancy did matter and the endpoint will be the point at the angle reaching the radius from the origin point.
+            else
+            {
+               endPointX = mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION);
+               endPointY = mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION);
+            }
+
+            mPoints.push_back(std::make_pair(i->first, std::make_pair(endPointX, endPointY)));
          }
 
          // Reset redundancy check.
          redundantCollision = false;
+         // Reset end point gathering distances.
+         tempX = std::numeric_limits<float>::max();
+         tempY = std::numeric_limits<float>::max();
       }
+      delete x;
+      delete y;
 
       // Sort the list based on degrees in increasing order.
       std::sort(mPoints.begin(), mPoints.end(), [](auto &left, auto &right)
@@ -382,8 +437,8 @@ namespace Bebop { namespace Graphics
          mPoints.push_back(std::make_pair(angleDegrees, std::make_pair(aCoordinateX, aCoordinateY)));
          // Add angles close by to check so triangles drawn for the lgiht source aren't so drasticly far away from the
          // rectangle point.
-         mAnglesToCheck.push_back(angleDegrees + 0.1F);
-         mAnglesToCheck.push_back(angleDegrees - 0.1F);
+         mAnglesToCheck.push_back(std::make_pair(angleDegrees + 0.1F, true));
+         mAnglesToCheck.push_back(std::make_pair(angleDegrees - 0.1F, true));
       }
    }
 
@@ -429,7 +484,7 @@ namespace Bebop { namespace Graphics
       if (CheckObjectCollisions(cwX, cwY, aThisCircle) == false)
       {
          mPoints.push_back(std::make_pair(cwAngleFromOrigin, std::make_pair(cwX, cwY)));
-         mAnglesToCheck.push_back(cwAngleFromOrigin + 0.1F);
+         mAnglesToCheck.push_back(std::make_pair(cwAngleFromOrigin + 0.1F, true));
       }
 
       // Find the edge points and angle to the point form the light origin for the counterclockwise angle.
@@ -441,7 +496,7 @@ namespace Bebop { namespace Graphics
       if (CheckObjectCollisions(ccwX, ccwY, aThisCircle) == false)
       {
          mPoints.push_back(std::make_pair(ccwAngleFromOrigin, std::make_pair(ccwX, ccwY)));
-         mAnglesToCheck.push_back(ccwAngleFromOrigin - 0.1F);
+         mAnglesToCheck.push_back(std::make_pair(ccwAngleFromOrigin - 0.1F, true));
       }
 
       // Find some collision points along the circle.

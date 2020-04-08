@@ -217,8 +217,9 @@ namespace Bebop { namespace Graphics
          std::vector<std::pair<float, std::pair<float, float>>> mPoints;
 
          // Vectors of angles to check for the light sweeping checks. This sweeping check is to check each angle
-         // to determine points where the light will reach at these angles.
-         std::vector<float> mAnglesToCheck;
+         // to determine points where the light will reach at these angles. The second part of the pair determines
+         // if the check should skip redundancy object collision (true) or not (false).
+         std::vector<std::pair<float,bool>> mAnglesToCheck;
 
          // Vector of objects that can block a light source.
          std::vector<Objects::Object*> mObjects;

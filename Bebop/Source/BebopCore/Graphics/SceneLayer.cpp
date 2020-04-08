@@ -293,7 +293,7 @@ namespace Bebop { namespace Graphics
       // Draw areas for light blocking objects on the shadowmap.
       for (auto iterator = mLightBlockingObjects.begin(); iterator != mLightBlockingObjects.end(); ++iterator)
       {
-         (*iterator)->DrawForLightBlocking(250);
+         (*iterator)->DrawForLightBlocking(240);
       }
 
       // Set to blend the colors together by subtracting the light from the shadow map.
