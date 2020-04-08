@@ -56,6 +56,24 @@ namespace Bebop { namespace Events
 
          //************************************************************************************************************
          //
+         // Method: GetKeyStatus
+         //
+         // Description:
+         //    Retreives the status of the key as either true (pressed) or false (not pressed) using the passed in
+         //    keycode value for the lookup.
+         //
+         // Arguments:
+         //    aKeycode - The keycode value of the key being checked for pressed status.
+         //
+         // Return:
+         //    True  - The keycode value provided indicates the key is pressed.
+         //    False - The keycode value provided indicates the key is not pressed.
+         //
+         //************************************************************************************************************
+         bool GetKeyStatus(const unsigned int aKeycode);
+
+         //************************************************************************************************************
+         //
          // Method: GetTimedOut
          //
          // Description:
@@ -155,6 +173,8 @@ namespace Bebop { namespace Events
          float mLastUpdate;
 
          float mUpdateTimeDifference;
+
+         bool* mpKeys;
 
       //***************************************************************************************************************
       // Member Variables - End

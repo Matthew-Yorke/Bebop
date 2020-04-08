@@ -32,6 +32,12 @@ namespace Bebop { namespace Events
    //******************************************************************************************************************
    Event::Event() : mpTimer(nullptr), mTimedOut(false), mUpdateTimeDifference(0.0F)
    {
+      mpKeys = new bool[ALLEGRO_KEY_MAX];
+      for (auto iter = 0; iter < ALLEGRO_KEY_MAX; ++iter)
+      {
+         mpKeys[iter] = false;
+      }
+
       mLastUpdate = static_cast<float>(al_current_time());
 
       if (!al_create_event_queue())
@@ -65,6 +71,35 @@ namespace Bebop { namespace Events
    //******************************************************************************************************************
    Event::~Event()
    {
+      delete mpKeys;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: GetKeyStatus
+   //
+   // Description:
+   //    Retreives the status of the key as either true (pressed) or false (not pressed) using the passed in keycode
+   //    value for the lookup.
+   //
+   // Arguments:
+   //    aKeycode - The keycode value of the key being checked for pressed status.
+   //
+   // Return:
+   //    True  - The keycode value provided indicates the key is pressed.
+   //    False - The keycode value provided indicates the key is not pressed.
+   //
+   //******************************************************************************************************************
+   bool Event::GetKeyStatus(const unsigned int aKeycode)
+   {
+      // Keycode exceeds the keycode value limit indicating an incorrect checkup, therefore return false as a key that
+      // does not exist cannot be pressed.
+      if (aKeycode > ALLEGRO_KEY_MAX)
+      {
+         return false;
+      }
+
+      return mpKeys[aKeycode];
    }
 
    //******************************************************************************************************************
@@ -157,14 +192,12 @@ namespace Bebop { namespace Events
          // The event was the user pressing a key down.
          else if (nextEvent.type == ALLEGRO_EVENT_KEY_DOWN)
          {
-            // TODO: Add code for this case.
-            std::cout << "KEY PRESSED!\n";
+            mpKeys[nextEvent.keyboard.keycode] = true;
          }
          // The event was the user releasing a downed key.
          else if (nextEvent.type == ALLEGRO_EVENT_KEY_UP)
          {
-            // TODO: Add code for this case.
-            std::cout << "KEY RELEASED!\n";
+            mpKeys[nextEvent.keyboard.keycode] = false;
          }
          // The event was a timer event.
          else if (nextEvent.type == ALLEGRO_EVENT_TIMER)

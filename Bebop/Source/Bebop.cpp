@@ -222,6 +222,27 @@ namespace Bebop
 
    //******************************************************************************************************************
    //
+   // Method: GetKeyStatus
+   //
+   // Description:
+   //    Retreives the status of the key as either true (pressed) or false (not pressed) using the passed in keycode
+   //    value for the lookup.
+   //
+   // Arguments:
+   //    aKeycode - The keycode value of the key being checked for pressed status.
+   //
+   // Return:
+   //    True  - The keycode value provided indicates the key is pressed.
+   //    False - The keycode value provided indicates the key is not pressed.
+   //
+   //******************************************************************************************************************
+   bool Bebop::GetKeyStatus(int aKeycode)
+   {
+      return mpEventHandler->GetKeyStatus(aKeycode);
+   }
+
+   //******************************************************************************************************************
+   //
    // Method: Update
    //
    // Description:
