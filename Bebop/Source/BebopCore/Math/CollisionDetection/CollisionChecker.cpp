@@ -32,13 +32,134 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
-                                    Objects::RectangleObject* mpRectangleTwo)
+                                    Objects::RectangleObject* mpRectangleTwo,
+                                    std::vector<std::pair<float, float>>* apCollisionPoints)
    {
-      if (mpRectangleOne->GetCoordinateX() < mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth() &&
-          mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth() > mpRectangleTwo->GetCoordinateX() &&
-          mpRectangleOne->GetCoordinateY() < mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight() &&
-          mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight() > mpRectangleTwo->GetCoordinateY())
+      if (mpRectangleOne->GetCoordinateX() <= mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth() &&
+          mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth() >= mpRectangleTwo->GetCoordinateX() &&
+          mpRectangleOne->GetCoordinateY() <= mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight() &&
+          mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight() >= mpRectangleTwo->GetCoordinateY())
       {
+         // Gather collision points.
+         if (apCollisionPoints != nullptr)
+         {
+            float* x = new float;
+            float* y = new float;
+
+            // Rectangle One Top vs Rectangle Two Top
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Top vs Rectangle Two Left Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Top vs Rectangle Two Right Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
+                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Top vs Rectangle Two Bottom
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Left vs Rectangle Two Top
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Left vs Rectangle Two Left Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Left vs Rectangle Two Right Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Left vs Rectangle Two Bottom
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Right vs Rectangle Two Top
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Right vs Rectangle Two Left Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Right vs Rectangle Two Right Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Right vs Rectangle Two Bottom
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Bottom vs Rectangle Two Top
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Bottom vs Rectangle Two Left Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Bottom vs Rectangle Two Right Side
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            // Rectangle One Bottom vs Rectangle Two Bottom
+            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
+                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
+                                  x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+         }
+
          return true;
       }
       else

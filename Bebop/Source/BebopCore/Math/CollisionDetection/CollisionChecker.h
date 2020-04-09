@@ -33,7 +33,8 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
-                                    Objects::RectangleObject* mpRectangleTwo);
+                                    Objects::RectangleObject* mpRectangleTwo,
+                                    std::vector<std::pair<float, float>>* apCollisionPoints);
    
    //******************************************************************************************************************
    //

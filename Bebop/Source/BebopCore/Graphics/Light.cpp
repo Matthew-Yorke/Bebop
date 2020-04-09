@@ -111,6 +111,106 @@ namespace Bebop { namespace Graphics
          }
       }
 
+      std::vector<std::pair<float, float>>* pObjectCollidePoints = new std::vector<std::pair<float, float>>;
+      // Get collision points for colliding blocking objects
+      for (auto outerIter = mObjects.begin(); outerIter != mObjects.end(); ++outerIter)
+      {
+         for (auto innerIter = mObjects.begin(); innerIter != mObjects.end(); ++innerIter)
+         {
+            // Skip checking self
+            if (outerIter == innerIter)
+            {
+               continue;
+            }
+
+            // Check rectangle/rectangle collision
+            if ((*outerIter)->GetObjectType() == Objects::ObjectType::RECTANGLE && (*innerIter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+            {
+               Math::RectangleRectangleCollision(dynamic_cast<Objects::RectangleObject*>(*outerIter),
+                                                 dynamic_cast<Objects::RectangleObject*>(*innerIter),
+                                                 pObjectCollidePoints);
+            }
+         }
+      }
+      // Tracks if object was passed through for the line from light origin to the point being checked.
+      bool passedThroughObject = false;
+      // Check if ray can reach overlapping collision and if so add to points to draw.
+      for (auto pointIter = pObjectCollidePoints->begin(); pointIter != pObjectCollidePoints->end(); ++pointIter)
+      {
+         int x = pointIter->first;
+         int y = pointIter->second;
+         // Get the angle from light origin to the circle center.
+         float angleDegrees = atan2f(y - mOriginY, x - mOriginX) * Math::DEGREES_CONVERSION;
+         while (angleDegrees < 0.0F)
+         {
+            angleDegrees += 360.0F;
+         }
+         while (angleDegrees > 360.0F)
+         {
+            angleDegrees -= 360.0F;
+         }
+
+         // Brin point slightly close to light source to avoid collision check of objects inappropriately.
+         // Point is lower-right of light.
+         if (angleDegrees >= 0.0F && angleDegrees < 90.0F)
+         {
+            x -= 1.0F;
+            y -= 1.0F;
+         }
+         // Point is lower-left of light.
+         else if (angleDegrees >= 90.0F && angleDegrees < 180.0F)
+         {
+            x += 1.0F;
+            y -= 1.0F;
+         }
+         // Point is upper-left of light.
+         else if (angleDegrees >= 180.0F && angleDegrees < 270.0F)
+         {
+            x += 1.0F;
+            y += 1.0F;
+         }
+         // Point is rupper-right of light.
+         else
+         {
+            x -= 1.0F;
+            y += 1.0F;
+         }
+
+         // Check if the ray collides with an object. In the case it does it would be a redundant calculations so this ray is skipped.
+         for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
+         {
+            if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+            {
+               if (true == Math::LineRectangleCollision(mOriginX, mOriginY,
+                                                        x, y,
+                                                        dynamic_cast<Objects::RectangleObject*>(*iter),
+                                                        nullptr, nullptr))
+               {
+                  passedThroughObject = true;
+               }
+            }
+            else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
+            {
+               if (true == Math::LineCircleCollision(mOriginX, mOriginY,
+                                                     x, y,
+                                                     dynamic_cast<Objects::CircleObject*>(*iter),
+                                                     nullptr, nullptr))
+               {
+                  passedThroughObject = true;
+               }
+            }
+         }
+
+         // If the line didnt pass through an object add it to the points to draw.
+         if (passedThroughObject == false)
+         {
+            mPoints.push_back(std::make_pair(angleDegrees, std::make_pair(pointIter->first, pointIter->second)));
+         }
+
+         passedThroughObject = false;
+      }
+      delete pObjectCollidePoints;
+
       for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
       {
          if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
