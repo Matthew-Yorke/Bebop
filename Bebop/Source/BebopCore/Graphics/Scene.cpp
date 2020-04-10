@@ -183,7 +183,7 @@ namespace Bebop { namespace Graphics
    //************************************************************************************************************
    void Scene::Draw() const
    {
-      al_clear_to_color(al_map_rgb(0, 0, 0));
+      al_clear_to_color(al_map_rgb(0, 255, 0));
       ResetShadowMap();
 
       for (auto iterator = mLayers.begin(); iterator != mLayers.end(); ++iterator)
@@ -222,7 +222,7 @@ namespace Bebop { namespace Graphics
       al_set_target_bitmap(mpShadowMap);
 
       // TODO: This should be temprary 0 alpha. Eventually update to change this with a scene call.
-      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 240));
+      al_clear_to_color(al_map_rgba(NO_COLOR, NO_COLOR, NO_COLOR, 255));
 
       // Set the target bitmap back to the main display and reset the blending options.
       al_set_target_bitmap(displayBitmap);

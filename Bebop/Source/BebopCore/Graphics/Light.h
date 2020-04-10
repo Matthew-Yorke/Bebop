@@ -49,6 +49,70 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: GetCoordinateX
+         //
+         // Description:
+         //    UReturn the origin X-Coordinate of the light source.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the float value that is the X-Coordinate of the light source origin.
+         //
+         //************************************************************************************************************
+         float GetCoordinateX();
+         
+         //************************************************************************************************************
+         //
+         // Method: SetCoordinateX
+         //
+         // Description:
+         //    Update the X-Coordinate origin point for the light source.
+         //
+         // Arguments:
+         //    aCoordinateX - The float value to update the X-Cooridnate origin point of the light source.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void SetCoordinateX(float aCoordinateX);
+         
+         //************************************************************************************************************
+         //
+         // Method: GetCoordinateY
+         //
+         // Description:
+         //    UReturn the origin Y-Coordinate of the light source.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the float value that is the Y-Coordinate of the light source origin.
+         //
+         //************************************************************************************************************
+         float GetCoordinateY();
+         
+         //************************************************************************************************************
+         //
+         // Method: SetCoordinateY
+         //
+         // Description:
+         //    Update the Y-Coordinate origin point for the light source.
+         //
+         // Arguments:
+         //    aCoordinateY - The float value to update the Y-Cooridnate origin point of the light source.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void SetCoordinateY(float aCoordinateY);
+
+         //************************************************************************************************************
+         //
          // Method: Update
          //
          // Description:

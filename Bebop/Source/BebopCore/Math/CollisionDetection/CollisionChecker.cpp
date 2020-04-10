@@ -183,8 +183,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle,
-                                 Objects::CircleObject* mpCircle)
+   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle,
+                                 std::vector<std::pair<float, float>>* apCollisionPoints)
    {
       //
       float tempCircleX = mpCircle->GetCoordinateX();
@@ -221,6 +221,79 @@ namespace Bebop { namespace Math
       // collision.
       if (distance <= mpCircle->GetRadius())
       {
+         if (apCollisionPoints != nullptr)
+         {
+            float* x = new float;
+            float* y = new float;
+
+            // Check Top of Rectangle against the Circle
+            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
+                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
+                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            
+            // Check Left of Rectangle against the Circle
+            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
+                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            
+            // Check Right of Rectangle against the Circle
+            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
+                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            
+            // Check Bottom of Rectangle against the Circle
+            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
+                                mpCircle, x, y);
+            if (x != nullptr && y != nullptr)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+
+            delete x;
+            delete y;
+         }
+
          return true;
       }
 
@@ -459,6 +532,8 @@ namespace Bebop { namespace Math
       float disc = pBy2 * pBy2 - q;
       if (disc < 0.0F)
       {
+         aCollisionX = nullptr;
+         aCollisionY = nullptr;
          return false;
       }
 

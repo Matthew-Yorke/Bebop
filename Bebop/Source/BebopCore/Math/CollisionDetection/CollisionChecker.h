@@ -51,7 +51,8 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle);
+   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle,
+                                 std::vector<std::pair<float, float>>* apCollisionPoints);
    
    //******************************************************************************************************************
    //
@@ -119,9 +120,9 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool LineCircleCollision(float aOriginPointX, float aOriginPointY,
-                               float aEndPointX, float aEndPointY,
-                               Objects::CircleObject* apCircle,
-                               float* aCollisionX, float* aCollisionY);
+                            float aEndPointX, float aEndPointY,
+                            Objects::CircleObject* apCircle,
+                            float* aCollisionX, float* aCollisionY);
    
    //******************************************************************************************************************
    //

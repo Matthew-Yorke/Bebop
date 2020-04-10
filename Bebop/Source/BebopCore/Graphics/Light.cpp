@@ -48,6 +48,82 @@ namespace Bebop { namespace Graphics
 
    //******************************************************************************************************************
    //
+   // Method: GetCoordinateX
+   //
+   // Description:
+   //    UReturn the origin X-Coordinate of the light source.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns the float value that is the X-Coordinate of the light source origin.
+   //
+   //******************************************************************************************************************
+   float Light::GetCoordinateX()
+   {
+      return mOriginX;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: SetCoordinateX
+   //
+   // Description:
+   //    Update the X-Coordinate origin point for the light source.
+   //
+   // Arguments:
+   //    aCoordinateX - The float value to update the X-Cooridnate origin point of the light source.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::SetCoordinateX(float aCoordinateX)
+   {
+      mOriginX = aCoordinateX;
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method: GetCoordinateY
+   //
+   // Description:
+   //    UReturn the origin Y-Coordinate of the light source.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns the float value that is the Y-Coordinate of the light source origin.
+   //
+   //******************************************************************************************************************
+   float Light::GetCoordinateY()
+   {
+      return mOriginY;
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method: SetCoordinateY
+   //
+   // Description:
+   //    Update the Y-Coordinate origin point for the light source.
+   //
+   // Arguments:
+   //    aCoordinateY - The float value to update the Y-Cooridnate origin point of the light source.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::SetCoordinateY(float aCoordinateY)
+   {
+      mOriginY = aCoordinateY;
+   }
+
+   //******************************************************************************************************************
+   //
    // Method: Update
    //
    // Description:
@@ -83,63 +159,74 @@ namespace Bebop { namespace Graphics
    {
       mPoints.clear();
       mAnglesToCheck.clear();
-      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Color(0,0,0,0), false);
-
-      // Check if a light blocking object will collide within the radius of the light source. Add this light blocking object
-      // to a list to check fro collision points, otherwise the object doesn't need to be checked.
       mObjects.clear();
-      bool collides = false;
-      for (auto iterator = aBlockingObjects.begin(); iterator != aBlockingObjects.end(); ++iterator)
+      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Color(0,0,0,0), false);
+      std::vector<Objects::Object*> mObjects;
+      std::vector<std::pair<float, float>>* pCollisionPoints = new std::vector<std::pair<float, float>>;
+
+      // Check which objects will collide with the light and store those objects.
+      bool objectLigthCollides = false;
+      for (auto objectIterator = aBlockingObjects.begin(); objectIterator != aBlockingObjects.end(); ++objectIterator)
       {
-         Objects::CircleObject* thisLight = new Objects::CircleObject(mOriginX, mOriginY, mRadius, Graphics::Color(0,0,0,0), false);
-
-         // Check if the object being added collides within the light radius
-         if ((*iterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+         if ((*objectIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
          {
-            collides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*iterator), thisLight);
+            objectLigthCollides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*objectIterator), ligthCircle, nullptr);
          }
-         else if ((*iterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
+         else if ((*objectIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
          {
-            collides = Math::CircleCircleCollision(dynamic_cast<Objects::CircleObject*>(*iterator), thisLight);
+            // TODO: Handle circles.
          }
-         delete thisLight;
 
-         if (collides == true)
+         if (objectLigthCollides == true)
          {
-            mObjects.push_back(*iterator);
-            collides = false;
+            mObjects.push_back(*objectIterator);
+            objectLigthCollides = false;
          }
       }
 
-      std::vector<std::pair<float, float>>* pObjectCollidePoints = new std::vector<std::pair<float, float>>;
-      // Get collision points for colliding blocking objects
-      for (auto outerIter = mObjects.begin(); outerIter != mObjects.end(); ++outerIter)
+      // Gather points of objects to check for light being able to reach.
+      for (auto collideObjectIterator = mObjects.begin(); collideObjectIterator != mObjects.end(); ++collideObjectIterator)
       {
-         for (auto innerIter = mObjects.begin(); innerIter != mObjects.end(); ++innerIter)
+         if ((*collideObjectIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
          {
-            // Skip checking self
-            if (outerIter == innerIter)
+            // Check if this object overlaps with other objects within the light's range and gather those collision points.
+            for (auto overlapCheckIterator = collideObjectIterator + 1; overlapCheckIterator != mObjects.end(); ++overlapCheckIterator)
             {
-               continue;
+               Math::RectangleRectangleCollision(dynamic_cast<Objects::RectangleObject*>(*collideObjectIterator),
+                                                 dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
+                                                 pCollisionPoints);
             }
 
-            // Check rectangle/rectangle collision
-            if ((*outerIter)->GetObjectType() == Objects::ObjectType::RECTANGLE && (*innerIter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
-            {
-               Math::RectangleRectangleCollision(dynamic_cast<Objects::RectangleObject*>(*outerIter),
-                                                 dynamic_cast<Objects::RectangleObject*>(*innerIter),
-                                                 pObjectCollidePoints);
-            }
+            // Convert object to rectangle type since we know the type to be rectangle.
+            Objects::RectangleObject* tempRectangle = dynamic_cast<Objects::RectangleObject*>(*collideObjectIterator);
+
+            // Find collision points of circle and rectangle.
+            Math::RectangleCircleCollision(tempRectangle, ligthCircle, pCollisionPoints);
+
+            // Gather collision points for this rectangle.
+            // Top Left
+            pCollisionPoints->push_back(std::make_pair(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY()));
+            // Top Right
+            pCollisionPoints->push_back(std::make_pair(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY()));
+            // Bottom Left
+            pCollisionPoints->push_back(std::make_pair(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight()));
+            // Bottom Right
+            pCollisionPoints->push_back(std::make_pair(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight()));
+         }
+         else if ((*collideObjectIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
+         {
+            // TODO: Handle circles
          }
       }
-      // Tracks if object was passed through for the line from light origin to the point being checked.
-      bool passedThroughObject = false;
-      // Check if ray can reach overlapping collision and if so add to points to draw.
-      for (auto pointIter = pObjectCollidePoints->begin(); pointIter != pObjectCollidePoints->end(); ++pointIter)
+
+      // TODO: Resolve the found points to see if they can reached.
+      for (auto pointIter = pCollisionPoints->begin(); pointIter != pCollisionPoints->end(); ++pointIter)
       {
-         int x = pointIter->first;
-         int y = pointIter->second;
-         // Get the angle from light origin to the circle center.
+         // Gather the X-Coordinate and Y-Coordinate of the point.
+         float x = pointIter->first;
+         float y = pointIter->second;
+
+         // Get the angle from light origin to the point.
          float angleDegrees = atan2f(y - mOriginY, x - mOriginX) * Math::DEGREES_CONVERSION;
          while (angleDegrees < 0.0F)
          {
@@ -150,7 +237,20 @@ namespace Bebop { namespace Graphics
             angleDegrees -= 360.0F;
          }
 
-         // Brin point slightly close to light source to avoid collision check of objects inappropriately.
+         // Add checks close surrounding angles
+         mAnglesToCheck.push_back(std::make_pair(angleDegrees - 0.1F, true));
+         mAnglesToCheck.push_back(std::make_pair(angleDegrees + 0.1F, true));
+
+         // Handle the case if the point is further than the light's radius.
+         float circleMaxDistanceX = mOriginX + mRadius * cos(angleDegrees * Math::RADIANS_CONVERSION);
+         float circleMaxDistanceY = mOriginY + mRadius * sin(angleDegrees * Math::RADIANS_CONVERSION);
+         if (Math::PointDistances(mOriginX, mOriginY, x, y) >
+             Math::PointDistances(mOriginX, mOriginY,  circleMaxDistanceX, circleMaxDistanceY))
+         {
+            continue;
+         }
+
+         // Bring point slightly closer to light source to avoid collision check of objects inappropriately.
          // Point is lower-right of light.
          if (angleDegrees >= 0.0F && angleDegrees < 90.0F)
          {
@@ -176,7 +276,8 @@ namespace Bebop { namespace Graphics
             y += 1.0F;
          }
 
-         // Check if the ray collides with an object. In the case it does it would be a redundant calculations so this ray is skipped.
+         // Check if the ray from the light to the point collides with any object.
+         bool collidesObject = false;
          for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
          {
             if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
@@ -186,89 +287,55 @@ namespace Bebop { namespace Graphics
                                                         dynamic_cast<Objects::RectangleObject*>(*iter),
                                                         nullptr, nullptr))
                {
-                  passedThroughObject = true;
+                  collidesObject = true;
+                  break;
                }
             }
             else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
             {
-               if (true == Math::LineCircleCollision(mOriginX, mOriginY,
-                                                     x, y,
-                                                     dynamic_cast<Objects::CircleObject*>(*iter),
-                                                     nullptr, nullptr))
-               {
-                  passedThroughObject = true;
-               }
+               // TODO: Handle circles
             }
          }
 
-         // If the line didnt pass through an object add it to the points to draw.
-         if (passedThroughObject == false)
+         // If the ray  does not collide with an object, then add this to the vector of points for drawing.
+         if (collidesObject == false)
          {
             mPoints.push_back(std::make_pair(angleDegrees, std::make_pair(pointIter->first, pointIter->second)));
          }
-
-         passedThroughObject = false;
       }
-      delete pObjectCollidePoints;
 
-      for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
+      // Add the angles for the sweeping points.
+      for (auto degrees = 0.0F; degrees < 360.0F; degrees += 15.0F)
       {
-         if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
-         {
-            Objects::RectangleObject* tempRectangle = dynamic_cast<Objects::RectangleObject*>(*iter);
-            if (Math::RectangleCircleCollision(tempRectangle, ligthCircle))
-            {
-               RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY(), tempRectangle);
-               RectangleCollisionPoint(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY(), tempRectangle);
-               RectangleCollisionPoint(tempRectangle->GetCoordinateX(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight(), tempRectangle);
-               RectangleCollisionPoint(tempRectangle->GetCoordinateX() + tempRectangle->GetWidth(), tempRectangle->GetCoordinateY() + tempRectangle->GetHeight(), tempRectangle);
-            }
-         }
-         else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
-         {
-            Objects::CircleObject* tempCircle = dynamic_cast<Objects::CircleObject*>(*iter);
-            if (Math::CircleCircleCollision(tempCircle, ligthCircle))
-            {
-               CircleCollisionPoints(tempCircle);
-            }
-         }
+         mAnglesToCheck.push_back(std::make_pair(degrees, false));
       }
-      delete ligthCircle;
 
-      // Add remaining angles to check and the sort them in ascending order.
-      for (auto i = Math::DEGREES_ZERO; i < Math::DEGREES_THREE_SIXTY; i += 15.0F)
-      {
-         mAnglesToCheck.push_back(std::make_pair(i, false));
-      }
+      // Sort the angles to check in ascending order and remove duplicates.
       std::sort(mAnglesToCheck.begin(), mAnglesToCheck.end(), [](auto &left, auto &right)
       {
          return left < right;
       });
+      mAnglesToCheck.erase(std::unique(mAnglesToCheck.begin(), mAnglesToCheck.end()), mAnglesToCheck.end());
 
-      bool redundantCollision = false;
+      // Check all angles to be checked
       float* x = new float;
       float* y = new float;
       float tempX = std::numeric_limits<float>::max();
       float tempY = std::numeric_limits<float>::max();
-      // Check all the angles to be checked.
-      for (auto i = mAnglesToCheck.begin(); i < mAnglesToCheck.end(); ++i)
-      {     
-         // Check if the ray collides with an object. In the case it does it would be a redundant calculations so this ray is skipped.
-         for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
+      for (auto angleIter = mAnglesToCheck.begin(); angleIter != mAnglesToCheck.end(); ++angleIter)
+      {
+         // Check the angle for the ray against every object the circle is colliding with.
+         for (auto objectIter = mObjects.begin(); objectIter != mObjects.end(); ++objectIter)
          {
-            if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+            // The object is a rectangle object.
+            if ((*objectIter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
             {
+               // Check if the ray collides with this rectangle object.
                if (true == Math::LineRectangleCollision(mOriginX, mOriginY,
-                                                        mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION),
-                                                        dynamic_cast<Objects::RectangleObject*>(*iter),
-                                                        x, y))
+                                                        mOriginX + mRadius * cos(angleIter->first * Math::RADIANS_CONVERSION),
+                                                        mOriginY + mRadius * sin(angleIter->first * Math::RADIANS_CONVERSION),
+                                                        dynamic_cast<Objects::RectangleObject*>(*objectIter), x, y))
                {
-                  if (i->second == false)
-                  {
-                     redundantCollision = true;
-                     break;
-                  }
-
                   if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) > Math::PointDistances(mOriginX, mOriginY, *x, *y))
                   {
                      tempX = *x;
@@ -276,78 +343,42 @@ namespace Bebop { namespace Graphics
                   }
                }
             }
-            else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
+            else if ((*objectIter)->GetObjectType() == Objects::ObjectType::CIRCLE)
             {
-               if (true == Math::LineCircleCollision(mOriginX, mOriginY,
-                                                     mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION), mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION),
-                                                     dynamic_cast<Objects::CircleObject*>(*iter),
-                                                     x, y))
-               {
-                  if (i->second == false)
-                  {
-                     redundantCollision = true;
-                     break;
-                  }
-
-                  if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) > Math::PointDistances(mOriginX, mOriginY, *x, *y))
-                  {
-                     tempX = *x;
-                     tempY = *y;
-                  }
-               }
+               // TODO: Handle circles.
             }
          }
-
-         // If there was no redundancy then add the coordinate to the list.
-         if (redundantCollision == false)
+               
+         // Check to make sure the distance is not further than the distance of the light's radius.
+         float circleMaxDistanceX = mOriginX + mRadius * cos(angleIter->first * Math::RADIANS_CONVERSION);
+         float circleMaxDistanceY = mOriginY + mRadius * sin(angleIter->first * Math::RADIANS_CONVERSION);
+         if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) >
+             Math::PointDistances(mOriginX, mOriginY,  circleMaxDistanceX, circleMaxDistanceY))
          {
-            float endPointX = 0.0F;
-            float endPointY = 0.0F;
-
-            // If the second in the pair is true, then redundancy was never a matter so use the values gathered from
-            // the collision check.
-            if (i->second == true)
-            {
-               // Make sure the end points found during the sweeping check are within the light's raddius. If not then
-               // use the point at the same angle up to the circles radius edge.
-               if (Math::PointDistances(mOriginX, mOriginY, tempX, tempY) >
-                   Math::PointDistances(mOriginX, mOriginY,
-                                        mOriginX + mRadius * cos(i->first * Math::RADIANS_CONVERSION),
-                                        mOriginY + mRadius * sin(i->first * Math::RADIANS_CONVERSION)))
-               {
-                  endPointX = mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION);
-                  endPointY = mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION);
-               }
-               else
-               {
-                  endPointX = tempX;
-                  endPointY = tempY;
-               }
-            }
-            // Redundancy did matter and the endpoint will be the point at the angle reaching the radius from the origin point.
-            else
-            {
-               endPointX = mOriginX + mRadius*cos(i->first * Math::RADIANS_CONVERSION);
-               endPointY = mOriginY + mRadius*sin(i->first * Math::RADIANS_CONVERSION);
-            }
-
-            mPoints.push_back(std::make_pair(i->first, std::make_pair(endPointX, endPointY)));
+            mPoints.push_back(std::make_pair(angleIter->first, std::make_pair(circleMaxDistanceX, circleMaxDistanceY)));
+         }
+         // Point is within the lights distance so add the point.
+         else
+         {
+            mPoints.push_back(std::make_pair(angleIter->first, std::make_pair(tempX, tempY)));
          }
 
-         // Reset redundancy check.
-         redundantCollision = false;
-         // Reset end point gathering distances.
+         // Reset distance of the point to be furthest away.
          tempX = std::numeric_limits<float>::max();
          tempY = std::numeric_limits<float>::max();
       }
-      delete x;
-      delete y;
 
-      // Sort the list based on degrees in increasing order.
+      // Sort the list based on degrees in ascending order.
       std::sort(mPoints.begin(), mPoints.end(), [](auto &left, auto &right)
       {
          return left.first < right.first;
       });
+
+      // Cleanup
+      delete x;
+      delete y;
+      delete ligthCircle;
+      delete pCollisionPoints;
    }
 
    //******************************************************************************************************************
@@ -519,7 +550,7 @@ namespace Bebop { namespace Graphics
       delete x;
       delete y;
 
-      // Check to amke sure the ray doesn't pass through another object from the origin to the rectangle point.
+      // Check to make sure the ray doesn't pass through another object from the origin to the rectangle point.
       if (CheckObjectCollisions(aCoordinateX, aCoordinateY, aThisRectangle) == false)
       {
          // Get the angle from the light origin to the rectangle point.
