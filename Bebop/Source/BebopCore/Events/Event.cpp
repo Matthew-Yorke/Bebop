@@ -218,7 +218,6 @@ namespace Bebop { namespace Events
 
                const float currentUpdate = static_cast<float>(al_current_time());
                mUpdateTimeDifference = currentUpdate - mLastUpdate;
-               std::cout << "Time: " << mUpdateTimeDifference << "\n";
                mLastUpdate = currentUpdate;
             }
          }

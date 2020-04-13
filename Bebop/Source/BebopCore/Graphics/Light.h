@@ -220,8 +220,9 @@ namespace Bebop { namespace Graphics
          // Return:
          //    N/A
          //
-         //******************************************************************************************************************
-         void CircleCollisionPoints(Objects::CircleObject* aThisCircle);
+         //************************************************************************************************************
+         void CircleCollisionPoints(Objects::CircleObject* aThisCircle,
+                                    std::vector<std::pair<float, float>>* apCollisionPoints);
 
          //************************************************************************************************************
          //

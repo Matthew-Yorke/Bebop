@@ -316,7 +316,8 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool CircleCircleCollision(Objects::CircleObject* mpCircleOne,
-                              Objects::CircleObject* mpCircleTwo)
+                              Objects::CircleObject* mpCircleTwo,
+                              std::vector<std::pair<float, float>>* apCollisionPoints)
    {
       // Get the distance from the center of the first circle to the second circle.
       float distanceX = mpCircleOne->GetCoordinateX() - mpCircleTwo->GetCoordinateX();
@@ -327,6 +328,33 @@ namespace Bebop { namespace Math
       // has happened.
       if (distance < mpCircleOne->GetRadius() + mpCircleTwo->GetRadius())
       {
+         if (apCollisionPoints != nullptr)
+         {
+            // Avoid circles that overlap.
+            if (distance != 0.0F)
+            {
+               // Distance from circle one to point perpendiculr to intersection points.
+               float a = ((mpCircleOne->GetRadius() * mpCircleOne->GetRadius()) - 
+                         (mpCircleTwo->GetRadius() * mpCircleTwo->GetRadius()) +
+                         (distance * distance)) /
+                         (2.0F * distance);
+               // Distance from "a" (above) to one of the intersecition points.
+               float h = sqrtf((mpCircleOne->GetRadius() * mpCircleOne->GetRadius()) - (a * a));
+               // X and Y coordinate of of point that is perpendicular to the intersectoin points.
+               float x2 = mpCircleOne->GetCoordinateX() + a * (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance;
+               float y2 = mpCircleOne->GetCoordinateY() + a * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
+
+               // Gather the X and Y points for botht he intersection points.
+               float x3 = x2 + h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
+               float y3 = y2 - h * (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance;
+               float x4 = x2 - h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
+               float y4 = y2 + h + (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance;
+
+               apCollisionPoints->push_back(std::make_pair(x3, y3));
+               apCollisionPoints->push_back(std::make_pair(x4, y4));
+            }
+         }
+
          return true;
       }
 
