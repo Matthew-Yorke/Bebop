@@ -226,7 +226,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         virtual void DrawForLightBlocking(int aAlpha) const = 0;
+         virtual void DrawForLightBlocking(unsigned int aAlpha) const = 0;
 
       protected:
       

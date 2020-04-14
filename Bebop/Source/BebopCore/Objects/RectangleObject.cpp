@@ -157,7 +157,7 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void RectangleObject::DrawForLightBlocking(int aAlpha) const
+   void RectangleObject::DrawForLightBlocking(unsigned int aAlpha) const
    {
       al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
                                al_map_rgba(Graphics::NO_COLOR , Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));

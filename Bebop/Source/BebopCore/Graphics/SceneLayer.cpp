@@ -296,6 +296,20 @@ namespace Bebop { namespace Graphics
          (*iterator)->DrawForLightBlocking(240);
       }
 
+      // Draw blacked out area of sprites for this layer on the shadowmap.
+      for (auto iterator = mSprites.begin(); iterator != mSprites.end(); ++iterator)
+      {
+         (*iterator)->DrawTinted(240);
+      }
+      for (auto iterator = mAnimatedSprites.begin(); iterator != mAnimatedSprites.end(); ++iterator)
+      {
+         (*iterator)->DrawTinted(240);
+      }
+      for (auto iterator = mParticles.begin(); iterator != mParticles.end(); ++iterator)
+      {
+         (*iterator)->DrawTinted(240);
+      }
+
       // Set to blend the colors together by subtracting the light from the shadow map.
       al_set_blender(ALLEGRO_DEST_MINUS_SRC, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 

@@ -45,6 +45,8 @@ namespace Bebop { namespace Graphics
       {
          Terminate();
       }
+
+      al_convert_mask_to_alpha(mpSpriteSheet, al_map_rgb(255, 0, 255));
    }
    
    //******************************************************************************************************************
@@ -149,6 +151,33 @@ namespace Bebop { namespace Graphics
                             mPositionX,
                             mPositionY,
                             0);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: DrawTinted
+   //
+   // Description:
+   //    Draw a tinted version of the sprite.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Sprite::DrawTinted(unsigned int aAlpha) const
+   {
+      al_draw_tinted_bitmap_region(mpSpriteSheet,
+                                   al_map_rgba(0, 0, 0, aAlpha),
+                                   mSourceX,
+                                   mSourceY,
+                                   mWidth,
+                                   mHeight,
+                                   mPositionX,
+                                   mPositionY,
+                                   0);
    }
 
 //*********************************************************************************************************************

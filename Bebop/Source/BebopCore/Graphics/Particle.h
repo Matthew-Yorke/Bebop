@@ -105,6 +105,22 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          void Draw();
 
+         //************************************************************************************************************
+         //
+         // Method: DrawTinted
+         //
+         // Description:
+         //    Draw a tinted version of the particle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void DrawTinted(unsigned int aAlpha);
+
       protected:
 
          // There are currently no protected methods for this class.

@@ -139,7 +139,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         void DrawForLightBlocking(int aAlpha) const override;
+         void DrawForLightBlocking(unsigned int aAlpha) const override;
 
       protected:
       

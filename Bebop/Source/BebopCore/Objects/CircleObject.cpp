@@ -97,7 +97,7 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   void CircleObject::DrawForLightBlocking(int aAlpha) const
+   void CircleObject::DrawForLightBlocking(unsigned int aAlpha) const
    {
       al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius,
                             al_map_rgba(Graphics::NO_COLOR, Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));
