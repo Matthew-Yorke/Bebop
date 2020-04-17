@@ -8,6 +8,7 @@
 //*********************************************************************************************************************
 
 #include "Bebop.h"
+#include <iostream>
 
 namespace Bebop
 {
@@ -257,12 +258,24 @@ namespace Bebop
    //******************************************************************************************************************
    void Bebop::Update()
    {
+      static int count = 0;
+      static float FPS = 0.0F;
       if (mpEventHandler != nullptr)
       {
          mpEventHandler->Execute();
 
          if (mpEventHandler->GetTimedOut() == true)
          {
+            
+            count++;
+            FPS += mpEventHandler->GetUpdateTimeDifference();
+            if (count == 60)
+            {
+               std::cout << "FPS: " << 60.0F*FPS << "\n";
+               count = 0;
+               FPS = 0.0F;
+            }
+
             mpScene->Update(mpEventHandler->GetUpdateTimeDifference());
             Draw();
             mpEventHandler->SetTimedOut(false);

@@ -198,9 +198,12 @@ namespace Bebop { namespace Graphics
                // The object being checked aginst is a rectangle.
                if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
                {
-                  Math::RectangleRectangleCollision(tempCollideRectangle,
-                                                    dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
-                                                    pCollisionPoints);
+                  if (true == Math::RectangleRectangleCollision(tempCollideRectangle,
+                                                                dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
+                                                                nullptr))
+                  {
+                     RectangleRectangleCollisionPoints(tempCollideRectangle, dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator), pCollisionPoints);
+                  }
                }
                // The object being checked against is a circle.
                else if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
@@ -729,6 +732,146 @@ namespace Bebop { namespace Graphics
       }
 
       return false;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RectangleRectangleCollisionPoints
+   //
+   // Description:
+   //    Checks for collision points between two rectangles based on the origin of the light. For example, if the
+   //    light is above both rectangles and to the right of the first rectangle then the only two lines needed
+   //    to be check for collision is the top horizontal edge of the first rectangle agaisnt the right vertical
+   //    edge of the second rectangle as that is the only collision point the light will possiblu reach without passing
+   //    through either rectangle.
+   //
+   // Arguments:
+   //    apRectangleOne - One of the rectangle to check for collision points.
+   //    apRectangleTwo - The second rectangle to check for collision points.
+   //    apCollisionPoints - The collection of possible collision points known to the light source.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::RectangleRectangleCollisionPoints(Objects::RectangleObject* apRectangleOne,
+                                                 Objects::RectangleObject* apRectangleTwo,
+                                                 std::vector<std::pair<float, float>>* apCollisionPoints)
+   {
+      Line* rectangleOneHorizontal= nullptr;
+      Line* rectangleOneVertical= nullptr;
+      Line* rectangleTwoHorizontal= nullptr;
+      Line* rectangleTwoVertical= nullptr;
+
+      // check light is left/right of rectangle one.
+      if (mOriginX < apRectangleOne->GetCoordinateX())
+      {
+         rectangleOneVertical = new Line;
+         rectangleOneVertical->originX = apRectangleOne->GetCoordinateX();
+         rectangleOneVertical->originY = apRectangleOne->GetCoordinateY();
+         rectangleOneVertical->endY = apRectangleOne->GetCoordinateY() + apRectangleOne->GetHeight();
+      }
+      else if (mOriginX > apRectangleOne->GetCoordinateX() + apRectangleOne->GetWidth())
+      {
+         rectangleOneVertical = new Line;
+         rectangleOneVertical->originX = apRectangleOne->GetCoordinateX() + apRectangleOne->GetWidth();
+         rectangleOneVertical->originY = apRectangleOne->GetCoordinateY();
+         rectangleOneVertical->endX = apRectangleOne->GetCoordinateX() + apRectangleOne->GetWidth();
+         rectangleOneVertical->endY = apRectangleOne->GetCoordinateY() + apRectangleOne->GetHeight();
+      }
+      // Check Light above/below rectangle one.
+      if (mOriginY < apRectangleOne->GetCoordinateY())
+      {
+         rectangleOneHorizontal = new Line;
+         rectangleOneHorizontal->originX = apRectangleOne->GetCoordinateX();
+         rectangleOneHorizontal->originY = apRectangleOne->GetCoordinateY();
+         rectangleOneHorizontal->endX = apRectangleOne->GetCoordinateX() + apRectangleOne->GetWidth();
+         rectangleOneHorizontal->endY = apRectangleOne->GetCoordinateY();
+      }
+      else if (mOriginY > apRectangleOne->GetCoordinateY() + apRectangleOne->GetHeight())
+      {
+         rectangleOneHorizontal = new Line;
+         rectangleOneHorizontal->originX = apRectangleOne->GetCoordinateX();
+         rectangleOneHorizontal->originY = apRectangleOne->GetCoordinateY() + apRectangleOne->GetHeight();
+         rectangleOneHorizontal->endX = apRectangleOne->GetCoordinateX() + apRectangleOne->GetWidth();
+         rectangleOneHorizontal->endY = apRectangleOne->GetCoordinateY() + apRectangleOne->GetHeight();
+      }
+
+      // check light is left/right of rectangle two.
+      if (mOriginX < apRectangleTwo->GetCoordinateX())
+      {
+         rectangleTwoVertical = new Line;
+         rectangleTwoVertical->originX = apRectangleTwo->GetCoordinateX();
+         rectangleTwoVertical->originY = apRectangleTwo->GetCoordinateY();
+         rectangleTwoVertical->endX = apRectangleTwo->GetCoordinateX();
+         rectangleTwoVertical->endY = apRectangleTwo->GetCoordinateY() + apRectangleTwo->GetHeight();
+      }
+      else if (mOriginX > apRectangleTwo->GetCoordinateX() + apRectangleTwo->GetWidth())
+      {
+         rectangleTwoVertical = new Line;
+         rectangleTwoVertical->originX = apRectangleTwo->GetCoordinateX() + apRectangleTwo->GetWidth();
+         rectangleTwoVertical->originY = apRectangleTwo->GetCoordinateY();
+         rectangleTwoVertical->endX = apRectangleTwo->GetCoordinateX() + apRectangleTwo->GetWidth();
+         rectangleTwoVertical->endY = apRectangleTwo->GetCoordinateY() + apRectangleTwo->GetHeight();
+      }
+      // Check Light above/below rectangle two.
+      if (mOriginY < apRectangleTwo->GetCoordinateY())
+      {
+         rectangleTwoHorizontal = new Line;
+         rectangleTwoHorizontal->originX = apRectangleTwo->GetCoordinateX();
+         rectangleTwoHorizontal->originY = apRectangleTwo->GetCoordinateY();
+         rectangleTwoHorizontal->endX = apRectangleTwo->GetCoordinateX() + apRectangleOne->GetWidth();
+         rectangleTwoHorizontal->endY = apRectangleTwo->GetCoordinateY();
+      }
+      else if (mOriginY > apRectangleTwo->GetCoordinateY() + apRectangleTwo->GetHeight())
+      {
+         rectangleTwoHorizontal = new Line;
+         rectangleTwoHorizontal->originX = apRectangleTwo->GetCoordinateX();
+         rectangleTwoHorizontal->originY = apRectangleTwo->GetCoordinateY() + apRectangleTwo->GetHeight();
+         rectangleTwoHorizontal->endX = apRectangleTwo->GetCoordinateX() + apRectangleTwo->GetWidth();
+         rectangleTwoHorizontal->endY = apRectangleTwo->GetCoordinateY() + apRectangleTwo->GetHeight();
+      }
+
+      float* x = new float;
+      float* y = new float;
+      // Check if rectangle one vertical and rectangle two horizontal lines will collide. 
+      if (rectangleOneVertical != nullptr)
+      {
+         if (rectangleTwoHorizontal != nullptr)
+         {
+            if (Math::LineLineCollision(rectangleOneVertical->originX, rectangleOneVertical->originY,
+                                        rectangleOneVertical->endX, rectangleOneVertical->endY,
+                                        rectangleTwoHorizontal->originX, rectangleTwoHorizontal->originY,
+                                        rectangleTwoHorizontal->endX, rectangleTwoHorizontal->endY,
+                                        x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+         }
+      }
+      // Check if rectangle one horizontal and rectangle two vertical lines will collide. 
+      if (rectangleOneHorizontal != nullptr)
+      {
+         if (rectangleTwoVertical != nullptr)
+         {
+            if (Math::LineLineCollision(rectangleOneHorizontal->originX, rectangleOneHorizontal->originY,
+                                        rectangleOneHorizontal->endX, rectangleOneHorizontal->endY,
+                                        rectangleTwoVertical->originX, rectangleTwoVertical->originY,
+                                        rectangleTwoVertical->endX, rectangleTwoVertical->endY,
+                                        x, y) == true)
+            {
+               apCollisionPoints->push_back(std::make_pair(*x, *y));
+            }
+         }
+      }
+
+      // Cleanup any allocated memory.
+      delete rectangleOneHorizontal;
+      delete rectangleOneVertical;
+      delete rectangleTwoHorizontal;
+      delete rectangleTwoVertical;
+      delete x;
+      delete y;
    }
 
 //*********************************************************************************************************************

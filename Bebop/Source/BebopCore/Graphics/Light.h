@@ -244,6 +244,30 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          bool CheckObjectCollisions(float aEndPointX, float aEndPointY, Objects::Object* testingObject);
 
+         //************************************************************************************************************
+         //
+         // Method: RectangleRectangleCollisionPoints
+         //
+         // Description:
+         //    Checks for collision points between two rectangles based on the origin of the light. For example, if the
+         //    light is above both rectangles and to the right of the first rectangle then the only two lines needed
+         //    to be check for collision is the top horizontal edge of the first rectangle agaisnt the right vertical
+         //    edge of the second rectangle as that is the only collision point the light will possiblu reach without
+         //    passingthrough either rectangle.
+         //
+         // Arguments:
+         //    apRectangleOne - One of the rectangle to check for collision points.
+         //    apRectangleTwo - The second rectangle to check for collision points.
+         //    apCollisionPoints - The collection of possible collision points known to the light source.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RectangleRectangleCollisionPoints(Objects::RectangleObject* apRectangleOne,
+                                                Objects::RectangleObject* apRectangleTwo,
+                                                std::vector<std::pair<float, float>>* apCollisionPoints);
+
    //******************************************************************************************************************
    // Methods - End
    //******************************************************************************************************************
@@ -288,6 +312,15 @@ namespace Bebop { namespace Graphics
 
          // Vector of objects that can block a light source.
          std::vector<Objects::Object*> mObjects;
+
+         // TODO: This needs a better location.
+         struct Line
+         {
+            float originX;
+            float originY;
+            float endX;
+            float endY;
+         };
 
    //******************************************************************************************************************
    // Member Variables - End
