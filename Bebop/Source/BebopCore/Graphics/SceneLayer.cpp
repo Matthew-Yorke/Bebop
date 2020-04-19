@@ -71,7 +71,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void SceneLayer::AddSprite(Sprite* apSprite)
    {
-      mSprites.push_back(apSprite);
+      auto iter = std::find(mSprites.begin(), mSprites.end(), apSprite);
+      if (iter == mSprites.end())
+      {
+         mSprites.push_back(apSprite);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RemoveSprite
+   //
+   // Description:
+   //    Removes a sprite from the scene layer.
+   //
+   // Arguments:
+   //    apSprite - The sprite being removed from this layer.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void SceneLayer::RemoveSprite(Sprite* apSprite)
+   {
+      auto iter = std::find(mSprites.begin(), mSprites.end(), apSprite);
+      if (iter != mSprites.end())
+      {
+         mSprites.erase(iter);
+      }
    }
 
    //******************************************************************************************************************
@@ -90,7 +117,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void SceneLayer::AddAnimatedSprite(AnimatedSprite* apAniamtedSprite)
    {
-      mAnimatedSprites.push_back(apAniamtedSprite);
+      auto iter = std::find(mAnimatedSprites.begin(), mAnimatedSprites.end(), apAniamtedSprite);
+      if (iter == mAnimatedSprites.end())
+      {
+         mAnimatedSprites.push_back(apAniamtedSprite);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RemoveAnimatedSprite
+   //
+   // Description:
+   //    Removes an animated sprite from the scene layer.
+   //
+   // Arguments:
+   //    apAniamtedSprite - The animated being removed from this layer.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void SceneLayer::RemoveAnimatedSprite(AnimatedSprite* apAniamtedSprite)
+   {
+      auto iter = std::find(mAnimatedSprites.begin(), mAnimatedSprites.end(), apAniamtedSprite);
+      if (iter != mAnimatedSprites.end())
+      {
+         mAnimatedSprites.erase(iter);
+      }
    }
    
    //******************************************************************************************************************
@@ -109,7 +163,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void SceneLayer::AddParticle(Particle* apParticle)
    {
-      mParticles.push_back(apParticle);
+      auto iter = std::find(mParticles.begin(), mParticles.end(), apParticle);
+      if (iter == mParticles.end())
+      {
+         mParticles.push_back(apParticle);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RemoveParticle
+   //
+   // Description:
+   //    Removes a particle from the scene layer.
+   //
+   // Arguments:
+   //    apParticle - The particle being removed from this layer.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void SceneLayer::RemoveParticle(Particle* apParticle)
+   {
+      auto iter = std::find(mParticles.begin(), mParticles.end(), apParticle);
+      if (iter != mParticles.end())
+      {
+         mParticles.erase(iter);
+      }
    }
    
    //******************************************************************************************************************
@@ -128,7 +209,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void SceneLayer::AddLight(Light* apLight)
    {
-      mLights.push_back(apLight);
+      auto iter = std::find(mLights.begin(), mLights.end(), apLight);
+      if (iter == mLights.end())
+      {
+         mLights.push_back(apLight);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RemoveLight
+   //
+   // Description:
+   //    Removes a light from the scene layer.
+   //
+   // Arguments:
+   //    apLight - The light source being removed from this layer.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void SceneLayer::RemoveLight(Light* apLight)
+   {
+      auto iter = std::find(mLights.begin(), mLights.end(), apLight);
+      if (iter != mLights.end())
+      {
+         mLights.erase(iter);
+      }
    }
    
    //******************************************************************************************************************
@@ -147,7 +255,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void SceneLayer::AddLightBlockingObjects(Objects::Object* apObject)
    {
-      mLightBlockingObjects.push_back(apObject);
+      auto iter = std::find(mLightBlockingObjects.begin(), mLightBlockingObjects.end(), apObject);
+      if (iter == mLightBlockingObjects.end())
+      {
+         mLightBlockingObjects.push_back(apObject);
+      }
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: RemoveLightBlockingObjects
+   //
+   // Description:
+   //    Removes a object that will block light sources from the scene layer.
+   //
+   // Arguments:
+   //    apObject - The object that will block light sources being removed from this layer.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void SceneLayer::RemoveLightBlockingObjects(Objects::Object* apObject)
+   {
+      auto iter = std::find(mLightBlockingObjects.begin(), mLightBlockingObjects.end(), apObject);
+      if (iter != mLightBlockingObjects.end())
+      {
+         mLightBlockingObjects.erase(iter);
+      }
    }
 
    //******************************************************************************************************************

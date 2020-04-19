@@ -80,6 +80,22 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: RemoveSprite
+         //
+         // Description:
+         //    Removes a sprite from the scene layer.
+         //
+         // Arguments:
+         //    apSprite - The sprite being removed from this layer.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RemoveSprite(Sprite* apSprite);
+
+         //************************************************************************************************************
+         //
          // Method: AddAnimatedSprite
          //
          // Description:
@@ -96,10 +112,26 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: RemoveAnimatedSprite
+         //
+         // Description:
+         //    Removes an animated sprite from the scene layer.
+         //
+         // Arguments:
+         //    apAniamtedSprite - The animated being removed from this layer.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RemoveAnimatedSprite(AnimatedSprite* apAniamtedSprite);
+
+         //************************************************************************************************************
+         //
          // Method: AddParticle
          //
          // Description:
-         //    Adds a particle  to the scene layer.
+         //    Adds a particle to the scene layer.
          //
          // Arguments:
          //    apParticle - The particle being added for this layer.
@@ -109,6 +141,22 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void AddParticle(Particle* apParticle);
+
+         //************************************************************************************************************
+         //
+         // Method: RemoveParticle
+         //
+         // Description:
+         //    Removes a particle from the scene layer.
+         //
+         // Arguments:
+         //    apParticle - The particle being removed from this layer.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RemoveParticle(Particle* apParticle);
 
          //************************************************************************************************************
          //
@@ -128,6 +176,22 @@ namespace Bebop { namespace Graphics
 
          //************************************************************************************************************
          //
+         // Method: RemoveLight
+         //
+         // Description:
+         //    Removes a light from the scene layer.
+         //
+         // Arguments:
+         //    apLight - The light source being removed from this layer.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RemoveLight(Light* apLight);
+
+         //************************************************************************************************************
+         //
          // Method: AddLightBlockingObjects
          //
          // Description:
@@ -141,6 +205,22 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void AddLightBlockingObjects(Objects::Object* apObject);
+
+         //************************************************************************************************************
+         //
+         // Method: RemoveLightBlockingObjects
+         //
+         // Description:
+         //    Removes a object that will block light sources from the scene layer.
+         //
+         // Arguments:
+         //    apObject - The object that will block light sources being removed from this layer.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void RemoveLightBlockingObjects(Objects::Object* apObject);
 
          //************************************************************************************************************
          //
