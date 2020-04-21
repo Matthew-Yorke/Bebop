@@ -195,6 +195,22 @@ namespace Bebop { namespace Math
 
          //************************************************************************************************************
          //
+         // Method: SetComponentX
+         //
+         // Description:
+         //    Sets the X component of the vector.
+         //
+         // Arguments:
+         //    aComponentX - The X-Componenet value to set.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void SetComponentX(const T aComponentX);
+
+         //************************************************************************************************************
+         //
          // Method: GetComponentY
          //
          // Description:
@@ -208,6 +224,22 @@ namespace Bebop { namespace Math
          //
          //************************************************************************************************************
          T GetComponentY() const;
+
+         //************************************************************************************************************
+         //
+         // Method: SetComponentY
+         //
+         // Description:
+         //    Sets the Y component of the vector.
+         //
+         // Arguments:
+         //    aComponentY - The Y-Componenet value to set.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void SetComponentY(const T aComponentY);
 
          //************************************************************************************************************
          //
@@ -566,6 +598,26 @@ namespace Bebop { namespace Math
 
    //******************************************************************************************************************
    //
+   // Method: SetComponentX
+   //
+   // Description:
+   //    Sets the X component of the vector.
+   //
+   // Arguments:
+   //    aComponentX - The X-Componenet value to set.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   template<class T>
+   void Vector2D<T>::SetComponentX(const T aComponentX)
+   {
+      mComponentX = aComponentX;
+   }
+
+   //******************************************************************************************************************
+   //
    // Method: GetComponentY
    //
    // Description:
@@ -582,6 +634,26 @@ namespace Bebop { namespace Math
    T Vector2D<T>::GetComponentY() const
    {
       return mComponentY;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: SetComponentY
+   //
+   // Description:
+   //    Sets the Y component of the vector.
+   //
+   // Arguments:
+   //    aComponentX - The Y-Componenet value to set.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   template<class T>
+   void Vector2D<T>::SetComponentY(const T aComponentY)
+   {
+      mComponentY = aComponentY;
    }
 
    //******************************************************************************************************************

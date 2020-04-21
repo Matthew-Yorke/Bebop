@@ -152,6 +152,11 @@ namespace Bebop
          return false;
       }
 
+      if (!al_install_mouse())
+      {
+         return false;
+      }
+
       if (mpEventHandler == nullptr)
       {
          mpEventHandler = new Events::Event();
@@ -240,6 +245,27 @@ namespace Bebop
    bool Bebop::GetKeyStatus(int aKeycode)
    {
       return mpEventHandler->GetKeyStatus(aKeycode);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: GetMouseStatus
+   //
+   // Description:
+   //    Retreives the status of the mouse button as either true (pressed) or false (not pressed) using the passed in
+   //    value for the lookup.
+   //
+   // Arguments:
+   //    aMouseButton - The value of the key being checked for pressed status.
+   //
+   // Return:
+   //    True  - The value provided indicates the key is pressed.
+   //    False - The value provided indicates the key is not pressed.
+   //
+   //******************************************************************************************************************
+   bool Bebop::GetMouseStatus(const unsigned int aMouseButton)
+   {
+      return mpEventHandler->GetMouseStatus(aMouseButton);
    }
 
    //******************************************************************************************************************

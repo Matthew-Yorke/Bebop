@@ -180,6 +180,24 @@ namespace Bebop
 
          //************************************************************************************************************
          //
+         // Method: GetMouseStatus
+         //
+         // Description:
+         //    Retreives the status of the mouse button as either true (pressed) or false (not pressed) using the passed
+         //    in value for the lookup.
+         //
+         // Arguments:
+         //    aMouseButton - The value of the key being checked for pressed status.
+         //
+         // Return:
+         //    True  - The value provided indicates the key is pressed.
+         //    False - The value provided indicates the key is not pressed.
+         //
+         //************************************************************************************************************
+         bool GetMouseStatus(const unsigned int aMouseButton);
+
+         //************************************************************************************************************
+         //
          // Method: Update
          //
          // Description:

@@ -11,6 +11,7 @@
 #define Event_H
 
 #include <allegro5/allegro_acodec.h>
+#include "../Math/Vector2D.h"
 
 namespace Bebop { namespace Events
 {
@@ -71,6 +72,24 @@ namespace Bebop { namespace Events
          //
          //************************************************************************************************************
          bool GetKeyStatus(const unsigned int aKeycode);
+
+         //************************************************************************************************************
+         //
+         // Method: GetMouseStatus
+         //
+         // Description:
+         //    Retreives the status of the mouse button as either true (pressed) or false (not pressed) using the passed
+         //    in value for the lookup.
+         //
+         // Arguments:
+         //    aMouseButton - The value of the key being checked for pressed status.
+         //
+         // Return:
+         //    True  - The value provided indicates the key is pressed.
+         //    False - The value provided indicates the key is not pressed.
+         //
+         //************************************************************************************************************
+         bool GetMouseStatus(const unsigned int aMouseButton);
 
          //************************************************************************************************************
          //
@@ -175,6 +194,10 @@ namespace Bebop { namespace Events
          float mUpdateTimeDifference;
 
          bool* mpKeys;
+
+         bool* mpMouseButtons;
+
+         Math::Vector2D<int> mMousePoisiton;
 
       //***************************************************************************************************************
       // Member Variables - End

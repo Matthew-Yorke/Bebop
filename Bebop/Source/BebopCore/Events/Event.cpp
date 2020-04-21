@@ -29,12 +29,18 @@ namespace Bebop { namespace Events
    //    N/A
    //
    //******************************************************************************************************************
-   Event::Event() : mpTimer(nullptr), mTimedOut(false), mUpdateTimeDifference(0.0F)
+   Event::Event() : mpTimer(nullptr), mTimedOut(false), mUpdateTimeDifference(0.0F), mMousePoisiton(0.0F, 0.0F)
    {
       mpKeys = new bool[ALLEGRO_KEY_MAX];
       for (auto iter = 0; iter < ALLEGRO_KEY_MAX; ++iter)
       {
          mpKeys[iter] = false;
+      }
+
+      mpMouseButtons = new bool[100];
+      for (auto iter = 0; iter < 100; ++iter)
+      {
+         mpMouseButtons[iter] = false;
       }
 
       mLastUpdate = static_cast<float>(al_current_time());
@@ -50,6 +56,7 @@ namespace Bebop { namespace Events
 
       mpEventQueue = al_create_event_queue();
       al_register_event_source(mpEventQueue, al_get_keyboard_event_source());
+      al_register_event_source(mpEventQueue, al_get_mouse_event_source());
       al_register_event_source(mpEventQueue, al_get_timer_event_source(mpTimer));
       al_start_timer(mpTimer);
    }
@@ -99,6 +106,34 @@ namespace Bebop { namespace Events
       }
 
       return mpKeys[aKeycode];
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: GetMouseStatus
+   //
+   // Description:
+   //    Retreives the status of the mouse button as either true (pressed) or false (not pressed) using the passed in
+   //    value for the lookup.
+   //
+   // Arguments:
+   //    aMouseButton - The value of the key being checked for pressed status.
+   //
+   // Return:
+   //    True  - The value provided indicates the key is pressed.
+   //    False - The value provided indicates the key is not pressed.
+   //
+   //******************************************************************************************************************
+   bool Event::GetMouseStatus(const unsigned int aMouseButton)
+   {
+      // Value exceeds the value limit indicating an incorrect checkup, therefore return false as a key that does not
+      // exist cannot be pressed.
+      if (aMouseButton > 100)
+      {
+         return false;
+      }
+
+      return mpMouseButtons[aMouseButton];
    }
 
    //******************************************************************************************************************
@@ -197,6 +232,19 @@ namespace Bebop { namespace Events
          else if (nextEvent.type == ALLEGRO_EVENT_KEY_UP)
          {
             mpKeys[nextEvent.keyboard.keycode] = false;
+         }
+         else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+         {
+            mpMouseButtons[nextEvent.mouse.button] = true;
+         }
+         else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+         {
+            mpMouseButtons[nextEvent.mouse.button] = false;
+         }
+         else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_AXES)
+         {
+            mMousePoisiton.SetComponentX(nextEvent.mouse.x);
+            mMousePoisiton.SetComponentY(nextEvent.mouse.y);
          }
          // The event was a timer event.
          else if (nextEvent.type == ALLEGRO_EVENT_TIMER)
