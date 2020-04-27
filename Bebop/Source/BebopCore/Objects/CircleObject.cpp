@@ -35,9 +35,9 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //************************************************************************************************************
-   CircleObject::CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius,
+   CircleObject::CircleObject(const Math::Vector2D<float> aCoordinates, const int aRadius,
                               const Graphics::Color aColor, const bool aBlocksLights) :
-      Object(aCoordinateX, aCoordinateY, aRadius, aRadius, aColor, ObjectType::CIRCLE, aBlocksLights),
+      Object(aCoordinates, aRadius, aRadius, aColor, ObjectType::CIRCLE, aBlocksLights),
       mRadius(aRadius)
    {
    }
@@ -77,10 +77,9 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void CircleObject::Draw() const
    {
-      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius-1, al_map_rgba(mColor.GetRedColor(),
-                                                                               mColor.GetGreenColor(),
-                                                                               mColor.GetBlueColor(),
-                                                                               mColor.GetAlpha()));
+      al_draw_filled_circle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
+                            mRadius-1, al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
+                                                    mColor.GetAlpha()));
    }
 
    //******************************************************************************************************************
@@ -99,7 +98,7 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void CircleObject::DrawForLightBlocking(unsigned int aAlpha) const
    {
-      al_draw_filled_circle(mCoordinateX, mCoordinateY, mRadius,
+      al_draw_filled_circle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(), mRadius,
                             al_map_rgba(Graphics::NO_COLOR, Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));
    }
 

@@ -40,7 +40,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         CircleObject(const float aCoordinateX, const float aCoordinateY, const int aRadius,
+         CircleObject(const Math::Vector2D<float> aCoordinates, const int aRadius,
                       const Graphics::Color aColor, const bool aBlocksLights);
       
          //************************************************************************************************************

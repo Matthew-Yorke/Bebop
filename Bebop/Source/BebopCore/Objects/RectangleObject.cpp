@@ -36,13 +36,133 @@ namespace Bebop { namespace Objects
    //    N/A
    //
    //******************************************************************************************************************
-   RectangleObject::RectangleObject(const float aCoordinateX, const float aCoordinateY, const int aWidth,
+   RectangleObject::RectangleObject(const Math::Vector2D<float> aCoordinates, const int aWidth,
                                     const int aHeight, const Graphics::Color aColor, const bool aBlocksLights) :
-      Object(aCoordinateX, aCoordinateY, (aWidth / 2), (aHeight / 2), aColor, ObjectType::RECTANGLE, aBlocksLights),
-      mWidth(aWidth), mHeight(aHeight)
+      Object(aCoordinates, (aWidth / 2), (aHeight / 2), aColor, ObjectType::RECTANGLE, aBlocksLights),
+      mWidth(aWidth), mHeight(aHeight),
+      mTopLeftPoint(aCoordinates),
+      mTopRightPoint(GetCoordinateX() + aWidth, GetCoordinateY()),
+      mBottomLeftPoint(GetCoordinateX(), GetCoordinateY() + aHeight),
+      mBottomRightPoint(GetCoordinateX() + aWidth, GetCoordinateY() + aHeight)
    {
    }
    
+   //******************************************************************************************************************
+   //
+   // Method Name: SetCoordinateX
+   //
+   // Description:
+   //    This method updates the X-Coordinate of the object based on the passed in value.
+   //
+   // Arguments:
+   //    aCoordianteX - The updated X-Coordinate to place the object at.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void RectangleObject::SetCoordinateX(const float aCoordianteX)
+   {
+      Object::SetCoordinateX(aCoordianteX);
+      UpdateCooridnates();
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method Name: SetCoordinateY
+   //
+   // Description:
+   //    This method updates the Y-Coordinate of the object based on the passed in value.
+   //
+   // Arguments:
+   //    aCoordianteY - The updated Y-Coordinate to place the object at.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void RectangleObject::SetCoordinateY(const float aCoordianteY)
+   {
+      Object::SetCoordinateY(aCoordianteY);
+      UpdateCooridnates();
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method Name: GetTopLeftCorner
+   //
+   // Description:
+   //    Returns the vector coordinates of the top-left corner of the rectangle.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns a 2D Vector coordinates for the top-left corner.
+   //
+   //******************************************************************************************************************
+   Math::Vector2D<float> RectangleObject::GetTopLeftCorner()
+   {
+      return mTopLeftPoint;
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method Name: GetTopRightCorner
+   //
+   // Description:
+   //    Returns the vector coordinates of the top-right corner of the rectangle.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns a 2D Vector coordinates for the top-right corner.
+   //
+   //******************************************************************************************************************
+   Math::Vector2D<float> RectangleObject::GetTopRightCorner()
+   {
+      return mTopRightPoint;
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method Name: GetBottomLeftCorner
+   //
+   // Description:
+   //    Returns the vector coordinates of the bottom-left corner of the rectangle.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns a 2D Vector coordinates for the bottom-left corner.
+   //
+   //******************************************************************************************************************
+   Math::Vector2D<float> RectangleObject::GetBottomLeftCorner()
+   {
+      return mBottomLeftPoint;
+   }
+   
+   //******************************************************************************************************************
+   //
+   // Method Name: GetBottomRightCorner
+   //
+   // Description:
+   //    Returns the vector coordinates of the bottom-right corner of the rectangle.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    Returns a 2D Vector coordinates for the bottom-right corner.
+   //
+   //******************************************************************************************************************
+   Math::Vector2D<float> RectangleObject::GetBottomRightCorner()
+   {
+      return mBottomRightPoint;
+   }
+
    //******************************************************************************************************************
    //
    // Method Name: SetWidth
@@ -137,7 +257,8 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void RectangleObject::Draw() const
    {
-      al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
+      al_draw_filled_rectangle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
+                               mCoordinates.GetComponentX() + mWidth, mCoordinates.GetComponentY() + mHeight,
                                al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
                                            mColor.GetAlpha()));
    }
@@ -159,7 +280,8 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void RectangleObject::DrawForLightBlocking(unsigned int aAlpha) const
    {
-      al_draw_filled_rectangle(mCoordinateX, mCoordinateY, mCoordinateX + mWidth, mCoordinateY + mHeight,
+      al_draw_filled_rectangle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
+                               mCoordinates.GetComponentX() + mWidth, mCoordinates.GetComponentY() + mHeight,
                                al_map_rgba(Graphics::NO_COLOR , Graphics::NO_COLOR, Graphics::NO_COLOR, aAlpha));
    }
 
@@ -181,7 +303,34 @@ namespace Bebop { namespace Objects
 // Private Methods - Start
 //*********************************************************************************************************************
 
-   // There are currently no private methods for this class.
+   //******************************************************************************************************************
+   //
+   // Method: UpdateCooridnates
+   //
+   // Description:
+   //    Updates the coordinates of each of the rectangle corner points.
+   //
+   // Arguments:
+   //    N/A
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void RectangleObject::UpdateCooridnates()
+   {
+      // Update top-left point.
+      mTopLeftPoint = mCoordinates;
+      // Update top-right point.
+      mTopRightPoint.SetComponentX(mCoordinates.GetComponentX() + mWidth);
+      mTopRightPoint.SetComponentY(mCoordinates.GetComponentY());
+      // Update bottom-left point.
+      mBottomLeftPoint.SetComponentX(mCoordinates.GetComponentX());
+      mBottomLeftPoint.SetComponentY(mCoordinates.GetComponentY() + mHeight);
+      // Update bottom-right point.
+      mBottomRightPoint.SetComponentX(mCoordinates.GetComponentX() + mWidth);
+      mBottomRightPoint.SetComponentY(mCoordinates.GetComponentY() + mHeight);
+   }
 
 //*********************************************************************************************************************
 // Private Methods - End

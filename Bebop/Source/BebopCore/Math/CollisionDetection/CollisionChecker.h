@@ -34,7 +34,7 @@ namespace Bebop { namespace Math
    //******************************************************************************************************************
    bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
                                     Objects::RectangleObject* mpRectangleTwo,
-                                    std::vector<std::pair<float, float>>* apCollisionPoints);
+                                    std::vector<Vector2D<float>>* apCollisionPoints);
    
    //******************************************************************************************************************
    //
@@ -52,7 +52,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle,
-                                 std::vector<std::pair<float, float>>* apCollisionPoints);
+                                 std::vector<Vector2D<float>>* apCollisionPoints);
    
    //******************************************************************************************************************
    //
@@ -70,7 +70,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool CircleCircleCollision(Objects::CircleObject* mpCircleOne, Objects::CircleObject* mpCircleTwo,
-                              std::vector<std::pair<float, float>>* apCollisionPoints);
+                              std::vector<Vector2D<float>>* apCollisionPoints);
    
    //******************************************************************************************************************
    //
@@ -93,10 +93,10 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and rectangle.
    //
    //******************************************************************************************************************
-   bool LineRectangleCollision(float aOriginPointX, float aOriginPointY,
-                               float aEndPointX, float aEndPointY,
+   bool LineRectangleCollision(Vector2D<float> aOriginPoint,
+                               Vector2D<float> aEndPoint,
                                Objects::RectangleObject* mpRectangle,
-                               float* aCollisionX, float* aCollisionY);
+                               Vector2D<float>* aCollisionPoint);
    
    //******************************************************************************************************************
    //
@@ -120,10 +120,10 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and circle.
    //
    //******************************************************************************************************************
-   bool LineCircleCollision(float aOriginPointX, float aOriginPointY,
-                            float aEndPointX, float aEndPointY,
+   bool LineCircleCollision(Vector2D<float> aOriginPoint,
+                            Vector2D<float> aEndPoint,
                             Objects::CircleObject* apCircle,
-                            float* aCollisionX, float* aCollisionY);
+                            Vector2D<float>* aCollisionPoint);
    
    //******************************************************************************************************************
    //
@@ -149,11 +149,11 @@ namespace Bebop { namespace Math
    //    False - There is no collision between both lines.
    //
    //******************************************************************************************************************
-   bool LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
-                          float aLineOneEndPointX, float aLineOneEndPointY,
-                          float aLineTwoOriginPointX, float aLineTwoOriginPointY,
-                          float aLineTwoEndPointX, float aLineTwoEndPointY,
-                          float* aCollisionX, float* aCollisionY);
+   bool LineLineCollision(Vector2D<float> aLineOneOriginPoint,
+                          Vector2D<float> aLineOneEndPoint,
+                          Vector2D<float> aLineTwoOriginPoint,
+                          Vector2D<float> aLineTwoEndPoint,
+                          Vector2D<float>* aCollisionPoint);
 
    //******************************************************************************************************************
    //
@@ -172,7 +172,7 @@ namespace Bebop { namespace Math
    //    Returns the distances between two points.
    //
    //******************************************************************************************************************
-   float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY);
+   float PointDistances(Vector2D<float> aOriginPoint, Vector2D<float> aEndPoint);
 
    namespace
    {
@@ -197,9 +197,9 @@ namespace Bebop { namespace Math
       //    2 = Points are in Counterclockwise orientation.
       //
       //***************************************************************************************************************
-      int Orientation(float aPointOneX, float aPointOneY,
-                      float aPointTwoX, float aPointTwoY,
-                      float aPointThreeX, float aPointThreeY);
+      int Orientation(Vector2D<float> aPointOne,
+                      Vector2D<float> aPointTwo,
+                      Vector2D<float> aPointThree);
       
       //***************************************************************************************************************
       //
@@ -222,9 +222,9 @@ namespace Bebop { namespace Math
       //    False - Point Two does not lie on line segment One->Three.
       //
       //***************************************************************************************************************
-      bool OnSegment(float aPointOneX, float aPointOneY,
-                     float aPointTwoX, float aPointTwoY,
-                     float aPointThreeX, float aPointThreeY);
+      bool OnSegment(Vector2D<float> aPointOne,
+                     Vector2D<float> aPointTwo,
+                     Vector2D<float> aPointThree);
    }
 }}
 

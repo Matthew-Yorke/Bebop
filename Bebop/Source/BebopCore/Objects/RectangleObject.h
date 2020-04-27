@@ -41,9 +41,105 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         RectangleObject(const float aCoordinateX, const float aCoordinateY, const int aWidth, const int aHeight,
+         RectangleObject(const Math::Vector2D<float> aCoordinates, const int aWidth, const int aHeight,
                          const Graphics::Color aColor, const bool aBlocksLights);
       
+         //************************************************************************************************************
+         //
+         // Method Name: SetCoordinateX
+         //
+         // Description:
+         //    This method updates the X-Coordinate of the object based on the passed in value.
+         //
+         // Arguments:
+         //    aCoordianteX - The updated X-Coordinate to place the object at.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         virtual void SetCoordinateX(const float aoordianteX);
+      
+         //************************************************************************************************************
+         //
+         // Method Name: SetCoordinateY
+         //
+         // Description:
+         //    This method updates the Y-Coordinate of the object based on the passed in value.
+         //
+         // Arguments:
+         //    aCoordianteY - The updated Y-Coordinate to place the object at.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         virtual void SetCoordinateY(const float aCoordianteY);
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetTopLeftCorner
+         //
+         // Description:
+         //    Returns the vector coordinates of the top-left corner of the rectangle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns a 2D Vector coordinates for the top-left corner.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetTopLeftCorner();
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetTopRightCorner
+         //
+         // Description:
+         //    Returns the vector coordinates of the top-right corner of the rectangle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns a 2D Vector coordinates for the top-right corner.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetTopRightCorner();
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetBottomLeftCorner
+         //
+         // Description:
+         //    Returns the vector coordinates of the bottom-left corner of the rectangle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns a 2D Vector coordinates for the bottom-left corner.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetBottomLeftCorner();
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetBottomRightCorner
+         //
+         // Description:
+         //    Returns the vector coordinates of the bottom-right corner of the rectangle.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns a 2D Vector coordinates for the bottom-right corner.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetBottomRightCorner();
+         
          //************************************************************************************************************
          //
          // Method Name: SetWidth
@@ -147,7 +243,21 @@ namespace Bebop { namespace Objects
       
       private:
       
-         // There are currently no private methods for this class.
+         //************************************************************************************************************
+         //
+         // Method: UpdateCooridnates
+         //
+         // Description:
+         //    Updates the coordinates of each of the rectangle corner points.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void UpdateCooridnates();
       
    //******************************************************************************************************************
    // Methods - End
@@ -172,6 +282,12 @@ namespace Bebop { namespace Objects
       
          // The height of the rectangular object.
          int mHeight;
+
+         // 2D vector contiaing the points of each corner of the rectangle.
+         Math::Vector2D<float> mTopLeftPoint;
+         Math::Vector2D<float> mTopRightPoint;
+         Math::Vector2D<float> mBottomLeftPoint;
+         Math::Vector2D<float> mBottomRightPoint;
    
    //******************************************************************************************************************
    // Member Variables - End

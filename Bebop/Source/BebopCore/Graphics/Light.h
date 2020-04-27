@@ -15,6 +15,7 @@
 #include <vector>
 #include "../Objects//RectangleObject.h"
 #include "../Objects//CircleObject.h"
+#include "../Math/Vector2D.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -44,7 +45,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         Light(const float aOriginX, const float aOriginY, const float aRadius, const Color aLightColor,
+         Light(Math::Vector2D<float> aOrigin, const float aRadius, const Color aLightColor,
                const int aLightIntensity);
 
          //************************************************************************************************************
@@ -186,8 +187,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void DrawTriangle(const float aFirstPointX, const float aFirstPointY, const float aSecondPointX,
-                           const float aSecondPointY, const bool aWithColor) const;
+         void DrawTriangle(Math::Vector2D<float> aFirstPoint, Math::Vector2D<float> aSecondPoint, const bool aWithColor) const;
 
          //************************************************************************************************************
          //
@@ -205,7 +205,7 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         void RectangleCollisionPoint(float aCoordinateX, float aCoordinateY, Objects::Object* aThisRectangle);
+         void RectangleCollisionPoint(Math::Vector2D<float> aRectangleCoordinate, Objects::Object* aThisRectangle);
 
          //******************************************************************************************************************
          //
@@ -222,7 +222,7 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void CircleCollisionPoints(Objects::CircleObject* aThisCircle,
-                                    std::vector<std::pair<float, float>>* apCollisionPoints);
+                                    std::vector<Math::Vector2D<float>>* apCollisionPoints);
 
          //************************************************************************************************************
          //
@@ -242,7 +242,7 @@ namespace Bebop { namespace Graphics
          //    False - The ray doesn't pass through any other objects.
          //
          //************************************************************************************************************
-         bool CheckObjectCollisions(float aEndPointX, float aEndPointY, Objects::Object* testingObject);
+         bool CheckObjectCollisions(Math::Vector2D<float> aEndPoint, Objects::Object* testingObject);
 
          //************************************************************************************************************
          //
@@ -266,7 +266,7 @@ namespace Bebop { namespace Graphics
          //************************************************************************************************************
          void RectangleRectangleCollisionPoints(Objects::RectangleObject* apRectangleOne,
                                                 Objects::RectangleObject* apRectangleTwo,
-                                                std::vector<std::pair<float, float>>* apCollisionPoints);
+                                                std::vector<Math::Vector2D<float>>* apCollisionPoints);
 
    //******************************************************************************************************************
    // Methods - End
@@ -286,11 +286,8 @@ namespace Bebop { namespace Graphics
 
       private:
 
-         // The X-Coordinate of the origin of the light source.
-         float mOriginX;
-
-         // The Y-Coordinate of the origin of the light source.
-         float mOriginY;
+         // The coordinates of the origin of the light source.
+         Math::Vector2D<float> mOrigin;
 
          // The radius of the light.
          float mRadius;
@@ -303,7 +300,7 @@ namespace Bebop { namespace Graphics
 
          // Vector of X and Y coordinate for each point in the light radius.
          // Vector Composition: <Angle <X-Coordiante, Y-Coordinate>>
-         std::vector<std::pair<float, std::pair<float, float>>> mPoints;
+         std::vector<std::pair<float, Math::Vector2D<float>>> mPoints;
 
          // Vectors of angles to check for the light sweeping checks. This sweeping check is to check each angle
          // to determine points where the light will reach at these angles. The second part of the pair determines

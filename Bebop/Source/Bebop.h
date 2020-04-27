@@ -207,10 +207,11 @@ namespace Bebop
          //    N/A
          //
          // Return:
-         //    N/A
+         //    True  - Timeout happened.
+         //    False - Timeout did not happen.
          //
          //************************************************************************************************************
-         void Update();
+         bool Update();
 
       protected:
 

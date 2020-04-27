@@ -11,6 +11,7 @@
 #define Object_h
 
 #include "../Graphics/Color.h"
+#include "../Math/Vector2D.h"
 
 namespace Bebop { namespace Objects
 {
@@ -48,25 +49,57 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         Object(const float aCoordinateX, const float aCoordinateY, const int aWidthCenterPoint,
+         Object(const Math::Vector2D<float> aCoordinates, const int aWidthCenterPoint,
                 const int aHeightCenterPoint, const Graphics::Color aColor, const ObjectType aObjectType,
                 const bool aBlocksLight);
       
          //************************************************************************************************************
          //
-         // Method Name: GetCoordinateX
+         // Method Name: GetCoordinates
          //
          // Description:
-         //    This method returns the current X-Coordinate of the object.
+         //    This method returns the current coordinates vector of the object.
          //
          // Arguments:
          //    N/A
          //
          // Return:
-         //    Returns the current X-Coordinate of the object.
+         //    Returns the current coordinates of the object.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetCoordinates() const;
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetCoordinateX
+         //
+         // Description:
+         //    This method returns the current x-coordinate vector of the object.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the current x-coordinate of the object.
          //
          //************************************************************************************************************
          float GetCoordinateX() const;
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetCoordinateY
+         //
+         // Description:
+         //    This method returns the current y-coordinate vector of the object.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the current y-coordinate of the object.
+         //
+         //************************************************************************************************************
+         float GetCoordinateY() const;
       
          //************************************************************************************************************
          //
@@ -82,23 +115,7 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         void SetCoordinateX(const float aoordianteX);
-      
-         //************************************************************************************************************
-         //
-         // Method Name: GetCoordinateY
-         //
-         // Description:
-         //    This method returns the current Y-Coordinate of the object.
-         //
-         // Arguments:
-         //    N/A
-         //
-         // Return:
-         //    Returns the current Y-Coordinate of the object.
-         //
-         //************************************************************************************************************
-         float GetCoordinateY() const;
+         virtual void SetCoordinateX(const float aCoordianteX);
       
          //************************************************************************************************************
          //
@@ -114,20 +131,36 @@ namespace Bebop { namespace Objects
          //    N/A
          //
          //************************************************************************************************************
-         void SetCoordinateY(const float aCoordianteY);
+         virtual void SetCoordinateY(const float aCoordianteY);
+
+         //************************************************************************************************************
+         //
+         // Method Name: GetStartingCoordinates
+         //
+         // Description:
+         //    This method returns the starting coordinates vector of the object.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    Returns the starting coordinates of the object.
+         //
+         //************************************************************************************************************
+         Math::Vector2D<float> GetStartingCoordinates() const;
 
          //************************************************************************************************************
          //
          // Method Name: GetStartingCoordinateX
          //
          // Description:
-         //    This method returns the starting X-Coordinate of the object.
+         //    This method returns the starting x-coordinate of the object.
          //
          // Arguments:
          //    N/A
          //
          // Return:
-         //    Returns the starting X-Coordinate of the object.
+         //    Returns the starting x-coordinates of the object.
          //
          //************************************************************************************************************
          float GetStartingCoordinateX() const;
@@ -137,13 +170,13 @@ namespace Bebop { namespace Objects
          // Method Name: GetStartingCoordinateY
          //
          // Description:
-         //    This method returns the starting Y-Coordinate of the object.
+         //    This method returns the starting y-coordinate of the object.
          //
          // Arguments:
          //    N/A
          //
          // Return:
-         //    Returns the starting Y-Coordinate of the object.
+         //    Returns the starting y-coordinate of the object.
          //
          //************************************************************************************************************
          float GetStartingCoordinateY() const;
@@ -280,17 +313,11 @@ namespace Bebop { namespace Objects
       
       protected:
       
-         // The X-Coordinate that the object is starting at.
-         float mStartingCoordinateX;
+         // The Coodrinates that the object is starting at.
+         Math::Vector2D<float> mStartingCoordinates;
 
-         // The Y-Coordinate that the object is starting at.
-         float mStartingCoordinateY;
-
-         // The X-Coordinate that the object is placed at based on world coordinates.
-         float mCoordinateX;
-      
-         // The Y-Coordinate that the object is placed at based on world coordinates.
-         float mCoordinateY;
+         // The Coordinates that the object is placed at based on world coordinates.
+         Math::Vector2D<float> mCoordinates;
       
          // The center point along the width of an object.
          int mWidthCenterPoint;

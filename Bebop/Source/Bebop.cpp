@@ -279,10 +279,11 @@ namespace Bebop
    //    N/A
    //
    // Return:
-   //    N/A
+   //    True  - Timeout happened.
+   //    False - Timeout did not happen.
    //
    //******************************************************************************************************************
-   void Bebop::Update()
+   bool Bebop::Update()
    {
       static int count = 0;
       static float FPS = 0.0F;
@@ -305,8 +306,12 @@ namespace Bebop
             mpScene->Update(mpEventHandler->GetUpdateTimeDifference());
             Draw();
             mpEventHandler->SetTimedOut(false);
+
+            return true;
          }
       }
+
+      return false;
    }
 
 //*********************************************************************************************************************

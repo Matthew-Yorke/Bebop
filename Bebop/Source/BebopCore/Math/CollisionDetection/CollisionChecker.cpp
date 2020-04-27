@@ -33,7 +33,7 @@ namespace Bebop { namespace Math
    //******************************************************************************************************************
    bool RectangleRectangleCollision(Objects::RectangleObject* mpRectangleOne,
                                     Objects::RectangleObject* mpRectangleTwo,
-                                    std::vector<std::pair<float, float>>* apCollisionPoints)
+                                    std::vector<Vector2D<float>>* apCollisionPoints)
    {
       if (mpRectangleOne->GetCoordinateX() <= mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth() &&
           mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth() >= mpRectangleTwo->GetCoordinateX() &&
@@ -43,120 +43,119 @@ namespace Bebop { namespace Math
          // Gather collision points.
          if (apCollisionPoints != nullptr)
          {
-            float* x = new float;
-            float* y = new float;
+            Vector2D<float>* collisionPoint = new Vector2D<float>(0.0F, 0.0F);
 
             // Rectangle One Top vs Rectangle Two Top
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetTopRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetTopRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Top vs Rectangle Two Left Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetTopRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetBottomLeftCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Top vs Rectangle Two Right Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
-                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetTopRightCorner(),
+                                  mpRectangleTwo->GetTopRightCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Top vs Rectangle Two Bottom
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetTopRightCorner(),
+                                  mpRectangleTwo->GetBottomLeftCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Left vs Rectangle Two Top
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetBottomLeftCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetTopRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Left vs Rectangle Two Left Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetBottomLeftCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetBottomLeftCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Left vs Rectangle Two Right Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetBottomLeftCorner(),
+                                  mpRectangleTwo->GetTopRightCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Left vs Rectangle Two Bottom
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopLeftCorner(), mpRectangleOne->GetBottomLeftCorner(),
+                                  mpRectangleTwo->GetBottomLeftCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Right vs Rectangle Two Top
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopRightCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetTopRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Right vs Rectangle Two Left Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopRightCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetBottomLeftCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Right vs Rectangle Two Right Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopRightCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopRightCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Right vs Rectangle Two Bottom
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetTopRightCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetBottomLeftCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Bottom vs Rectangle Two Top
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetBottomLeftCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetTopRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Bottom vs Rectangle Two Left Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetBottomLeftCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopLeftCorner(), mpRectangleTwo->GetBottomLeftCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Bottom vs Rectangle Two Right Side
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetBottomLeftCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetTopRightCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             // Rectangle One Bottom vs Rectangle Two Bottom
-            if (LineLineCollision(mpRectangleOne->GetCoordinateX(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(), mpRectangleOne->GetCoordinateX() + mpRectangleOne->GetWidth(), mpRectangleOne->GetCoordinateY() + mpRectangleOne->GetHeight(),
-                                  mpRectangleTwo->GetCoordinateX(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(), mpRectangleTwo->GetCoordinateX() + mpRectangleTwo->GetWidth(), mpRectangleTwo->GetCoordinateY() + mpRectangleTwo->GetHeight(),
-                                  x, y) == true)
+            if (LineLineCollision(mpRectangleOne->GetBottomLeftCorner(), mpRectangleOne->GetBottomRightCorner(),
+                                  mpRectangleTwo->GetBottomLeftCorner(), mpRectangleTwo->GetBottomRightCorner(),
+                                  collisionPoint) == true)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
          }
 
@@ -184,7 +183,7 @@ namespace Bebop { namespace Math
    //
    //******************************************************************************************************************
    bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle,
-                                 std::vector<std::pair<float, float>>* apCollisionPoints)
+                                 std::vector<Vector2D<float>>* apCollisionPoints)
    {
       //
       float tempCircleX = mpCircle->GetCoordinateX();
@@ -223,75 +222,73 @@ namespace Bebop { namespace Math
       {
          if (apCollisionPoints != nullptr)
          {
-            float* x = new float;
-            float* y = new float;
+            Vector2D<float>* collisionPoint = new Vector2D<float>(0.0F, 0.0F);
 
             // Check Top of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetTopLeftCorner(),
+                                mpRectangle->GetTopRightCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
-            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetTopRightCorner(),
+                                mpRectangle->GetTopLeftCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             
             // Check Left of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetTopLeftCorner(),
+                                mpRectangle->GetBottomLeftCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
-            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetBottomLeftCorner(),
+                                mpRectangle->GetTopLeftCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             
             // Check Right of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetTopRightCorner(),
+                                mpRectangle->GetBottomRightCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
-            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetBottomRightCorner(),
+                                mpRectangle->GetTopRightCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
             
             // Check Bottom of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetBottomLeftCorner(),
+                                mpRectangle->GetBottomRightCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
-            LineCircleCollision(mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                mpCircle, x, y);
-            if (x != nullptr && y != nullptr)
+            LineCircleCollision(mpRectangle->GetBottomRightCorner(),
+                                mpRectangle->GetBottomLeftCorner(),
+                                mpCircle, collisionPoint);
+            if (collisionPoint != nullptr)
             {
-               apCollisionPoints->push_back(std::make_pair(*x, *y));
+               apCollisionPoints->push_back(*collisionPoint);
             }
 
-            delete x;
-            delete y;
+            delete collisionPoint;
          }
 
          return true;
@@ -317,7 +314,7 @@ namespace Bebop { namespace Math
    //******************************************************************************************************************
    bool CircleCircleCollision(Objects::CircleObject* mpCircleOne,
                               Objects::CircleObject* mpCircleTwo,
-                              std::vector<std::pair<float, float>>* apCollisionPoints)
+                              std::vector<Vector2D<float>>* apCollisionPoints)
    {
       // Get the distance from the center of the first circle to the second circle.
       float distanceX = mpCircleOne->GetCoordinateX() - mpCircleTwo->GetCoordinateX();
@@ -345,13 +342,13 @@ namespace Bebop { namespace Math
                float y2 = mpCircleOne->GetCoordinateY() + a * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
 
                // Gather the X and Y points for botht he intersection points.
-               float x3 = x2 + h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
-               float y3 = y2 - h * (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance;
-               float x4 = x2 - h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance;
-               float y4 = y2 + h + (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance;
+               Vector2D<float> x3(x2 + h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance,
+                                  y2 - h * (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance);
+               Vector2D<float> x4(x2 - h * (mpCircleTwo->GetCoordinateY() - mpCircleOne->GetCoordinateY()) / distance,
+                                  y2 + h + (mpCircleTwo->GetCoordinateX() - mpCircleOne->GetCoordinateX()) / distance);
 
-               apCollisionPoints->push_back(std::make_pair(x3, y3));
-               apCollisionPoints->push_back(std::make_pair(x4, y4));
+               apCollisionPoints->push_back(x3);
+               apCollisionPoints->push_back(x4);
             }
          }
 
@@ -382,69 +379,56 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and rectangle.
    //
    //******************************************************************************************************************
-   bool LineRectangleCollision(float aOriginPointX, float aOriginPointY,
-                               float aEndPointX, float aEndPointY,
+   bool LineRectangleCollision(Vector2D<float> aOriginPoint,
+                               Vector2D<float> aEndPoint,
                                Objects::RectangleObject* mpRectangle,
-                               float* aCollisionX, float* aCollisionY)
+                               Vector2D<float>* aCollisionPoint)
    {
-      float* leftX = new float;
-      float* leftY = new float;
-      float* topX = new float;
-      float* topY = new float;
-      float* rightX = new float;
-      float* rightY = new float;
-      float* bottomX = new float;
-      float* bottomY = new float;
+      Vector2D<float>* left = new Vector2D<float>(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+      Vector2D<float>* top = new Vector2D<float>(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+      Vector2D<float>* right = new Vector2D<float>(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+      Vector2D<float>* bottom = new Vector2D<float>(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
       bool leftCollided = false;
       bool topCollided = false;
       bool rightCollided = false;
       bool bottomCollided = false;
 
-      if (aOriginPointX >= mpRectangle->GetCoordinateX() &&
-          aOriginPointX <= mpRectangle->GetCoordinateX() + mpRectangle->GetWidth() &&
-          aOriginPointY >= mpRectangle->GetCoordinateY() &&
-          aOriginPointY <= mpRectangle->GetCoordinateY() + mpRectangle->GetHeight())
+      if (aOriginPoint.GetComponentX() >= mpRectangle->GetCoordinateX() &&
+          aOriginPoint.GetComponentX() <= mpRectangle->GetCoordinateX() + mpRectangle->GetWidth() &&
+          aOriginPoint.GetComponentY() >= mpRectangle->GetCoordinateY() &&
+          aOriginPoint.GetComponentY() <= mpRectangle->GetCoordinateY() + mpRectangle->GetHeight())
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aOriginPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aOriginPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aOriginPoint;
+
          return true;
       }
 
       // Check line collision on left side of the rectangle.
-      if (true == LineLineCollision(aOriginPointX, aOriginPointY,
-                                    aEndPointX, aEndPointY,
-                                    mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                    mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                    leftX, leftY))
+      if (true == LineLineCollision(aOriginPoint, aEndPoint,
+                                    mpRectangle->GetTopLeftCorner(), mpRectangle->GetBottomLeftCorner(),
+                                    left))
       {
          leftCollided = true;
       }
       // Check line collision on the top of the rectangle.
-      if (true == LineLineCollision(aOriginPointX, aOriginPointY,
-                                         aEndPointX, aEndPointY,
-                                         mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY(),
-                                         mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                         topX, topY))
+      if (true == LineLineCollision(aOriginPoint, aEndPoint,
+                                    mpRectangle->GetTopLeftCorner(), mpRectangle->GetTopRightCorner(),
+                                    top))
       {
          topCollided = true;
       }
       // Check line collision on the right side of the rectangle.
-      if (true == LineLineCollision(aOriginPointX, aOriginPointY,
-                                         aEndPointX, aEndPointY,
-                                         mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY(),
-                                         mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                         rightX, rightY))
+      if (true == LineLineCollision(aOriginPoint, aEndPoint,
+                                    mpRectangle->GetTopRightCorner(), mpRectangle->GetBottomRightCorner(),
+                                    right))
       {
          rightCollided = true;
       }
       // Check line collision on the bottom side of the rectangle.
-      if (true == LineLineCollision(aOriginPointX, aOriginPointY,
-                                         aEndPointX, aEndPointY,
-                                         mpRectangle->GetCoordinateX(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                         mpRectangle->GetCoordinateX() + mpRectangle->GetWidth(), mpRectangle->GetCoordinateY() + mpRectangle->GetHeight(),
-                                         bottomX, bottomY))
+      if (true == LineLineCollision(aOriginPoint, aEndPoint,
+                                    mpRectangle->GetBottomLeftCorner(), mpRectangle->GetBottomRightCorner(),
+                                    bottom))
       {
          bottomCollided = true;
       }
@@ -452,54 +436,40 @@ namespace Bebop { namespace Math
       // Check if any of sides collided and then find the closest point between all the sides.
       if(leftCollided == true || topCollided == true || rightCollided == true || bottomCollided == true)
       {
-         float* closestPointX = leftX;
-         float* closestPointY = leftY;
-         float closestDistance = PointDistances(aOriginPointX, aOriginPointY, *closestPointX, *closestPointY);
+         Vector2D<float>* closestPoint = left;
+         float closestDistance = PointDistances(aOriginPoint, *closestPoint);
 
-         if (PointDistances(aOriginPointX, aOriginPointY, *topX, *topY) < closestDistance)
+         if (PointDistances(aOriginPoint, *top) < closestDistance)
          {
-            closestPointX = topX;
-            closestPointY = topY;
-            closestDistance = PointDistances(aOriginPointX, aOriginPointY, *topX, *topY);
+            closestPoint = top;
+            closestDistance = PointDistances(aOriginPoint, *top);
          }
-         if (PointDistances(aOriginPointX, aOriginPointY, *rightX, *rightY) < closestDistance)
+         if (PointDistances(aOriginPoint, *right) < closestDistance)
          {
-            closestPointX = rightX;
-            closestPointY = rightY;
-            closestDistance = PointDistances(aOriginPointX, aOriginPointY, *rightX, *rightY);
+            closestPoint = right;
+            closestDistance = PointDistances(aOriginPoint, *right);
          }
-         if (PointDistances(aOriginPointX, aOriginPointY, *bottomX, *bottomY) < closestDistance)
+         if (PointDistances(aOriginPoint, *bottom) < closestDistance)
          {
-            closestPointX = bottomX;
-            closestPointY = bottomY;
-            closestDistance = PointDistances(aOriginPointX, aOriginPointY, *bottomX, *bottomY);
+            closestPoint = bottom;
+            closestDistance = PointDistances(aOriginPoint, *bottom);
          }
 
-         if (aCollisionX != nullptr)
-            *aCollisionX = *closestPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = *closestPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = *closestPoint;
 
-         delete leftX;
-         delete leftY;
-         delete topX;
-         delete topY;
-         delete rightX;
-         delete rightY;
-         delete bottomX;
-         delete bottomY;
+         delete left;
+         delete top;
+         delete right;
+         delete bottom;
 
          return true;
       }
 
-      delete leftX;
-      delete leftY;
-      delete topX;
-      delete topY;
-      delete rightX;
-      delete rightY;
-      delete bottomX;
-      delete bottomY;
+      delete left;
+      delete top;
+      delete right;
+      delete bottom;
 
       return false;
    }
@@ -526,29 +496,25 @@ namespace Bebop { namespace Math
    //    False - There is no collision between the line segment and circle.
    //
    //******************************************************************************************************************
-   bool LineCircleCollision(float aOriginPointX, float aOriginPointY,
-                            float aEndPointX, float aEndPointY,
+   bool LineCircleCollision(Vector2D<float> aOriginPoint,
+                            Vector2D<float> aEndPoint,
                             Objects::CircleObject* apCircle,
-                            float* aCollisionX, float* aCollisionY)
+                            Vector2D<float>* aCollisionPoint)
    {
-      Vector2D<float> origin(aOriginPointX, aOriginPointY);
-      Vector2D<float> end(aEndPointX, aEndPointY);
       Vector2D<float> circleCenter(apCircle->GetCoordinateX(), apCircle->GetCoordinateY());
 
-      float originCircleDistance = PointDistances(aOriginPointX, aOriginPointY, apCircle->GetCoordinateX(), apCircle->GetStartingCoordinateY());
+      float originCircleDistance = PointDistances(aOriginPoint, apCircle->GetCoordinates());
       // Check if the origin is within the circle.
       if (originCircleDistance <= apCircle->GetRadius())
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aOriginPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aOriginPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aOriginPoint;
 
          return true;
       }
 
-      Vector2D<float> endToOrigin = end - origin;
-      Vector2D<float> circleToOrigin = circleCenter - origin;
+      Vector2D<float> endToOrigin = aEndPoint - aOriginPoint;
+      Vector2D<float> circleToOrigin = circleCenter - aOriginPoint;
       float a = endToOrigin.GetComponentX() * endToOrigin.GetComponentX() + endToOrigin.GetComponentY() * endToOrigin.GetComponentY();
       float bBy2 = endToOrigin.Dot(circleToOrigin);
       float c = circleToOrigin.Dot(circleToOrigin) - (apCircle->GetRadius() * apCircle->GetRadius());
@@ -560,8 +526,7 @@ namespace Bebop { namespace Math
       float disc = pBy2 * pBy2 - q;
       if (disc < 0.0F)
       {
-         aCollisionX = nullptr;
-         aCollisionY = nullptr;
+         aCollisionPoint = nullptr;
          return false;
       }
 
@@ -569,46 +534,41 @@ namespace Bebop { namespace Math
       float tmpSqrt = sqrtf(disc);
       float abScalingFactor1 = -pBy2 + tmpSqrt;
       float abScalingFactor2 = -pBy2 - tmpSqrt;
-      Vector2D<float> p1(origin.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor1,
-                         origin.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor1);
-      Vector2D<float> p2(origin.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor2,
-                         origin.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor2);
+      Vector2D<float> p1(aOriginPoint.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor1,
+                         aOriginPoint.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor1);
+      Vector2D<float> p2(aOriginPoint.GetComponentX() - endToOrigin.GetComponentX() * abScalingFactor2,
+                         aOriginPoint.GetComponentY() - endToOrigin.GetComponentY() * abScalingFactor2);
 
-      float p1ToOrigin = PointDistances(origin.GetComponentX(), origin.GetComponentY(), p1.GetComponentX(), p1.GetComponentY());
-      float p2ToOrigin = PointDistances(origin.GetComponentX(), origin.GetComponentY(), p2.GetComponentX(), p2.GetComponentY());
+      float p1ToOrigin = PointDistances(aOriginPoint, p1);
+      float p2ToOrigin = PointDistances(aOriginPoint, p2);
 
       // Find the closest intersection point to the origin.
-      float closestX;
-      float closestY;
+      Vector2D<float> closestPoint(0.0F, 0.0F);
       if (p1ToOrigin < p2ToOrigin)
       {
-         closestX = p1.GetComponentX();
-         closestY = p1.GetComponentY();
+         closestPoint = p1;
       }
       else
       {
-         closestX = p2.GetComponentX();
-         closestY = p2.GetComponentY();
+         closestPoint = p2;
       }
 
-      float dotProduct = (closestX - origin.GetComponentX()) * (end.GetComponentX() - origin.GetComponentX()) +
-                         (closestY - origin.GetComponentY()) * (end.GetComponentY() - origin.GetComponentY());
+      float dotProduct = (closestPoint.GetComponentX() - aOriginPoint.GetComponentX()) * (aEndPoint.GetComponentX() - aOriginPoint.GetComponentX()) +
+                         (closestPoint.GetComponentY() - aOriginPoint.GetComponentY()) * (aEndPoint.GetComponentY() - aOriginPoint.GetComponentY());
       if (dotProduct < 0.0F)
       {
          return false;
       }
 
-      float squareLengthBA = (end.GetComponentX() - origin.GetComponentX()) * (end.GetComponentX() - origin.GetComponentX()) +
-                             (end.GetComponentY() - origin.GetComponentY()) * (end.GetComponentY() - origin.GetComponentY());
+      float squareLengthBA = (aEndPoint.GetComponentX() - aOriginPoint.GetComponentX()) * (aEndPoint.GetComponentX() - aOriginPoint.GetComponentX()) +
+                             (aEndPoint.GetComponentY() - aOriginPoint.GetComponentY()) * (aEndPoint.GetComponentY() - aOriginPoint.GetComponentY());
       if (dotProduct > squareLengthBA)
       {
          return false;
       }
 
-      if (aCollisionX != nullptr)
-         *aCollisionX = closestX;
-      if (aCollisionX != nullptr)
-         *aCollisionY = closestY;
+      if (aCollisionPoint != nullptr)
+         *aCollisionPoint = closestPoint;
 
       return true;
    }
@@ -637,48 +597,49 @@ namespace Bebop { namespace Math
    //    False - There is no collision between both lines.
    //
    //******************************************************************************************************************
-   bool LineLineCollision(float aLineOneOriginPointX, float aLineOneOriginPointY,
-                          float aLineOneEndPointX, float aLineOneEndPointY,
-                          float aLineTwoOriginPointX, float aLineTwoOriginPointY,
-                          float aLineTwoEndPointX, float aLineTwoEndPointY,
-                          float* aCollisionX, float* aCollisionY)
+   bool LineLineCollision(Vector2D<float> aLineOneOriginPoint,
+                          Vector2D<float> aLineOneEndPoint,
+                          Vector2D<float> aLineTwoOriginPoint,
+                          Vector2D<float> aLineTwoEndPoint,
+                          Vector2D<float>* aCollisionPoint)
    {
       // Retrieve the orientation possibilities.
-      int o1 = Orientation(aLineOneOriginPointX, aLineOneOriginPointY,
-                           aLineOneEndPointX, aLineOneEndPointY,
-                           aLineTwoOriginPointX, aLineTwoOriginPointY); 
-      int o2 = Orientation(aLineOneOriginPointX, aLineOneOriginPointY,
-                           aLineOneEndPointX, aLineOneEndPointY,
-                           aLineTwoEndPointX, aLineTwoEndPointY); 
-      int o3 = Orientation(aLineTwoOriginPointX, aLineTwoOriginPointY,
-                           aLineTwoEndPointX, aLineTwoEndPointY,
-                           aLineOneOriginPointX, aLineOneOriginPointY);
-      int o4 = Orientation(aLineTwoOriginPointX, aLineTwoOriginPointY,
-                           aLineTwoEndPointX, aLineTwoEndPointY,
-                           aLineOneEndPointX, aLineOneEndPointY);
+      int o1 = Orientation(aLineOneOriginPoint,
+                           aLineOneEndPoint,
+                           aLineTwoOriginPoint); 
+      int o2 = Orientation(aLineOneOriginPoint,
+                           aLineOneEndPoint,
+                           aLineTwoEndPoint); 
+      int o3 = Orientation(aLineTwoOriginPoint,
+                           aLineTwoEndPoint,
+                           aLineOneOriginPoint);
+      int o4 = Orientation(aLineTwoOriginPoint,
+                           aLineTwoEndPoint,
+                           aLineOneEndPoint);
 
       // Check if segments intersect, but aren't collinear.
       if (o1 != o2 && o3 != o4)
       {
          // Retrieve the intersection point.
-         if (aCollisionX != nullptr && aCollisionY != nullptr)
+         if (aCollisionPoint != nullptr)
          {
             // Line One represented as a1x +b1y = c1.
-            float a1 = aLineOneEndPointY - aLineOneOriginPointY;
-            float b1 = aLineOneOriginPointX - aLineOneEndPointX;
-            float c1 = a1*aLineOneOriginPointX + b1*aLineOneOriginPointY;
+            float a1 = aLineOneEndPoint.GetComponentY() - aLineOneOriginPoint.GetComponentY();
+            float b1 = aLineOneOriginPoint.GetComponentX() - aLineOneEndPoint.GetComponentX();
+            float c1 = a1*aLineOneOriginPoint.GetComponentX() + b1*aLineOneOriginPoint.GetComponentY();
 
             // Line Two represented as a2x +b2y = c2.
-            float a2 = aLineTwoEndPointY - aLineTwoOriginPointY;
-            float b2 = aLineTwoOriginPointX - aLineTwoEndPointX;
-            float c2 = a2*aLineTwoOriginPointX + b2*aLineTwoOriginPointY;
+            float a2 = aLineTwoEndPoint.GetComponentY() - aLineTwoOriginPoint.GetComponentY();
+            float b2 = aLineTwoOriginPoint.GetComponentX() - aLineTwoEndPoint.GetComponentX();
+            float c2 = a2*aLineTwoOriginPoint.GetComponentX() + b2*aLineTwoOriginPoint.GetComponentY();
 
             float determinant = a1*b2 - a2*b1;
 
-            if (aCollisionX != nullptr)
-               *aCollisionX = (b2*c1 - b1*c2)/determinant;
-            if (aCollisionY != nullptr)
-               *aCollisionY = (a1*c2 - a2*c1)/determinant;
+            if (aCollisionPoint != nullptr)
+            {
+               aCollisionPoint->SetComponentX((b2*c1 - b1*c2)/determinant);
+               aCollisionPoint->SetComponentY((a1*c2 - a2*c1)/determinant);
+            }
          }
 
          return true;
@@ -687,56 +648,48 @@ namespace Bebop { namespace Math
       // Special Cases 
       // LineOneOriginPoint, LineOneEndPoint, and LineTwoOriginPoint are collinear and LineTwoOriginPoint lies on
       // segment LineOneOriginPoint->LineOneEndPoint. 
-      if (o1 == 0 && OnSegment(aLineOneOriginPointX, aLineOneOriginPointY,
-                               aLineTwoOriginPointX, aLineTwoOriginPointY,
-                               aLineOneEndPointX, aLineOneEndPointY))
+      if (o1 == 0 && OnSegment(aLineOneOriginPoint,
+                               aLineTwoOriginPoint,
+                               aLineOneEndPoint))
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aLineTwoOriginPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aLineTwoOriginPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aLineTwoOriginPoint;
 
          return true;
       }
       
       // LineOneOriginPoint, LineOneEndPOint, and LineTwoEndPoint are collinear and LineTwoEndPoint lies on segment
       // LineOneOriginPoint->LineOneEndPoint. 
-      if (o2 == 0 && OnSegment(aLineOneOriginPointX, aLineOneOriginPointY,
-                               aLineTwoEndPointX, aLineTwoEndPointY,
-                               aLineOneEndPointX, aLineOneEndPointY))
+      if (o2 == 0 && OnSegment(aLineOneOriginPoint,
+                               aLineTwoEndPoint,
+                               aLineOneEndPoint))
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aLineTwoEndPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aLineTwoEndPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aLineTwoEndPoint;
 
          return true;
       }
       
       // LineTwoOriginPoint, LineTwoEndPoint, and LineOneOriginPoint are collinear and LineOneOriginPoint lies on
       // segment LineTwoOriginPoint->LineTwoEndPoint. 
-      if (o3 == 0 && OnSegment(aLineTwoOriginPointX, aLineTwoOriginPointY, 
-                               aLineOneOriginPointX, aLineOneOriginPointY,
-                               aLineTwoEndPointX, aLineTwoEndPointY))
+      if (o3 == 0 && OnSegment(aLineTwoOriginPoint, 
+                               aLineOneOriginPoint,
+                               aLineTwoEndPoint))
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aLineOneOriginPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aLineOneOriginPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aLineOneOriginPoint;
 
          return true;
       }
       
        // LineTwoOriginPoint, LineTwoEndPoint, and LineOneEndPoint are collinear and LineOneEndPoint lies on segment
        // LineTwoOriginPoint->LineTwoEndPoint. 
-      if (o4 == 0 && OnSegment(aLineTwoOriginPointX, aLineTwoOriginPointY,
-                               aLineOneEndPointX, aLineOneEndPointY,
-                               aLineTwoEndPointX, aLineTwoEndPointY))
+      if (o4 == 0 && OnSegment(aLineTwoOriginPoint,
+                               aLineOneOriginPoint,
+                               aLineTwoEndPoint))
       {
-         if (aCollisionX != nullptr)
-            *aCollisionX = aLineOneEndPointX;
-         if (aCollisionY != nullptr)
-            *aCollisionY = aLineOneEndPointY;
+         if (aCollisionPoint != nullptr)
+            *aCollisionPoint = aLineOneOriginPoint;
 
          return true;
       }
@@ -762,10 +715,10 @@ namespace Bebop { namespace Math
    //    Returns the distances between two points.
    //
    //******************************************************************************************************************
-   float PointDistances(float aOriginPointX, float aOriginPointY, float aEndPointX, float aEndPointY)
+   float PointDistances(Vector2D<float> aOriginPoint, Vector2D<float> aEndPoint)
    {
-      return sqrtf((aEndPointX - aOriginPointX)*(aEndPointX - aOriginPointX) + 
-                   (aEndPointY - aOriginPointY)*(aEndPointY - aOriginPointY));
+      return sqrtf((aEndPoint.GetComponentX() - aOriginPoint.GetComponentX())*(aEndPoint.GetComponentX() - aOriginPoint.GetComponentX()) + 
+                   (aEndPoint.GetComponentY() - aOriginPoint.GetComponentY())*(aEndPoint.GetComponentY() - aOriginPoint.GetComponentY()));
    }
 
    namespace
@@ -791,12 +744,12 @@ namespace Bebop { namespace Math
       //    2 = Points are in Counterclockwise orientation.
       //
       //***************************************************************************************************************
-      int Orientation(float aPointOneX, float aPointOneY,
-                      float aPointTwoX, float aPointTwoY,
-                      float aPointThreeX, float aPointThreeY)
+      int Orientation(Vector2D<float> aPointOne,
+                      Vector2D<float> aPointTwo,
+                      Vector2D<float> aPointThree)
       {
-         int val = static_cast<int>((aPointTwoY - aPointOneY) * (aPointThreeX - aPointTwoX) -
-                                    (aPointTwoX - aPointOneX) * (aPointThreeY - aPointTwoY));
+         int val = static_cast<int>((aPointTwo.GetComponentY() - aPointOne.GetComponentY()) * (aPointThree.GetComponentX() - aPointTwo.GetComponentX()) -
+                                    (aPointTwo.GetComponentX() - aPointOne.GetComponentX()) * (aPointThree.GetComponentY() - aPointTwo.GetComponentY()));
 
          // Check if the points are collinear.
          if (val == 0)
@@ -830,15 +783,15 @@ namespace Bebop { namespace Math
       //    False - Point Two does not lie on line segment One->Three.
       //
       //***************************************************************************************************************
-      bool OnSegment(float aPointOneX, float aPointOneY,
-                     float aPointTwoX, float aPointTwoY,
-                     float aPointThreeX, float aPointThreeY)
+      bool OnSegment(Vector2D<float> aPointOne,
+                     Vector2D<float> aPointTwo,
+                     Vector2D<float> aPointThree)
       {
          // Check if point Two lies on line segment One-Three.
-         if (aPointTwoX <= std::max(aPointOneX, aPointThreeX) &&
-             aPointTwoX >= std::min(aPointOneX, aPointThreeX) && 
-             aPointTwoY <= std::max(aPointOneY, aPointThreeY) &&
-             aPointTwoY >= std::min(aPointOneY, aPointThreeY))
+         if (aPointTwo.GetComponentX() <= std::max(aPointOne.GetComponentX(), aPointThree.GetComponentX()) &&
+             aPointTwo.GetComponentX() >= std::min(aPointOne.GetComponentX(), aPointThree.GetComponentX()) && 
+             aPointTwo.GetComponentY() <= std::max(aPointOne.GetComponentY(), aPointThree.GetComponentY()) &&
+             aPointTwo.GetComponentY() >= std::min(aPointOne.GetComponentY(), aPointThree.GetComponentY()))
          {
             return true; 
          }
