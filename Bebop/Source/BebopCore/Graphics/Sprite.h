@@ -12,6 +12,7 @@
 
 #include <string>
 #include <allegro5/allegro.h>
+#include "../Math/Vector2D.h"
 
 namespace Bebop { namespace Graphics
 {
@@ -33,20 +34,18 @@ namespace Bebop { namespace Graphics
          //    sprite.
          //
          // Arguments:
-         //    aFilePath  - This string depicts the file location of the sprite image.
-         //    aSourceX   - The X-Coordinate on the image to start drawing from.
-         //    aSourceY   - The Y-Coordinate on the image to start drawing from.
-         //    aWidth     - The width of the sprite image.
-         //    aHeight    - The height of the sprite image.
-         //    aPositionX - The X-Coordinate to draw the sprite.
-         //    aPositionY - The Y-Coordinate to draw the sprite.
+         //    aFilePath - This string depicts the file location of the sprite image.
+         //    aSource   - The X-Coordinate nad Y-Coordinate on the image to start drawing from.
+         //    aWidth    - The width of the sprite image.
+         //    aHeight   - The height of the sprite image.
+         //    aPosition - The X-Coordinate nad Y-Coordinate to draw the sprite.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         Sprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
-                const int aHeight, const int aPositionX, const int aPositionY);
+         Sprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
+                const int aHeight, const Math::Vector2D<float> aPosition);
 
          //************************************************************************************************************
          //
@@ -72,14 +71,13 @@ namespace Bebop { namespace Graphics
          //    Update the sprites windows position with the passed in values.
          //    
          // Arguments:
-         //    aPositionX - The X-Coordinate to draw the sprite.
-         //    aPositionY - The Y-Coordinate to draw the sprite.
+         //    aPosition - The X-Coordinate and Y-Coordinate to draw the sprite.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
-         void UpdatePosition(const int aPositionX, const int aPositionY);
+         void UpdatePosition(const Math::Vector2D<float> aPosition);
 
          //************************************************************************************************************
          //
@@ -95,7 +93,7 @@ namespace Bebop { namespace Graphics
          //    Returns the current Y-Coordinate position of the sprite.
          //
          //************************************************************************************************************
-         int GetPositionX() const;
+         float GetPositionX() const;
 
          //************************************************************************************************************
          //
@@ -111,7 +109,7 @@ namespace Bebop { namespace Graphics
          //    Returns the current Y-Coordinate position of the sprite.
          //
          //************************************************************************************************************
-         int GetPositionY() const;
+         float GetPositionY() const;
 
          //************************************************************************************************************
          //
@@ -180,11 +178,8 @@ namespace Bebop { namespace Graphics
 
       protected:
 
-         // Holds the X-Coordinate where the sprite image resides in the sprite(sheet) bitmap.
-         int mSourceX;
-
-         // Holds the Y-Coordinate where the sprite image resides in the sprite(sheet) bitmap.
-         int mSourceY;
+         // Holds the X-Coordinate and Y-Coordinate where the sprite image resides in the sprite(sheet) bitmap.
+         Math::Vector2D<int> mSource;
 
          // Holds the width of the sprite image.
          int mWidth;
@@ -192,11 +187,8 @@ namespace Bebop { namespace Graphics
          // Holds the height of the sprite image.
          int mHeight;
 
-         // The X-Coordinate position to draw the sprite on the window.
-         int mPositionX;
-
-         // The Y-Coordinate position to draw the sprite on the window.
-         int mPositionY;
+         // The X-Coordinate and Y-Coordinate to draw the sprite on the window.
+         Math::Vector2D<float> mPosition;
 
       private:
 

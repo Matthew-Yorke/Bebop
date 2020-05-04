@@ -31,12 +31,10 @@ namespace Bebop { namespace Graphics
          //
          // Arguments:
          //    aFilePath     - The file path where the sprite(sheet) is located.
-         //    aSourceX      - The X-Coordinate where the sprite image on the bitmap is located.
-         //    aSourceY      - The Y-Coordinate where the sprite image on the bitmap is located.
+         //    aSource       - The X-Coordinate and Y-Coordinate where the sprite image on the bitmap is located.
          //    aWidth        - The width of the sprite image.
          //    aHeight       - The height of the sprite image.
-         //    aPositionX    - The X-Coordinate to draw the sprite.
-         //    aPositionY    - The Y-Coordinate to draw the sprite.
+         //    aPosition     - The X-Coordinate and Y-Coordinate to draw the sprite.
          //    aFps          - The number of frames that occur in a second.
          //    aNumberFrames - The number of frames in the animation.
          //
@@ -44,8 +42,8 @@ namespace Bebop { namespace Graphics
          //    N/A
          //
          //************************************************************************************************************
-         AnimatedSprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
-                        const int aHeight, const int aPositionX, const int aPositionY, const float aFps,
+         AnimatedSprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
+                        const int aHeight, const Math::Vector2D<float> aPosition, const float aFps,
                         const int aNumberFrames);
 
          //************************************************************************************************************

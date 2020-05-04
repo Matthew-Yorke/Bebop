@@ -24,22 +24,19 @@ namespace Bebop { namespace Graphics
    //    sprite, the location on the image to start drawing from, and the dimensions of the sprite.
    //
    // Arguments:
-   //    aFilePath  - This string depicts the file location of the sprite image.
-   //    aSourceX   - The X-Coordinate on the image to start drawing from.
-   //    aSourceY   - The Y-Coordinate on the image to start drawing from.
-   //    aWidth     - The width of the sprite image.
-   //    aHeight    - The height of the sprite image.
-   //    aPositionX - The X-Coordinate to draw the sprite.
-   //    aPositionY - The Y-Coordinate to draw the sprite.
+   //    aFilePath - This string depicts the file location of the sprite image.
+   //    aSource   - The X-Coordinate nad Y-Coordinate on the image to start drawing from.
+   //    aWidth    - The width of the sprite image.
+   //    aHeight   - The height of the sprite image.
+   //    aPosition - The X-Coordinate nad Y-Coordinate to draw the sprite.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   Sprite::Sprite(const std::string aFilePath, const int aSourceX, const int aSourceY, const int aWidth,
-                  const int aHeight, const int aPositionX, const int aPositionY) :
-      mSourceX(aSourceX), mSourceY(aSourceY), mWidth(aWidth), mHeight(aHeight), mPositionX(aPositionX),
-      mPositionY(aPositionY)
+   Sprite::Sprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
+                  const int aHeight, const Math::Vector2D<float> aPosition) :
+      mSource(aSource), mWidth(aWidth), mHeight(aHeight), mPosition(aPosition)
    {
       if (nullptr == (mpSpriteSheet = al_load_bitmap(aFilePath.c_str())))
       {
@@ -76,17 +73,15 @@ namespace Bebop { namespace Graphics
    //    Update the sprites windows position with the passed in values.
    //    
    // Arguments:
-   //    aPositionX - The X-Coordinate to draw the sprite.
-   //    aPositionY - The Y-Coordinate to draw the sprite.
+   //    aPosition - The X-Coordinate and Y-Coordinate to draw the sprite.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
-   void Sprite::UpdatePosition(const int aPositionX, const int aPositionY)
+   void Sprite::UpdatePosition(const Math::Vector2D<float> aPosition)
    {
-      mPositionX = aPositionX;
-      mPositionY = aPositionY;
+      mPosition = aPosition;
    }
 
    //******************************************************************************************************************
@@ -103,9 +98,9 @@ namespace Bebop { namespace Graphics
    //    Returns the current Y-Coordinate position of the sprite.
    //
    //******************************************************************************************************************
-   int Sprite::GetPositionX() const
+   float Sprite::GetPositionX() const
    {
-      return mPositionX;
+      return mPosition.GetComponentX();
    }
 
    //******************************************************************************************************************
@@ -122,9 +117,9 @@ namespace Bebop { namespace Graphics
    //    Returns the current Y-Coordinate position of the sprite.
    //
    //******************************************************************************************************************
-   int Sprite::GetPositionY() const
+   float Sprite::GetPositionY() const
    {
-      return mPositionY;
+      return mPosition.GetComponentY();
    }
 
    //******************************************************************************************************************
@@ -144,12 +139,12 @@ namespace Bebop { namespace Graphics
    void Sprite::Draw() const
    {
       al_draw_bitmap_region(mpSpriteSheet,
-                            mSourceX,
-                            mSourceY,
+                            mSource.GetComponentX(),
+                            mSource.GetComponentY(),
                             mWidth,
                             mHeight,
-                            mPositionX,
-                            mPositionY,
+                            mPosition.GetComponentX(),
+                            mPosition.GetComponentY(),
                             0);
    }
 
@@ -171,12 +166,12 @@ namespace Bebop { namespace Graphics
    {
       al_draw_tinted_bitmap_region(mpSpriteSheet,
                                    al_map_rgba(0, 0, 0, aAlpha),
-                                   mSourceX,
-                                   mSourceY,
+                                   mSource.GetComponentX(),
+                                   mSource.GetComponentY(),
                                    mWidth,
                                    mHeight,
-                                   mPositionX,
-                                   mPositionY,
+                                   mPosition.GetComponentX(),
+                                   mPosition.GetComponentY(),
                                    0);
    }
 

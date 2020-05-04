@@ -37,10 +37,10 @@ namespace Bebop { namespace Graphics
    //    N/A
    //
    //******************************************************************************************************************
-   AnimatedSprite::AnimatedSprite(const std::string aFilePath, const int aSourceX, const int aSourceY,
-                                  const int aWidth, const int aHeight, const int aPositionX, const int aPositionY,
-                                  const float aFps, const int aNumberFrames) :
-      Sprite(aFilePath, aSourceX, aSourceY, aWidth, aHeight, aPositionX, aPositionY),
+   AnimatedSprite::AnimatedSprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
+                                  const int aHeight, const Math::Vector2D<float> aPosition, const float aFps,
+                                  const int aNumberFrames) :
+      Sprite(aFilePath, aSource, aWidth, aHeight, aPosition),
       mFrameTime(1.0F /aFps), mNumberFrames(aNumberFrames), mCurrentFrame(0), mElapsedTime(0.0F)
    {
    }
@@ -75,13 +75,13 @@ namespace Bebop { namespace Graphics
          // sprite(sheet) by the sprite width.
          if (mCurrentFrame < mNumberFrames)
          {
-            mSourceX += mWidth;
+            mSource.SetComponentX(mSource.GetComponentX() + mWidth);
          }
          // The next frame is past the bounds of the number of frames. Reset the X-coordinate and current frame to the
          // first frame of the animation.
          else
          {
-            mSourceX = 0;
+            mSource.SetComponentX(0);
             mCurrentFrame = 0;
          }
       }
