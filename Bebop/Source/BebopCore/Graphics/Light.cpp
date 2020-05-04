@@ -170,7 +170,7 @@ namespace Bebop { namespace Graphics
       {
          if ((*objectIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
          {
-            objectLigthCollides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*objectIterator), ligthCircle, nullptr);
+            objectLigthCollides = Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*objectIterator), ligthCircle);
          }
          else if ((*objectIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
          {
@@ -198,24 +198,20 @@ namespace Bebop { namespace Graphics
                // The object being checked aginst is a rectangle.
                if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
                {
-                  if (true == Math::RectangleRectangleCollision(tempCollideRectangle,
-                                                                dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
-                                                                nullptr))
-                  {
-                     RectangleRectangleCollisionPoints(tempCollideRectangle, dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator), pCollisionPoints);
-                  }
+                  Math::RectangleRectangleCollision(tempCollideRectangle,
+                                                    dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
+                                                    pCollisionPoints);
                }
                // The object being checked against is a circle.
                else if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
                {
                   Math::RectangleCircleCollision(tempCollideRectangle,
-                                                 dynamic_cast<Objects::CircleObject*>(*overlapCheckIterator),
-                                                 pCollisionPoints);
+                                                 dynamic_cast<Objects::CircleObject*>(*overlapCheckIterator));
                }
             }
 
             // Find collision points of circle and rectangle.
-            Math::RectangleCircleCollision(tempCollideRectangle, ligthCircle, pCollisionPoints);
+            LightRectangleCollisionPoints(tempCollideRectangle, pCollisionPoints);
 
             // Gather collision points for this rectangle.
             // Top Left
@@ -239,8 +235,7 @@ namespace Bebop { namespace Graphics
                if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::RECTANGLE)
                {
                   Math::RectangleCircleCollision(dynamic_cast<Objects::RectangleObject*>(*overlapCheckIterator),
-                                                 tempCollideCircle,
-                                                 pCollisionPoints);
+                                                 tempCollideCircle);
                }
                // The object being checked against is a circle.
                else if ((*overlapCheckIterator)->GetObjectType() == Objects::ObjectType::CIRCLE)
@@ -250,9 +245,6 @@ namespace Bebop { namespace Graphics
                                               pCollisionPoints);
                }
             }
-            
-            // Find collision points of circle and circle.
-            //Math::CircleCircleCollision(tempCircle, ligthCircle, pCollisionPoints);
             
             // Gather collision points for this circle.
             CircleCollisionPoints(tempCollideCircle, pCollisionPoints);
@@ -868,6 +860,110 @@ namespace Bebop { namespace Graphics
       delete rectangleOneVertical;
       delete rectangleTwoHorizontal;
       delete rectangleTwoVertical;
+      delete collisionPoint;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: LightRectangleCollisionPoints
+   //
+   // Description:
+   //    Gather points where the outer edge of the light source collides with sides of a rectangle. The only
+   //    sides to be checked are closest to the light source itself (e.g., if the light is above and to the left
+   //    of the rectangle, only the top and left edge need to be checked for collision points).
+   //
+   // Arguments:
+   //    apRectangle       - Rectangle to check for collision points against the light.
+   //    apCollisionPoints - The collection of possible collision points known to the light source.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::LightRectangleCollisionPoints(Objects::RectangleObject* apRectangle,
+                                      std::vector<Math::Vector2D<float>>* apCollisionPoints)
+   {
+      Line* rectangleHorizontal= nullptr;
+      Line* rectangleVertical= nullptr;
+
+      // check light is left/right of rectangle one.
+      if (mOrigin.GetComponentX() < apRectangle->GetCoordinateX())
+      {
+         rectangleVertical = new Line;
+         rectangleVertical->originX = apRectangle->GetCoordinateX();
+         rectangleVertical->originY = apRectangle->GetCoordinateY();
+         rectangleVertical->endX = apRectangle->GetCoordinateX();
+         rectangleVertical->endY = apRectangle->GetCoordinateY() + apRectangle->GetHeight();
+      }
+      else if (mOrigin.GetComponentX() > apRectangle->GetCoordinateX() + apRectangle->GetWidth())
+      {
+         rectangleVertical = new Line;
+         rectangleVertical->originX = apRectangle->GetCoordinateX() + apRectangle->GetWidth();
+         rectangleVertical->originY = apRectangle->GetCoordinateY();
+         rectangleVertical->endX = apRectangle->GetCoordinateX() + apRectangle->GetWidth();
+         rectangleVertical->endY = apRectangle->GetCoordinateY() + apRectangle->GetHeight();
+      }
+      // Check Light above/below rectangle one.
+      if (mOrigin.GetComponentY() < apRectangle->GetCoordinateY())
+      {
+         rectangleHorizontal = new Line;
+         rectangleHorizontal->originX = apRectangle->GetCoordinateX();
+         rectangleHorizontal->originY = apRectangle->GetCoordinateY();
+         rectangleHorizontal->endX = apRectangle->GetCoordinateX() + apRectangle->GetWidth();
+         rectangleHorizontal->endY = apRectangle->GetCoordinateY();
+      }
+      else if (mOrigin.GetComponentY() > apRectangle->GetCoordinateY() + apRectangle->GetHeight())
+      {
+         rectangleHorizontal = new Line;
+         rectangleHorizontal->originX = apRectangle->GetCoordinateX();
+         rectangleHorizontal->originY = apRectangle->GetCoordinateY() + apRectangle->GetHeight();
+         rectangleHorizontal->endX = apRectangle->GetCoordinateX() + apRectangle->GetWidth();
+         rectangleHorizontal->endY = apRectangle->GetCoordinateY() + apRectangle->GetHeight();
+      }
+
+      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOrigin, mRadius, Color(0,0,0,0), false);
+      Math::Vector2D<float>* collisionPoint = new Math::Vector2D<float>(0.0F, 0.0F);
+
+      if (rectangleHorizontal != nullptr)
+      {
+         LineCircleCollision(Math::Vector2D<float>(rectangleHorizontal->originX, rectangleHorizontal->originY),
+                             Math::Vector2D<float>(rectangleHorizontal->endX, rectangleHorizontal->endY),
+                             ligthCircle, collisionPoint);
+         if (collisionPoint != nullptr)
+         {
+            apCollisionPoints->push_back(*collisionPoint);
+         }
+         LineCircleCollision(Math::Vector2D<float>(rectangleHorizontal->endX, rectangleHorizontal->endY),
+                             Math::Vector2D<float>(rectangleHorizontal->originX, rectangleHorizontal->originY),
+                             ligthCircle, collisionPoint);
+         if (collisionPoint != nullptr)
+         {
+            apCollisionPoints->push_back(*collisionPoint);
+         }
+      }
+      
+      if (rectangleVertical != nullptr)
+      {
+         LineCircleCollision(Math::Vector2D<float>(rectangleVertical->originX, rectangleVertical->originY),
+                             Math::Vector2D<float>(rectangleVertical->endX, rectangleVertical->endY),
+                             ligthCircle, collisionPoint);
+         if (collisionPoint != nullptr)
+         {
+            apCollisionPoints->push_back(*collisionPoint);
+         }
+         LineCircleCollision(Math::Vector2D<float>(rectangleVertical->endX, rectangleVertical->endY),
+                             Math::Vector2D<float>(rectangleVertical->originX, rectangleVertical->originY),
+                             ligthCircle, collisionPoint);
+         if (collisionPoint != nullptr)
+         {
+            apCollisionPoints->push_back(*collisionPoint);
+         }
+      }
+
+      // Cleanup any allocated memory.
+      delete ligthCircle;
+      delete rectangleHorizontal;
+      delete rectangleVertical;
       delete collisionPoint;
    }
 

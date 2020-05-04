@@ -182,8 +182,7 @@ namespace Bebop { namespace Math
    //    N/A
    //
    //******************************************************************************************************************
-   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle,
-                                 std::vector<Vector2D<float>>* apCollisionPoints)
+   bool RectangleCircleCollision(Objects::RectangleObject* mpRectangle, Objects::CircleObject* mpCircle)
    {
       //
       float tempCircleX = mpCircle->GetCoordinateX();
@@ -220,77 +219,6 @@ namespace Bebop { namespace Math
       // collision.
       if (distance <= mpCircle->GetRadius())
       {
-         if (apCollisionPoints != nullptr)
-         {
-            Vector2D<float>* collisionPoint = new Vector2D<float>(0.0F, 0.0F);
-
-            // Check Top of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetTopLeftCorner(),
-                                mpRectangle->GetTopRightCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            LineCircleCollision(mpRectangle->GetTopRightCorner(),
-                                mpRectangle->GetTopLeftCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            
-            // Check Left of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetTopLeftCorner(),
-                                mpRectangle->GetBottomLeftCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            LineCircleCollision(mpRectangle->GetBottomLeftCorner(),
-                                mpRectangle->GetTopLeftCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            
-            // Check Right of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetTopRightCorner(),
-                                mpRectangle->GetBottomRightCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            LineCircleCollision(mpRectangle->GetBottomRightCorner(),
-                                mpRectangle->GetTopRightCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            
-            // Check Bottom of Rectangle against the Circle
-            LineCircleCollision(mpRectangle->GetBottomLeftCorner(),
-                                mpRectangle->GetBottomRightCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-            LineCircleCollision(mpRectangle->GetBottomRightCorner(),
-                                mpRectangle->GetBottomLeftCorner(),
-                                mpCircle, collisionPoint);
-            if (collisionPoint != nullptr)
-            {
-               apCollisionPoints->push_back(*collisionPoint);
-            }
-
-            delete collisionPoint;
-         }
-
          return true;
       }
 

@@ -268,6 +268,26 @@ namespace Bebop { namespace Graphics
                                                 Objects::RectangleObject* apRectangleTwo,
                                                 std::vector<Math::Vector2D<float>>* apCollisionPoints);
 
+         //************************************************************************************************************
+         //
+         // Method: LightRectangleCollisionPoints
+         //
+         // Description:
+         //    Gather points where the outer edge of the light source collides with sides of a rectangle. The only
+         //    sides to be checked are closest to the light source itself (e.g., if the light is above and to the left
+         //    of the rectangle, only the top and left edge need to be checked for collision points).
+         //
+         // Arguments:
+         //    apRectangle       - Rectangle to check for collision points against the light.
+         //    apCollisionPoints - The collection of possible collision points known to the light source.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void LightRectangleCollisionPoints(Objects::RectangleObject* apRectangle,
+                                            std::vector<Math::Vector2D<float>>* apCollisionPoints);
+
    //******************************************************************************************************************
    // Methods - End
    //******************************************************************************************************************

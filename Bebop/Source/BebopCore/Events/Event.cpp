@@ -52,7 +52,7 @@ namespace Bebop { namespace Events
 
       // Set FPS to 60.
       // TODO: Allow user to set FPS
-      mpTimer = al_create_timer(1.0 / 60.0);
+      mpTimer = al_create_timer(1.0F / 60.0F);
 
       mpEventQueue = al_create_event_queue();
       al_register_event_source(mpEventQueue, al_get_keyboard_event_source());
