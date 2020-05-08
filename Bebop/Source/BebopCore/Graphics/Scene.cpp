@@ -184,7 +184,10 @@ namespace Bebop { namespace Graphics
    void Scene::Draw() const
    {
       al_clear_to_color(al_map_rgb(0, 255, 0));
-      ResetShadowMap();
+      if (mpShadowMap != nullptr)
+      {
+         ResetShadowMap();
+      }
 
       for (auto iterator = mLayers.begin(); iterator != mLayers.end(); ++iterator)
       {
@@ -192,7 +195,10 @@ namespace Bebop { namespace Graphics
       }
 
       // Draw the shadow map onto the main display.
-      al_draw_bitmap(mpShadowMap, SCENE_ORIGIN, SCENE_ORIGIN, NO_DRAW_FLAGS);
+      if (mpShadowMap != nullptr)
+      {
+         al_draw_bitmap(mpShadowMap, SCENE_ORIGIN, SCENE_ORIGIN, NO_DRAW_FLAGS);
+      }
    }
 
 //*********************************************************************************************************************
