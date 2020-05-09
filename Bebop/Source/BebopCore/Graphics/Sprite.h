@@ -39,13 +39,14 @@ namespace Bebop { namespace Graphics
          //    aWidth    - The width of the sprite image.
          //    aHeight   - The height of the sprite image.
          //    aPosition - The X-Coordinate nad Y-Coordinate to draw the sprite.
+         //    aRotation - The rotation angle in radians to the rotate the image.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Sprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
-                const int aHeight, const Math::Vector2D<float> aPosition);
+                const int aHeight, const Math::Vector2D<float> aPosition, float aRotation);
 
          //************************************************************************************************************
          //
@@ -68,7 +69,7 @@ namespace Bebop { namespace Graphics
          // Method: UpdatePosition
          //
          // Description:
-         //    Update the sprites windows position with the passed in values.
+         //    Update the sprite's window position with the passed in value.
          //    
          // Arguments:
          //    aPosition - The X-Coordinate and Y-Coordinate to draw the sprite.
@@ -78,6 +79,22 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void UpdatePosition(const Math::Vector2D<float> aPosition);
+
+         //************************************************************************************************************
+         //
+         // Method: UpdateRotation
+         //
+         // Description:
+         //    Update the sprites rotation with the passed in value.
+         //    
+         // Arguments:
+         //    aRotation - The angle in radians to rotate the sprite.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void UpdateRotation(float aRotation);
 
          //************************************************************************************************************
          //
@@ -189,6 +206,9 @@ namespace Bebop { namespace Graphics
 
          // The X-Coordinate and Y-Coordinate to draw the sprite on the window.
          Math::Vector2D<float> mPosition;
+
+         // The rotation of the sprite image.
+         float mRotation;
 
       private:
 

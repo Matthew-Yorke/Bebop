@@ -32,6 +32,7 @@ namespace Bebop { namespace Graphics
    //    aPositionY    - The Y-Coordinate to draw the sprite.
    //    aFps          - The number of frames that occur in a second.
    //    aNumberFrames - The number of frames in the animation.
+   //    aRotation     - The angle in radians for the rotation of the sprite.
    //
    // Return:
    //    N/A
@@ -39,8 +40,8 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    AnimatedSprite::AnimatedSprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
                                   const int aHeight, const Math::Vector2D<float> aPosition, const float aFps,
-                                  const int aNumberFrames) :
-      Sprite(aFilePath, aSource, aWidth, aHeight, aPosition),
+                                  const int aNumberFrames, const float aRotation) :
+      Sprite(aFilePath, aSource, aWidth, aHeight, aPosition, aRotation),
       mFrameTime(1.0F /aFps), mNumberFrames(aNumberFrames), mCurrentFrame(0), mElapsedTime(0.0F)
    {
    }

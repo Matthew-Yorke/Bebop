@@ -29,14 +29,15 @@ namespace Bebop { namespace Graphics
    //    aWidth    - The width of the sprite image.
    //    aHeight   - The height of the sprite image.
    //    aPosition - The X-Coordinate nad Y-Coordinate to draw the sprite.
+   //    aRotation - The rotation angle in radians to the rotate the image.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    Sprite::Sprite(const std::string aFilePath, const Math::Vector2D<int> aSource, const int aWidth,
-                  const int aHeight, const Math::Vector2D<float> aPosition) :
-      mSource(aSource), mWidth(aWidth), mHeight(aHeight), mPosition(aPosition)
+                  const int aHeight, const Math::Vector2D<float> aPosition, float aRotation) :
+      mSource(aSource), mWidth(aWidth), mHeight(aHeight), mPosition(aPosition), mRotation(aRotation)
    {
       if (nullptr == (mpSpriteSheet = al_load_bitmap(aFilePath.c_str())))
       {
@@ -70,7 +71,7 @@ namespace Bebop { namespace Graphics
    // Method: UpdatePosition
    //
    // Description:
-   //    Update the sprites windows position with the passed in values.
+   //    Update the sprite's window position with the passed in value.
    //    
    // Arguments:
    //    aPosition - The X-Coordinate and Y-Coordinate to draw the sprite.
@@ -82,6 +83,25 @@ namespace Bebop { namespace Graphics
    void Sprite::UpdatePosition(const Math::Vector2D<float> aPosition)
    {
       mPosition = aPosition;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: UpdateRotation
+   //
+   // Description:
+   //    Update the sprites rotation with the passed in value.
+   //    
+   // Arguments:
+   //    aRotation - The angle in radians to rotate the sprite.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Sprite::UpdateRotation(float aRotation)
+   {
+      mRotation = aRotation;
    }
 
    //******************************************************************************************************************
@@ -138,14 +158,34 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Sprite::Draw() const
    {
+      // Retreive the main display drawing area so it can be reverted back to.
+      ALLEGRO_BITMAP* displayDrawingArea = al_get_target_bitmap();
+
+      // Create a temporary bitmap to retrieve the correct image from the sprite sheet.
+      ALLEGRO_BITMAP* tempBitmap = al_create_bitmap(mWidth, mHeight);
+      al_set_target_bitmap(tempBitmap);
+      al_clear_to_color(al_map_rgb(0, 0, 0));
       al_draw_bitmap_region(mpSpriteSheet,
                             mSource.GetComponentX(),
                             mSource.GetComponentY(),
                             mWidth,
                             mHeight,
-                            mPosition.GetComponentX(),
-                            mPosition.GetComponentY(),
+                            0.0F,
+                            0.0F,
                             0);
+
+      // Revert back to the main drawing area and draw the sprite image onto the main area.
+      al_set_target_bitmap(displayDrawingArea);
+      al_draw_rotated_bitmap(tempBitmap,
+                             al_get_bitmap_width(tempBitmap)/2,
+                             al_get_bitmap_height(tempBitmap)/2,
+                             mPosition.GetComponentX() + (al_get_bitmap_width(tempBitmap)/2),
+                             mPosition.GetComponentY() + (al_get_bitmap_height(tempBitmap)/2),
+                             mRotation,
+                             0);
+      
+      // Clean up memory allocation.
+      al_destroy_bitmap(tempBitmap);
    }
 
    //******************************************************************************************************************
@@ -164,15 +204,35 @@ namespace Bebop { namespace Graphics
    //******************************************************************************************************************
    void Sprite::DrawTinted(unsigned int aAlpha) const
    {
+      // Retreive the main display drawing area so it can be reverted back to.
+      ALLEGRO_BITMAP* displayDrawingArea = al_get_target_bitmap();
+
+      // Create a temporary bitmap to retrieve the correct image from the sprite sheet.
+      ALLEGRO_BITMAP* tempBitmap = al_create_bitmap(mWidth, mHeight);
+      al_set_target_bitmap(tempBitmap);
+      al_clear_to_color(al_map_rgb(0, 0, 0));
       al_draw_tinted_bitmap_region(mpSpriteSheet,
                                    al_map_rgba(0, 0, 0, aAlpha),
                                    mSource.GetComponentX(),
                                    mSource.GetComponentY(),
                                    mWidth,
                                    mHeight,
-                                   mPosition.GetComponentX(),
-                                   mPosition.GetComponentY(),
+                                   0.0F,
+                                   0.0F,
                                    0);
+
+      // Revert back to the main drawing area and draw the sprite image onto the main area.
+      al_set_target_bitmap(displayDrawingArea);
+      al_draw_rotated_bitmap(tempBitmap,
+                             al_get_bitmap_width(tempBitmap)/2,
+                             al_get_bitmap_height(tempBitmap)/2,
+                             mPosition.GetComponentX() + (al_get_bitmap_width(tempBitmap)/2),
+                             mPosition.GetComponentY() + (al_get_bitmap_height(tempBitmap)/2),
+                             mRotation,
+                             0);
+      
+      // Clean up memory allocation.
+      al_destroy_bitmap(tempBitmap);
    }
 
 //*********************************************************************************************************************
