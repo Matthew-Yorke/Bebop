@@ -41,17 +41,31 @@ namespace Bebop { namespace Objects
          //    aCoorindateY       - The Y-Coordinate to place the object upon creation.
          //    aWidthCenterPoint  - The center point of the width of the object.
          //    aHeightCenterPoint - The center point of the height of the object.
-         //    aColor             - The color of the rectangle object.
+         //    apColor            - The color of the rectangle object.
          //    aObjectType        - Determines what kind of object is created (rectangle, circle, etc.)
-         //    aBlocksLights      - Determines if this object should blocks lights from passing through.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Object(const Math::Vector2D<float> aCoordinates, const int aWidthCenterPoint,
-                const int aHeightCenterPoint, const Graphics::Color aColor, const ObjectType aObjectType,
-                const bool aBlocksLight);
+                const int aHeightCenterPoint, Graphics::Color* const apColor, const ObjectType aObjectType);
+
+         //************************************************************************************************************
+         //
+         // Method Name: ~Object
+         //
+         // Description:
+         //    Descturctor to free any memory usage before the object is completely destroyed.
+         //
+         // Arguments:
+         //    N/A
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         ~Object();
       
          //************************************************************************************************************
          //
@@ -326,7 +340,7 @@ namespace Bebop { namespace Objects
          int mHeightCenterPoint;
 
          // The color of the object.
-         Graphics::Color mColor;
+         Graphics::Color* mpColor;
 
          // The type of object (e.g., circle, rectangle, etc.).
          ObjectType mObjectType;

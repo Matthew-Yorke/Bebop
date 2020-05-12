@@ -160,7 +160,7 @@ namespace Bebop { namespace Graphics
       mPoints.clear();
       mAnglesToCheck.clear();
       mObjects.clear();
-      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOrigin, mRadius, Color(0,0,0,0), false);
+      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOrigin, mRadius, nullptr);
       std::vector<Objects::Object*> mObjects;
       std::vector<Math::Vector2D<float>>* pCollisionPoints = new std::vector<Math::Vector2D<float>>;
 
@@ -921,7 +921,7 @@ namespace Bebop { namespace Graphics
          rectangleHorizontal->endY = apRectangle->GetCoordinateY() + apRectangle->GetHeight();
       }
 
-      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOrigin, mRadius, Color(0,0,0,0), false);
+      Objects::CircleObject* ligthCircle = new Objects::CircleObject(mOrigin, mRadius, nullptr);
       Math::Vector2D<float>* collisionPoint = new Math::Vector2D<float>(0.0F, 0.0F);
 
       if (rectangleHorizontal != nullptr)

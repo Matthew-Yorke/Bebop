@@ -28,16 +28,15 @@ namespace Bebop { namespace Objects
    //    aCoordinateX  - The X-Coordinate the circular object is to be displayed on the window.
    //    aCoordinateY  - The Y-Coordinate the circular object is to be displayed on the window. 
    //    aRadius       - The radius of the circular object.
-   //    aColor        - The color of the rectangle object.
-   //    aBlocksLights - Determines if this object should blocks lights from passing through.
+   //    apColor       - The color of the rectangle object.
    //
    // Return:
    //    N/A
    //
    //************************************************************************************************************
    CircleObject::CircleObject(const Math::Vector2D<float> aCoordinates, const int aRadius,
-                              const Graphics::Color aColor, const bool aBlocksLights) :
-      Object(aCoordinates, aRadius, aRadius, aColor, ObjectType::CIRCLE, aBlocksLights),
+                              Graphics::Color* const apColor) :
+      Object(aCoordinates, aRadius, aRadius, apColor, ObjectType::CIRCLE),
       mRadius(aRadius)
    {
    }
@@ -77,9 +76,12 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void CircleObject::Draw() const
    {
-      al_draw_filled_circle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
-                            mRadius-1, al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
-                                                    mColor.GetAlpha()));
+      if (mpColor != nullptr)
+      {
+         al_draw_filled_circle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
+                               mRadius-1, al_map_rgba(mpColor->GetRedColor(), mpColor->GetGreenColor(),
+                                                      mpColor->GetBlueColor(), mpColor->GetAlpha()));
+      }
    }
 
    //******************************************************************************************************************

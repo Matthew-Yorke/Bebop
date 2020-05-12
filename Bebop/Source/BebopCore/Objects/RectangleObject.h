@@ -34,15 +34,14 @@ namespace Bebop { namespace Objects
          //    aCoordinateY  - The Y-Coordinate the rectangular object is to be displayed on the window. 
          //    aWidth        - The width of the rectangular object.
          //    aHeight       - The height of the rectangular object.
-         //    aColor        - The color of the rectangle object.
-         //    aBlocksLights - Determines if this object should blocks lights from passing through.
+         //    apColor       - The color of the rectangle object.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          RectangleObject(const Math::Vector2D<float> aCoordinates, const int aWidth, const int aHeight,
-                         const Graphics::Color aColor, const bool aBlocksLights);
+                         Graphics::Color* const apColor);
       
          //************************************************************************************************************
          //

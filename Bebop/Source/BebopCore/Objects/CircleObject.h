@@ -33,15 +33,14 @@ namespace Bebop { namespace Objects
          //    aCoordinateX  - The X-Coordinate the circular object is to be displayed on the window.
          //    aCoordinateY  - The Y-Coordinate the circular object is to be displayed on the window. 
          //    aRadius       - The radius of the circular object.
-         //    aColor        - The color of the rectangle object.
-         //    aBlocksLights - Determines if this object should blocks lights from passing through.
+         //    apColor       - The color of the rectangle object.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          CircleObject(const Math::Vector2D<float> aCoordinates, const int aRadius,
-                      const Graphics::Color aColor, const bool aBlocksLights);
+                      Graphics::Color* const apColor);
       
          //************************************************************************************************************
          //

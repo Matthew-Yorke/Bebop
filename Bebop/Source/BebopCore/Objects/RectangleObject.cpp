@@ -29,16 +29,15 @@ namespace Bebop { namespace Objects
    //    aCoordinateY  - The Y-Coordinate the rectangular object is to be displayed on the window. 
    //    aWidth        - The width of the rectangular object.
    //    aHeight       - The height of the rectangular object.
-   //    aColor        - The color of the rectangle object.
-   //    aBlocksLights - Determines if this object should blocks lights from passing through.
+   //    apColor       - The color of the rectangle object.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    RectangleObject::RectangleObject(const Math::Vector2D<float> aCoordinates, const int aWidth,
-                                    const int aHeight, const Graphics::Color aColor, const bool aBlocksLights) :
-      Object(aCoordinates, (aWidth / 2), (aHeight / 2), aColor, ObjectType::RECTANGLE, aBlocksLights),
+                                    const int aHeight, Graphics::Color* const apColor) :
+      Object(aCoordinates, (aWidth / 2), (aHeight / 2), apColor, ObjectType::RECTANGLE),
       mWidth(aWidth), mHeight(aHeight),
       mTopLeftPoint(aCoordinates),
       mTopRightPoint(GetCoordinateX() + aWidth, GetCoordinateY()),
@@ -257,10 +256,13 @@ namespace Bebop { namespace Objects
    //******************************************************************************************************************
    void RectangleObject::Draw() const
    {
-      al_draw_filled_rectangle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
-                               mCoordinates.GetComponentX() + mWidth, mCoordinates.GetComponentY() + mHeight,
-                               al_map_rgba(mColor.GetRedColor(), mColor.GetGreenColor(), mColor.GetBlueColor(),
-                                           mColor.GetAlpha()));
+      if (mpColor != nullptr)
+      {
+         al_draw_filled_rectangle(mCoordinates.GetComponentX(), mCoordinates.GetComponentY(),
+                                  mCoordinates.GetComponentX() + mWidth, mCoordinates.GetComponentY() + mHeight,
+                                  al_map_rgba(mpColor->GetRedColor(), mpColor->GetGreenColor(), mpColor->GetBlueColor(),
+                                              mpColor->GetAlpha()));
+      }
    }
 
    //******************************************************************************************************************
