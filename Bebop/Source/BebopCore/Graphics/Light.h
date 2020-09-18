@@ -35,18 +35,19 @@ namespace Bebop { namespace Graphics
          //    Constructor to set member variables to their default values and then calculate the points for the light.
          //
          // Arguments:
-         //    aOriginX        - The X-Coordinate of the light origin point.
-         //    aOriginY        - The Y-Coordinate of the light origin point.
+         //    aOrigin         - The X-Coordinate and Y-Coordinate of the light origin point.
          //    aRadius         - The radius of the light source.
          //    aLightColor     - The color of the light source.
          //    aLightIntensity - Th intensity of the light itself.
+         //    aAngleCenter    - The angle the center of the light is pointed at.
+         //    aOffset         - The offset angle for either side from the center the light is directed at.
          //
          // Return:
          //    N/A
          //
          //************************************************************************************************************
          Light(Math::Vector2D<float> aOrigin, const float aRadius, const Color aLightColor,
-               const int aLightIntensity);
+               const int aLightIntensity, const int aAngleCenter, const int aOffset);
 
          //************************************************************************************************************
          //
@@ -111,6 +112,23 @@ namespace Bebop { namespace Graphics
          //
          //************************************************************************************************************
          void SetCoordinateY(float aCoordinateY);
+
+         //************************************************************************************************************
+         //
+         // Method: SetAngleCenter
+         //
+         // Description:
+         //    Upadres the angle that depicts the center of the light and updates the offsets as well based on the new
+         //    center.
+         //
+         // Arguments:
+         //    aAngleCenter - The new center of the angle of the light.
+         //
+         // Return:
+         //    N/A
+         //
+         //************************************************************************************************************
+         void SetAngleCenter(int aAngleCenter);
 
          //************************************************************************************************************
          //
@@ -288,6 +306,23 @@ namespace Bebop { namespace Graphics
          void LightRectangleCollisionPoints(Objects::RectangleObject* apRectangle,
                                             std::vector<Math::Vector2D<float>>* apCollisionPoints);
 
+         //************************************************************************************************************
+         //
+         // Method: AngleInBetween
+         //
+         // Description:
+         //    Checks if the passed in angle is inbetween the lights left and right offset when normalized.
+         //
+         // Arguments:
+         //    aCheckingAngle - The angle being checked.
+         //
+         // Return:
+         //    True  - The checked angle is inbetween the light's left and right offset angle.
+         //    False - The checked angle is not inbetween the light's left and right offset angle.
+         //
+         //************************************************************************************************************
+         bool AngleInBetween(int aCheckingAngle);
+
    //******************************************************************************************************************
    // Methods - End
    //******************************************************************************************************************
@@ -317,6 +352,15 @@ namespace Bebop { namespace Graphics
 
          // The intensity of the actual light.
          int mLightIntensity;
+
+         // The angle the center of the light is directed at.
+         int mAngleCenter;
+
+         // The angle the left (clockwise) edge of the light is directed at.
+         int mLeftOffsetAngle;
+
+         // The angle the right (clockwise) edge of the light is directed at.
+         int mRightOffsetAngle;
 
          // Vector of X and Y coordinate for each point in the light radius.
          // Vector Composition: <Angle <X-Coordiante, Y-Coordinate>>

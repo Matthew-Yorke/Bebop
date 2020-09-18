@@ -29,20 +29,22 @@ namespace Bebop { namespace Graphics
    //    Constructor to set member variables to their default values and then calculate the points for the light.
    //
    // Arguments:
-   //    aOriginX        - The X-Coordinate of the light origin point.
-   //    aOriginY        - The Y-Coordinate of the light origin point.
+   //    aOrigin         - The X-Coordinate and Y-Coordinate of the light origin point.
    //    aRadius         - The radius of the light source.
    //    aLightColor     - The color of the light source.
    //    aLightIntensity - Th intensity of the light itself.
+   //    aAngleCenter    - The angle the center of the light is pointed at.
+   //    aOffset         - The offset angle for either side from the center the light is directed at.
    //
    // Return:
    //    N/A
    //
    //******************************************************************************************************************
    Light::Light(Math::Vector2D<float> aOrigin, const float aRadius, const Color aLightColor,
-                const int aLightIntensity) :
+                const int aLightIntensity, const int aAngleCenter, const int aOffset) :
       mOrigin(aOrigin), mRadius(aRadius), mLightColor(aLightColor),
-      mLightIntensity(aLightIntensity)
+      mLightIntensity(aLightIntensity), mAngleCenter(aAngleCenter), mLeftOffsetAngle(aAngleCenter - aOffset),
+      mRightOffsetAngle(aAngleCenter + aOffset)
    {
    }
 
@@ -120,6 +122,31 @@ namespace Bebop { namespace Graphics
    void Light::SetCoordinateY(float aCoordinateY)
    {
       mOrigin.SetComponentY(aCoordinateY);
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: SetAngleCenter
+   //
+   // Description:
+   //    Upadres the angle that depicts the center of the light and updates the offsets as well based on the new
+   //    center.
+   //
+   // Arguments:
+   //    aAngleCenter - The new center of the angle of the light.
+   //
+   // Return:
+   //    N/A
+   //
+   //******************************************************************************************************************
+   void Light::SetAngleCenter(int aAngleCenter)
+   {
+      int oldAngleCenter = mAngleCenter;
+      mAngleCenter = aAngleCenter;
+
+      int difference = oldAngleCenter - mAngleCenter;
+      mLeftOffsetAngle -= difference;
+      mRightOffsetAngle -= difference;
    }
 
    //******************************************************************************************************************
@@ -256,70 +283,77 @@ namespace Bebop { namespace Graphics
       {
          // Get the angle from light origin to the point.
          float angleDegrees = atan2f(pointIter->GetComponentY() - mOrigin.GetComponentY(), pointIter->GetComponentX() - mOrigin.GetComponentX()) * Math::DEGREES_CONVERSION;
-         while (angleDegrees < 0.0F)
-         {
-            angleDegrees += 360.0F;
-         }
-         while (angleDegrees > 360.0F)
-         {
-            angleDegrees -= 360.0F;
-         }
 
-         // Add checks to close surrounding angles
-         mAnglesToCheck.push_back(std::make_pair(angleDegrees - 0.1F, true));
-         mAnglesToCheck.push_back(std::make_pair(angleDegrees + 0.1F, true));
-
-         // Handle the case if the point is further than the light's radius.
-         Math::Vector2D<float> circleMaxDistance(mOrigin.GetComponentX() + mRadius * cos(angleDegrees * Math::RADIANS_CONVERSION),
-                                                 mOrigin.GetComponentY() + mRadius * sin(angleDegrees * Math::RADIANS_CONVERSION));
-         if (Math::PointDistances(mOrigin, *pointIter) >
-             Math::PointDistances(mOrigin,  circleMaxDistance))
+         // Make sure the angle being checked is within range of the light.
+         if(AngleInBetween(angleDegrees) == true)
          {
-            continue;
-         }
-
-         // Check if the ray from the light to the point collides with any object.
-         bool collidesObject = false;
-         for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
-         {
-            // Object being checked for collision is a rectangle.
-            if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+            // Change angle to be an angle withing the light range since it will be.
+            while (angleDegrees < mLeftOffsetAngle)
             {
-               if (true == Math::LineRectangleCollision(mOrigin,
+               angleDegrees += 360.0F;
+            }
+            while (angleDegrees > mRightOffsetAngle)
+            {
+               angleDegrees -= 360.0F;
+            }
+
+            // Add checks to close surrounding angles
+            mAnglesToCheck.push_back(std::make_pair(angleDegrees - 0.1F, true));
+            mAnglesToCheck.push_back(std::make_pair(angleDegrees + 0.1F, true));
+
+            // Handle the case if the point is further than the light's radius.
+            Math::Vector2D<float> circleMaxDistance(mOrigin.GetComponentX() + mRadius * cos(angleDegrees * Math::RADIANS_CONVERSION),
+                                                    mOrigin.GetComponentY() + mRadius * sin(angleDegrees * Math::RADIANS_CONVERSION));
+            if (Math::PointDistances(mOrigin, *pointIter) >
+                Math::PointDistances(mOrigin,  circleMaxDistance))
+            {
+               continue;
+            }
+
+            // Check if the ray from the light to the point collides with any object.
+            bool collidesObject = false;
+            for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
+            {
+               // Object being checked for collision is a rectangle.
+               if ((*iter)->GetObjectType() == Objects::ObjectType::RECTANGLE)
+               {
+                  if (true == Math::LineRectangleCollision(mOrigin,
+                                                           *pointIter,
+                                                           dynamic_cast<Objects::RectangleObject*>(*iter),
+                                                           nullptr))
+                  {
+                     collidesObject = true;
+                     break;
+                  }
+               }
+               // Object being checked for collison is a circle.
+               else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
+               {
+                  if (true == Math::LineCircleCollision(mOrigin,
                                                         *pointIter,
-                                                        dynamic_cast<Objects::RectangleObject*>(*iter),
+                                                        dynamic_cast<Objects::CircleObject*>(*iter),
                                                         nullptr))
-               {
-                  collidesObject = true;
-                  break;
+                  {
+                     collidesObject = true;
+                     break;
+                  }
                }
             }
-            // Object being checked for collison is a circle.
-            else if ((*iter)->GetObjectType() == Objects::ObjectType::CIRCLE)
-            {
-               if (true == Math::LineCircleCollision(mOrigin,
-                                                     *pointIter,
-                                                     dynamic_cast<Objects::CircleObject*>(*iter),
-                                                     nullptr))
-               {
-                  collidesObject = true;
-                  break;
-               }
-            }
-         }
 
-         // If the ray  does not collide with an object, then add this to the vector of points for drawing.
-         if (collidesObject == false)
-         {
-            mPoints.push_back(std::make_pair(angleDegrees, *pointIter));
+            // If the ray  does not collide with an object, then add this to the vector of points for drawing.
+            if (collidesObject == false)
+            {
+               mPoints.push_back(std::make_pair(angleDegrees, *pointIter));
+            }
          }
       }
 
       // Add the angles for the sweeping points.
-      for (auto degrees = 0.0F; degrees < 360.0F; degrees += 15.0F)
+      for (auto degrees = mLeftOffsetAngle; degrees < mRightOffsetAngle; degrees += 15.0F)
       {
          mAnglesToCheck.push_back(std::make_pair(degrees, false));
       }
+      mAnglesToCheck.push_back(std::make_pair(mRightOffsetAngle, false));
 
       // Sort the angles to check in ascending order and remove duplicates.
       std::sort(mAnglesToCheck.begin(), mAnglesToCheck.end(), [](auto &left, auto &right)
@@ -421,16 +455,9 @@ namespace Bebop { namespace Graphics
       // Iterate through all the points calculated.
       for (auto iterator = mPoints.begin(); iterator != mPoints.end(); ++iterator)
       {
-         // Check if the next item in the vector would be the end, in this case connect the points to the first point
-         // in the vector.
+         // Check if the next item in the vector is not the end, in this case connect the current point and next point.
          auto isNext = iterator + 1;
-         if (isNext == mPoints.end())
-         {
-            auto firstPoint = mPoints.begin();
-            DrawTriangle(iterator->second, firstPoint->second, aWithColor);
-         }
-         // Otherwise connect the points to the next point in the vector.
-         else
+         if (isNext != mPoints.end())
          {
             auto nextPoint = iterator + 1;
             DrawTriangle(iterator->second, nextPoint->second, aWithColor);
@@ -965,6 +992,32 @@ namespace Bebop { namespace Graphics
       delete rectangleHorizontal;
       delete rectangleVertical;
       delete collisionPoint;
+   }
+
+   //******************************************************************************************************************
+   //
+   // Method: AngleInBetween
+   //
+   // Description:
+   //    Checks if the passed in angle is inbetween the lights left and right offset when normalized.
+   //
+   // Arguments:
+   //    aCheckingAngle - The angle being checked.
+   //
+   // Return:
+   //    True  - The checked angle is inbetween the light's left and right offset angle.
+   //    False - The checked angle is not inbetween the light's left and right offset angle.
+   //
+   //******************************************************************************************************************
+   bool Light::AngleInBetween(int aCheckingAngle)
+   {
+      int normalizedCheckingAngle = (360 + (aCheckingAngle % 360)) % 360;
+	   int normalizedLowAngle = (3600000 + mLeftOffsetAngle) % 360;
+	   int normalizedHighAngle = (3600000 + mRightOffsetAngle) % 360;
+
+	   if (normalizedLowAngle < normalizedHighAngle)
+	   	return normalizedLowAngle <= normalizedCheckingAngle && normalizedCheckingAngle <= normalizedHighAngle;
+	   return normalizedLowAngle <= normalizedCheckingAngle || normalizedCheckingAngle <= normalizedHighAngle;
    }
 
 //*********************************************************************************************************************
